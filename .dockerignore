@@ -1,0 +1,29 @@
+# .github
+.github
+
+# Python
+__pycache__
+venv
+
+# PyTest
+.pytest_cache
+
+# Coverage
+.coverage
+htmlcov
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# VSCode
+.vscode/
