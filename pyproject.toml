@@ -6,9 +6,16 @@ authors = ["Roni Tuohino <tuohinoroni@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.8"
 flask = "^2.2.2"
+invoke = "^1.7.3"
 
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.15.6"
+coverage = "^6.5.0"
+pytest = "^7.2.0"
+pylint-flask = "^0.6"
 
 [build-system]
 requires = ["poetry-core"]

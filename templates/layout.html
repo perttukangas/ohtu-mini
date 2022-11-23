@@ -1,3 +1,18 @@
-{% extends "layout.html" %} {% block content %}
-<h1>Hello!</h1>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ohtu-mini</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+  </head>
+
+  <body>
+    <main>{% block content %}{% endblock %}</main>
+    <footer>
+      <a href="https://github.com/Perttu-Kangas/ohtu-mini">View source</a>
+    </footer>
+  </body>
+</html>

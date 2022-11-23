@@ -2,18 +2,24 @@
 
 ## Definition of Done
 
-## Komennot
+## Komentorivitoiminnot
 
-### Kehitystila
+### Riippuvuuksien asentaminen
 
-```
-poetry install
-```
+Komento: `poetry install`
 
-```
-poetry shell
-```
+### Ohjelman suorittaminen
 
-```
-flask run
-```
+Komento: `poetry run invoke start`
+
+### Testaus
+
+Komento: `poetry run invoke test`
+
+### Testikattavuus
+
+Komento: `poetry run invoke coverage`
+
+### Pylint
+
+Komento: `poetry run invoke lint`
