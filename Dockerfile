@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.10.8-slim-bullseye
 
 # Configure Poetry
 ENV POETRY_VERSION=1.2.0

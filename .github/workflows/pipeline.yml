@@ -28,3 +28,16 @@ jobs:
         run: poetry run invoke test
       - name: Run lint
         run: poetry run invoke lint
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+    steps:
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: deploy
+        run: flyctl deploy --remote-only
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
