@@ -22,6 +22,6 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run tests
-        run: poetry run invoke coverage
+        run: poetry run invoke test
       - name: Run lint
         run: poetry run invoke lint

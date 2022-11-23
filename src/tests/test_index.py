@@ -8,4 +8,4 @@ class TestIndex(unittest.TestCase):
 
     def test_hello(self):
         response = self.client.get('/ping')
-        self.assertEqual(response.text, "pong")
+        self.assertEqual(response.text, "aa")
