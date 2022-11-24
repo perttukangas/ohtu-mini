@@ -3,15 +3,17 @@ from app import app
 
 @app.route("/")
 def index():
-    print(__name__)
     return render_template("index.html")
 
 
 @app.route("/test")
 def test():
+    print(":)")
     return render_template("test.html")
 
 
-@app.route("/ping")
+@app.route("/pingis")
 def ping():
-    return "pong"
+    print("ok")
+    print("yeehaaw")
+    return "pongis"
