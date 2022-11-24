@@ -1,6 +1,7 @@
 import unittest
 from app import app
 
+from src.utils import db
 
 class TestIndex(unittest.TestCase):
     def setUp(self):
