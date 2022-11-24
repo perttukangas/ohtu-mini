@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import os
 
 print(os.environ.get("DATABASE_URL"))
-
+#
 client = MongoClient(os.environ.get("DATABASE_URL"))
 
 print(os.environ.get("DB_NAME"))
@@ -38,6 +38,6 @@ record = user_collection.insert_one(record).inserted_id
 cursor = user_collection.find_one(record)
 print(cursor)
 
-cursor = user_collection.find({"username": "other user"})
+cursor = user_collection.find({"_id": record, "username": "other user"})
 for record in cursor:
   print(record)
