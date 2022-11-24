@@ -28,6 +28,9 @@ jobs:
         run: poetry run invoke lint
       - name: Run tests
         run: poetry run invoke coverage
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DB_NAME: ${{ secrets.DB_NAME }}
       #- name: Check coverage
       #  run: poetry run invoke coverage-report
   deploy:
