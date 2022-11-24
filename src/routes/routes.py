@@ -12,8 +12,8 @@ def test():
     return render_template("test.html")
 
 
-@app.route("/pingis")
+@app.route("/ping")
 def ping():
     print("ok")
     print("yeehaaw")
-    return "pongis"
+    return "pong"
