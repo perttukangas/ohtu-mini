@@ -4,7 +4,5 @@ import os
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 
-from src.utils import db
-
 from src.routes import routes
 from src.routes import user

@@ -35,8 +35,8 @@ jobs:
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_PORT: ${{ secrets.DB_PORT }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      #- name: Check coverage
-      #  run: poetry run invoke coverage-report
+      - name: Check coverage
+        run: poetry run invoke coverage-report
   deploy:
     needs: [build]
     runs-on: ubuntu-20.04
