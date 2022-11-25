@@ -22,10 +22,25 @@ def register(username, password):
 def login(username, password):
   
     query = "SELECT id, username, password FROM Users WHERE username=:username"
-    #result = 
+    con = connect()
+    try:
+        user = con.run(query, username=username)[0]
+        con.close()
+    except:
+        con.close()
+        print("nimeä ei löytynyt tietokannasta")
+        return False
+    if check_password_hash(user[2], password):
+        session["user_id"] = user[0]
+        session["user_username"] = user[1]
+        session["csrf_token"] = os.urandom(16).hex()
+        return True
+    return False
 
-    session["csrf_token"] = os.urandom(16).hex()
-    return True
+def logout():
+    del session["user_id"]
+    del session["user_username"]
+    del session["csrf_token"]
 
 # TESTAAMISTA VARTEN !!!
 def show_users():

@@ -1,12 +1,26 @@
-from ..services import user
 from flask import render_template, request, redirect
 from app import app
+from ..services import user
 
-@app.route("/login")
+
+@app.route("/logout")
+def logout():
+    user.logout()
+    return redirect("/")
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    # Metodin nimi pitää olla uniikki
-    # Ei saa esiintyä muissakaan routeissa
-    return render_template("test.html")
+    if request.method == "GET":
+        return redirect("/")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        if user.login(username, password):
+            if request.referrer == "/login":
+                return redirect("/")
+            return redirect(request.referrer)
+        return redirect("/")
+
 
 @app.route("/register", methods=["GET","POST"])
 def register():
@@ -24,8 +38,11 @@ def register():
             print("luotiin")
             return redirect("/")
 
+
 # TÄMÄ ON VAIN TESTAAMISTA VARTEN!!!
+"""
 @app.route("/showall")
 def showall():
     user.show_users()
     return redirect("/register")
+"""

@@ -10,6 +10,21 @@
   </head>
 
   <body>
+    <div class="navbar">
+        <a href="/">To Home</a>
+        {% if session.user_id %}
+            <a class="right" href="/logout">Log out</a>
+            <nobr style="float: right;">Logged in as: {{ session.user_username }}</nobr>
+        {% else %}
+        <nobr>login</nobr>
+        <form class="right" action="/login" method="post">
+            <nobr>Username: <input type="text" name="username"></nobr>
+            <nobr>Password: <input type="password" name="password"></nobr>
+            <input type="submit" value="Login" style="margin-top:10px;">
+            <a class="right" href="/register">Create a new account</a>
+        </form>
+        {% endif %}
+    </div>
     <main>{% block content %}{% endblock %}</main>
     <footer>
       <a href="https://github.com/Perttu-Kangas/ohtu-mini">View source</a>
