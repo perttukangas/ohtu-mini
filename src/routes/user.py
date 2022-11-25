@@ -36,15 +36,15 @@ def register():
             return render_template(
                 "register.html",
                 message="The password must be between 8-30 characters long"
-                )
+                ), 400
         if len(username) > 20 or len(username) < 3:
             return render_template(
                 "register.html",
                 message="The username must be between 3-20 characters long"
-                )
+                ), 400
         if user.register(username, password1):
             print("luotiin")
-            return redirect("/")
+            return redirect("/"), 201
     return redirect(request.referrer)
 
 # TÄMÄ ON VAIN TESTAAMISTA VARTEN!!!

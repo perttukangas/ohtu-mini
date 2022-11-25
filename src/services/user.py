@@ -7,7 +7,7 @@ from src.utils.db import connect
 def register(username, password):
     hash_value = generate_password_hash(password)
     try:
-        query = "INSERT INTO Users (username, password) VALUES (:username,:password)"
+        query = "INSERT INTO Users (username, password) VALUES (:username, :password)"
         con = connect()
         con.run(query, username=username, password=hash_value)
         con.close()
