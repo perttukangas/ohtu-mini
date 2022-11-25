@@ -45,7 +45,7 @@ limit-inference-results=100
 
 # List of plugins (as comma separated values of python module names) to load,
 # usually to register additional checkers.
-load-plugins=pylint_flask
+load-plugins=pylint_flask,pylint.extensions.mccabe
 
 # Pickle collected data for later comparisons.
 persistent=yes
@@ -561,6 +561,8 @@ max-statements=50
 
 # Minimum number of public methods for a class (see R0903).
 min-public-methods=2
+
+max-complexity=4
 
 
 [EXCEPTIONS]

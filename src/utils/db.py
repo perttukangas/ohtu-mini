@@ -1,32 +1,33 @@
 import os
-# Note: the module name is psycopg, not psycopg3
-import psycopg
+import pg8000.native
 
-print(os.environ.get("DATABASE_URL"))
+# Connect to the database with user name postgres
 
-# Connect to an existing database
-with psycopg.connect(os.environ.get("DATABASE_URL")) as conn:
-    # Open a cursor to perform database operations
-    with conn.cursor() as cur:
-        # Execute a command: this creates a new table
-        cur.execute("""
-            CREATE TABLE test (
-                id serial PRIMARY KEY,
-                num integer,
-                data text)
-            """)
-        # Pass data to fill a query placeholders and let Psycopg perform
-        # the correct conversion (no SQL injections!)
-        cur.execute(
-            "INSERT INTO test (num, data) VALUES (%s, %s)",
-            (100, "abc'def"))
-        # Query the database and obtain data as Python objects.
-        cur.execute("SELECT * FROM test")
-        cur.fetchone()
-        # will return (1, 100, "abc'def")
-        # You can use `cur.fetchmany()`, `cur.fetchall()` to return a list
-        # of several records, or even iterate on the cursor
-        for record in cur:
-            print(record)
-        # Make the changes to the database persistent
-        conn.commit()
+print(os.environ.get("DB_USERNAME"))
+print(os.environ.get("DB_HOST"))
+print(os.environ.get("DB_DATABASE"))
+print(os.environ.get("DB_PORT"))
+print(os.environ.get("DB_PASSWORD"))
+
+con = pg8000.native.Connection(os.environ.get("DB_USERNAME"),
+  host=os.environ.get("DB_HOST"),
+  database=os.environ.get("DB_DATABASE"), 
+  port=os.environ.get("DB_PORT"),
+  password=os.environ.get("DB_PASSWORD"), 
+  ssl_context=True
+  )
+
+# Create a temporary table
+con.run("CREATE TABLE book (id SERIAL, title TEXT)")
+
+# Populate the table
+for title in ("Ender's Game", "The Magus"):
+  con.run("INSERT INTO book (title) VALUES (:title)", title=title)
+
+# Print all the rows in the table
+for row in con.run("SELECT * FROM book"):
+  print(row)
+#[1, "Ender's Game"]
+#[2, 'The Magus']
+
+con.close()
