@@ -5,7 +5,6 @@ from src.utils.db import connect
 
 
 def register(username, password):
-
     hash_value = generate_password_hash(password)
     try:
         query = "INSERT INTO Users (username, password) VALUES (:username,:password)"
@@ -16,7 +15,6 @@ def register(username, password):
     except:
         con.close()
         return False
-
     return True
 
 def login(username, password):
