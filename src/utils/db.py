@@ -1,43 +1,32 @@
-from pymongo import MongoClient
 import os
+# Note: the module name is psycopg, not psycopg3
+import psycopg
 
 print(os.environ.get("DATABASE_URL"))
-#
-client = MongoClient(os.environ.get("DATABASE_URL"))
 
-print(os.environ.get("DB_NAME"))
-
-db = client[os.environ.get("DB_NAME")]
-
-user_collection = None
-if not "user" in db.list_collection_names():
-  user_collection = db.create_collection("user", validator={
-    "$jsonSchema": {
-      "bsonType": "object",
-      "required": [ "username", "password" ],
-      "properties": {
-        "username": {
-          "bsonType": "string",
-          "minLength": 3,
-          "maxLength": 20
-        }
-      },
-    }
-  })
-  user_collection.create_index("username", unique=True)
-else:
-  user_collection = db["user"]
-
-record = {
-  "username": "testfussSss1",
-  "password": "secret"
-}
-
-record = user_collection.insert_one(record).inserted_id
-
-cursor = user_collection.find_one(record)
-print(cursor)
-
-cursor = user_collection.find({"_id": record, "username": "other user"})
-for record in cursor:
-  print(record)
+# Connect to an existing database
+with psycopg.connect(os.environ.get("DATABASE_URL")) as conn:
+    # Open a cursor to perform database operations
+    with conn.cursor() as cur:
+        # Execute a command: this creates a new table
+        cur.execute("""
+            CREATE TABLE test (
+                id serial PRIMARY KEY,
+                num integer,
+                data text)
+            """)
+        # Pass data to fill a query placeholders and let Psycopg perform
+        # the correct conversion (no SQL injections!)
+        cur.execute(
+            "INSERT INTO test (num, data) VALUES (%s, %s)",
+            (100, "abc'def"))
+        # Query the database and obtain data as Python objects.
+        cur.execute("SELECT * FROM test")
+        cur.fetchone()
+        # will return (1, 100, "abc'def")
+        # You can use `cur.fetchmany()`, `cur.fetchall()` to return a list
+        # of several records, or even iterate on the cursor
+        for record in cur:
+            print(record)
+        # Make the changes to the database persistent
+        conn.commit()
