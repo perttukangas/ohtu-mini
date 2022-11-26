@@ -10,9 +10,24 @@
   </head>
 
   <body>
+    <div class="navbar">
+        <a href="/">Etusivulle</a>
+        {% if session.user_id %}
+            <a class="right" href="/logout">Kirjaudu ulos</a>
+            <nobr style="float: right;">Kirjauduttu käyttäjänä: {{ session.user_username }}</nobr>
+        {% else %}
+        <nobr>kirjaudu</nobr>
+        <form class="right" action="/login" method="post">
+            <nobr>Käyttäjätunnus: <input type="text" name="username"></nobr>
+            <nobr>Salasana: <input type="password" name="password"></nobr>
+            <input type="submit" value="Kirjaudu" style="margin-top:10px;">
+            <a class="right" href="/register">Luo uusi käyttäjä</a>
+        </form>
+        {% endif %}
+    </div>
     <main>{% block content %}{% endblock %}</main>
     <footer>
-      <a href="https://github.com/Perttu-Kangas/ohtu-mini">View source</a>
+      <a href="https://github.com/Perttu-Kangas/ohtu-mini">Tarkastele lähdekoodia</a>
     </footer>
   </body>
 </html>

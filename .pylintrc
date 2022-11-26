@@ -562,7 +562,7 @@ max-statements=50
 # Minimum number of public methods for a class (see R0903).
 min-public-methods=2
 
-max-complexity=4
+max-complexity=8
 
 
 [EXCEPTIONS]

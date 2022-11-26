@@ -12,6 +12,7 @@ invoke = "^1.7.3"
 gunicorn = "^20.1.0"
 python-dotenv = "^0.21.0"
 pg8000 = "^1.29.3"
+sqlparse = "^0.4.3"
 
 
 [tool.poetry.group.dev.dependencies]
