@@ -37,8 +37,8 @@ def login(username, password):
             return True
     return False
 
-def user_id():
-    return session.get("user_id",0)
+def logged_in():
+    return "user_id" in session
 
 def logout():
     try:
