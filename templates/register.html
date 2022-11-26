@@ -3,11 +3,11 @@
     <!-- <a href="/showall">print data from users table (for testing)</a> -->
     <p></p>
     <h2 style="color:red";>{{ message }}</h2>
-    <h3>Account Creation</h3>
+    <h3>Luo uusi käyttäjätili</h3>
     <form action="/register" method="POST">
-        <p>Username: <input type="text" placeholder="3-20 characters" name="username" minlength="3" maxlength="20"></p>
-        <p>Password: <input type="password" placeholder="8-30 characters" name="password1" minlength="8" maxlength="30"></p>
-        <p>Password again: <input type="password" name="password2"></p>
-        <input type="submit" value="Create account"><br>
+        <p>Käyttäjätunnus: <input type="text" placeholder="3-20 characters" name="username" minlength="3" maxlength="20"></p>
+        <p>Salasana: <input type="password" placeholder="8-30 characters" name="password1" minlength="8" maxlength="30"></p>
+        <p>Salasana uudestaan: <input type="password" name="password2"></p>
+        <input type="submit" value="Luo tili"><br>
     </form>
 {% endblock %}

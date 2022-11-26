@@ -6,12 +6,11 @@ from src.utils.db import connect
 
 def register(username, password):
     hash_value = generate_password_hash(password)
+    query = "INSERT INTO Users (username, password) VALUES (:username, :password)"
+    con = connect()
     try:
-        query = "INSERT INTO Users (username, password) VALUES (:username, :password)"
-        con = connect()
         con.run(query, username=username, password=hash_value)
         con.close()
-        print("services.register done")
     except:
         con.close()
         return False
@@ -26,7 +25,6 @@ def check_user_exists(username):
         return user
     except:
         con.close()
-        print("nimeä ei löytynyt tietokannasta")
         return False
 
 def login(username, password):
@@ -38,6 +36,9 @@ def login(username, password):
             session["csrf_token"] = os.urandom(16).hex()
             return True
     return False
+
+def user_id():
+    return session.get("user_id",0)
 
 def logout():
     try:
