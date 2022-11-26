@@ -41,8 +41,8 @@ def logout():
     del session["csrf_token"]
 
 # TESTAAMISTA VARTEN !!!
-def show_users():
-    con = connect()
-    for row in con.run("SELECT * FROM Users"):
-        print(row)
-    con.close()
+#def show_users():
+#    con = connect()
+#    for row in con.run("SELECT * FROM Users"):
+#        print(row)
+#    con.close()

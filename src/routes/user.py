@@ -6,7 +6,7 @@ from ..services import user
 @app.route("/logout")
 def logout():
     user.logout()
-    return redirect("/")
+    return redirect("/"), 200
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -17,9 +17,9 @@ def login():
         password = request.form["password"]
         if user.login(username, password):
             if request.referrer == "/login":
-                return redirect("/")
-            return redirect(request.referrer)
-    return render_template("index.html", message="Username or password incorrect")
+                return redirect("/"), 200
+            return redirect(request.referrer), 200
+    return render_template("index.html", message="Username or password incorrect"), 400
 
 
 @app.route("/register", methods=["GET","POST"])
@@ -31,7 +31,7 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
-            return render_template("register.html", message="The passwords did not match")
+            return render_template("register.html", message="The passwords did not match"), 400
         if len(password1) > 30 or len(password1) < 8:
             return render_template(
                 "register.html",

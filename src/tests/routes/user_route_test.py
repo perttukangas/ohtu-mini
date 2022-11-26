@@ -9,6 +9,7 @@ class TestUserRoute(unittest.TestCase):
         con = connect()
         con.run(query)
         con.close()
+        register("testaaja", "testaaja")
         self.client = app.test_client()
     
     def test_register_post_valid(self):
@@ -28,3 +29,33 @@ class TestUserRoute(unittest.TestCase):
           ))
         
         self.assertEqual(resp.status_code, 400)
+
+    def test_register_post_different_passwords(self):
+        resp = self.client.post("/register", data=dict(
+            username="valid",
+            password1="topsekret",
+            password2="topsecret"
+        ))
+
+        self.assertEqual(resp.status_code, 400)
+
+    def test_login_incorrect_credentials(self):
+        resp = self.client.post("/login", data=dict(
+            username="eiolemassa",
+            password="topsekret"
+        ))
+
+        self.assertEqual(resp.status_code, 400)
+
+# Nämä kaksi alempaa ei toimi
+    def test_login_correct_credentials(self):
+        resp = self.client.post("/login", data=dict(
+            username="testaaja",
+            password="testaaja"
+        ))
+
+        self.assertEqual(resp.status_code, 200)
+
+    def test_logout_when_logged_in(self):
+        resp = self.client.get("/logout")
+        self.assertEqual(resp.status_code, 200)
