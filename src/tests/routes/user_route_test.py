@@ -11,7 +11,8 @@ class TestUserRoute(unittest.TestCase):
         con.close()
         register("testaaja", "testaaja")
         self.client = app.test_client()
-    
+
+
     def test_register_post_valid(self):
         resp = self.client.post("/register", data=dict(
           username="thisisvalid", 
@@ -19,7 +20,7 @@ class TestUserRoute(unittest.TestCase):
           password2="topsekret"
           ))
         
-        self.assertEqual(resp.status_code, 201)
+        self.assertEqual(resp.status_code, 302)
 
     def test_register_post_invalid_username(self):
         resp = self.client.post("/register", data=dict(
@@ -28,7 +29,7 @@ class TestUserRoute(unittest.TestCase):
           password2="topsekret"
           ))
         
-        self.assertEqual(resp.status_code, 400)
+        self.assertEqual(resp.status_code, 200)
 
     def test_register_post_different_passwords(self):
         resp = self.client.post("/register", data=dict(
@@ -37,7 +38,7 @@ class TestUserRoute(unittest.TestCase):
             password2="topsecret"
         ))
 
-        self.assertEqual(resp.status_code, 400)
+        self.assertEqual(resp.status_code, 200)
 
     def test_login_incorrect_credentials(self):
         resp = self.client.post("/login", data=dict(
@@ -45,17 +46,28 @@ class TestUserRoute(unittest.TestCase):
             password="topsekret"
         ))
 
-        self.assertEqual(resp.status_code, 400)
-
-# Nämä kaksi alempaa ei toimi
-    def test_login_correct_credentials(self):
-        resp = self.client.post("/login", data=dict(
-            username="testaaja",
-            password="testaaja"
-        ))
-
         self.assertEqual(resp.status_code, 200)
+
+
+    def test_login_correct_credentials(self):
+        with self.client as c:
+            resp = c.post("/login", data=dict(
+                username="testaaja",
+                password="testaaja"
+            ))
+
+        self.assertEqual(resp.status_code, 302)
+
+    def test_logout_when_not_logged_in(self):
+        resp = self.client.get("/logout")
+        self.assertEqual(resp.status_code, 302)
 
     def test_logout_when_logged_in(self):
-        resp = self.client.get("/logout")
-        self.assertEqual(resp.status_code, 200)
+        with self.client as c:
+            c.post("/login", data=dict(
+                username="testaaja",
+                password="testaaja"
+            ))
+
+            resp = self.client.get("/logout")
+            self.assertEqual(resp.status_code, 302)

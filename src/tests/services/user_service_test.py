@@ -21,8 +21,14 @@ class TestUserService(unittest.TestCase):
         self.assertEqual(user[0], username)
         self.con.close()
 
-    def test_valid_login(self):
-        self.assertEqual(login("testaaja", "testaaja"), True)
+    def test_user_exists(self):
+        self.assertNotEqual(check_user_exists("testaaja"), False)
+        self.assertEqual(check_user_exists("tttttttt"), False)
+
+# Tämä testataan jo user_route_test.py, ei ehkä tarpeellinen
+#    def test_valid_login(self):
+#        self.assertEqual(login("testaaja", "testaaja"), True)
+
 
     def test_login_wrong_password(self):
         username = "testuser"
