@@ -1,9 +1,34 @@
-from flask import render_template
+from flask import render_template, request, redirect, session
 from app import app
+from ..services import user, references
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html"), 200
+    refs = []
+    if session.get("user_id") is not None:
+        refs = references.get_references()
+        references.testi_tietokantaan()
+        print(refs, "viitteet")
+
+    if request.method == "POST":
+        ref_id = request.form["ref_id"]
+        author = request.form["author"]
+        heading = request.form["heading"]
+        year = request.form["year"]
+        magazine = request.form["magazine"]
+
+        print(ref_id, author, heading, year, magazine)
+        error_msg = ""
+        error_msg = references.check_validation(ref_id, author, heading, year,
+        magazine)
+        if error_msg != "":
+            return render_template("index.html", message=error_msg)
+        else:
+            references.add_reference(ref_id, author, heading, year, magazine)
+        references.testi_tietokantaan()
+        return redirect("/")
+
+    return render_template("index.html", references = refs), 200
 
 
 @app.route("/test")

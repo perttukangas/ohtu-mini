@@ -1,4 +1,31 @@
 {% extends "layout.html" %} {% block content %}
 <h2 style="color:red">{{ message }}</h2>
 <h1>Tervetuloa etusivulle!</h1>
+{% if session.user_id %}
+<h2>Voit lisätä artikkeliviitteen täällä:</h2><br>
+<form action="/" method="POST">
+    <label for="id">ID-tunnus:</label><br>
+    <input type="text" placeholder="2-50 merkkiä" id="ref_id" name="ref_id" minlength="2" maxlength="50" style="width: 400px;"><br>
+    <p></p>
+    <label for="author">Tekijä(t):</label><br>
+    <input type="text" placeholder="2-300 merkkiä" id="author" name="author" minlength="2" maxlength="300"style="width: 1000px;"><br>
+    <p></p>
+    <label for="heading">Otsikko:</label><br>
+    <input type="text" placeholder="2-200 merkkiä" id="heading" name="heading" minlength="2" maxlength="200" style="width: 1000px;"><br>
+    <p></p>
+    <label for="year">Vuosi:</label><br>
+    <input type="text" placeholder="Vuosiluku tai n.d." id="year" name="year" minlength="4" maxlength="4"><br>
+    <p></p>
+    <label for="magazine">Lehden nimi:</label><br>
+    <input type="text" placeholder="2-200 merkkiä" id="magazine" name="magazine" minlength="2" maxlength="200" style="width: 700px;"><br>
+    <p></p>
+    <input type="submit" value="Lähetä">
+    <p></p>
+</form>
+<hr>
+{% for reference in references %}
+<p>{{reference}}</p>
+{% endfor %}
+<hr>
+{% endif %}
 {% endblock %}
