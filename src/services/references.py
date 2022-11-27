@@ -1,24 +1,22 @@
-import os
 from flask import session
 from src.utils.db import connect
 
-#pakolliset artikkeliin: id, tekijä, otsikko, julkaisuvuosi, lehden nimi
-#vapaavalintainen: volyymi ja numero, artikkelin tunniste, julkaisija, sivut.
-
-def add_reference(ref_id, author, heading, year, magazine):
+def add_reference(ref_id, author, heading, year, magazine, volume, doi,
+publisher, pages):
     """Funktio lisää artikkeliviitteen tiedot tietokantaan.
     """
 
     user_id = int(session.get("user_id"))
-    query = "INSERT INTO Article_Ref (ref_id, user_id, author, heading, year, magazine) VALUES (:ref_id, :user_id, :author, :heading, :year, :magazine)"
+    query = "INSERT INTO Article_Ref (ref_id, user_id, author, heading, year, magazine, volume, doi, publisher, pages) VALUES (:ref_id, :user_id, :author, :heading, :year, :magazine, :volume, :doi, :publisher, :pages)"
     con = connect()
 
     try:
-        con.run(query, ref_id=ref_id, user_id=user_id, author=author, heading=heading, year=year, magazine=magazine)
+        con.run(query, ref_id=ref_id, user_id=user_id, author=author,
+        heading=heading, year=year, magazine=magazine, volume=volume, doi=doi,
+        publisher=publisher, pages=pages)
         con.close()
     except:
         con.close()
-        print("fail")
         return False
     return True
 
@@ -55,7 +53,8 @@ def get_references():
     """
 
     user_id = int(session.get("user_id"))
-    query = "SELECT author, heading, year, magazine FROM Article_Ref WHERE user_id=:user_id"
+    query = "SELECT author, heading, year, magazine, volume, doi, publisher, pages FROM Article_Ref WHERE user_id=:user_id"
+
     con = connect()
 
     try:
@@ -64,8 +63,7 @@ def get_references():
         return ref_list
     except:
         con.close()
-        print("toinen fail")
-        return False
+        return []
 
 def testi_tietokantaan():
     con = connect()

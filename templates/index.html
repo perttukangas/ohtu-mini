@@ -4,7 +4,7 @@
 {% if session.user_id %}
 <h2>Voit lisätä artikkeliviitteen täällä:</h2><br>
 <form action="/" method="POST">
-    <label for="id">ID-tunnus:</label><br>
+    <label for="ref_id">ID-tunnus:</label><br>
     <input type="text" placeholder="2-50 merkkiä" id="ref_id" name="ref_id" minlength="2" maxlength="50" style="width: 400px;"><br>
     <p></p>
     <label for="author">Tekijä(t):</label><br>
@@ -18,6 +18,19 @@
     <p></p>
     <label for="magazine">Lehden nimi:</label><br>
     <input type="text" placeholder="2-200 merkkiä" id="magazine" name="magazine" minlength="2" maxlength="200" style="width: 700px;"><br>
+    <p></p>
+    <h3>Voit halutessasi lisätä artikkelille vielä vapaaehtoiset tiedot:</h3><br>
+    <label for="volume">Volyymi ja lehden numero:</label><br>
+    <input type="text" placeholder="max. 50 merkkiä" id="volume" name="volume" maxlength="50" style="width: 400px;"><br>
+    <p></p>
+    <label for="doi">Artikkelin tunniste (DOI):</label><br>
+    <input type="text" placeholder="max. 50 merkkiä" id="doi" name="doi" maxlength="50" style="width: 400px;"><br>
+    <p></p>
+    <label for="publisher">Julkaisija:</label><br>
+    <input type="text" placeholder="max. 200 merkkiä" id="publisher" name="publisher" maxlength="200" style="width: 700px;"><br>
+    <p></p>
+    <label for="pages">Artikkelin sivut:</label><br>
+    <input type="text" placeholder="max. 50 merkkiä" id="pages" name="pages" maxlength="50" style="width: 400px;"><br>
     <p></p>
     <input type="submit" value="Lähetä">
     <p></p>

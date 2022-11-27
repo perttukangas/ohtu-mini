@@ -11,6 +11,10 @@ CREATE TABLE IF NOT EXISTS Article_Ref (
     author TEXT,
     heading TEXT,
     year TEXT,
-    magazine TEXT
+    magazine TEXT,
+    volume TEXT,
+    doi TEXT,
+    publisher TEXT,
+    pages TEXT
     
 );
