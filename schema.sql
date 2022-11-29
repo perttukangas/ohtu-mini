@@ -1,4 +1,3 @@
-DROP TABLE Users, Article_Ref;
 CREATE TABLE IF NOT EXISTS Users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
@@ -16,6 +15,7 @@ CREATE TABLE IF NOT EXISTS Article_Ref (
     volume TEXT,
     doi TEXT,
     publisher TEXT,
-    pages TEXT
+    pages TEXT,
+    UNIQUE (user_id, ref_id)
     
 );
