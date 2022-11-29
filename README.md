@@ -1,4 +1,8 @@
-# ohtu-mini
+# Ohtu-miniprojekti
+
+## Backlogit
+- [Sprint backlog](https://github.com/orgs/Perttu-Kangas/projects/5)
+- [Product backlog](https://github.com/orgs/Perttu-Kangas/projects/3)
 
 ## Definition of Done
 
