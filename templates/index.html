@@ -13,11 +13,11 @@
     <label for="heading">Otsikko:</label><br>
     <input type="text" placeholder="2-200 merkkiä" id="heading" name="heading" minlength="2" maxlength="200" style="width: 1000px;"><br>
     <p></p>
-    <label for="year">Vuosi:</label><br>
-    <input type="text" placeholder="Vuosiluku tai n.d." id="year" name="year" minlength="4" maxlength="4"><br>
-    <p></p>
     <label for="magazine">Lehden nimi:</label><br>
     <input type="text" placeholder="2-200 merkkiä" id="magazine" name="magazine" minlength="2" maxlength="200" style="width: 700px;"><br>
+    <p></p>
+    <label for="year">Vuosi:</label><br>
+    <input type="text" placeholder="Vuosiluku tai n.d." id="year" name="year" minlength="4" maxlength="4"><br>
     <p></p>
     <h3>Voit halutessasi lisätä artikkelille vielä vapaaehtoiset tiedot:</h3><br>
     <label for="volume">Volyymi ja lehden numero:</label><br>
@@ -36,9 +36,12 @@
     <p></p>
 </form>
 <hr>
+<ol>
 {% for reference in references %}
-<p>{{reference}}</p>
+<li> {{reference.0}} {{reference.1}} {{reference.2}} {{reference.3}} {{reference.4}} {{reference.5}} {{reference.6}} {{reference.7}} {{reference.8}}</li>
 {% endfor %}
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</ol>
 <hr>
 {% endif %}
 {% endblock %}
