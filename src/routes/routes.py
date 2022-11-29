@@ -9,6 +9,8 @@ def index():
         refs = references.get_references()
 
     if request.method == "POST":
+        user_id = int(session.get("user_id"))
+
         ref_id = request.form["ref_id"]
         author = request.form["author"]
         heading = request.form["heading"]
@@ -26,7 +28,7 @@ def index():
         if error_msg != "":
             return render_template("index.html", message=error_msg)
         else:
-            references.add_reference(ref_id, author, heading, magazine, year,
+            references.add_reference(ref_id, user_id, author, heading, magazine, year,
             volume, doi, publisher, pages)
 
         return redirect("/")

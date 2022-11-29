@@ -1,12 +1,11 @@
 from flask import session
 from src.utils.db import connect
 
-def add_reference(ref_id, author, heading, magazine, year, volume, doi,
+def add_reference(ref_id, user_id, author, heading, magazine, year, volume, doi,
 publisher, pages):
     """Funktio lisää artikkeliviitteen tiedot tietokantaan.
     """
 
-    user_id = int(session.get("user_id"))
     query = '''INSERT INTO Article_Ref (ref_id, user_id, author, heading,
     magazine, year, volume, doi, publisher, pages) VALUES (:ref_id, :user_id,
     :author, :heading, :year, :magazine, :volume, :doi, :publisher, :pages)'''
