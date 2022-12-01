@@ -5,7 +5,8 @@ from ..utils import reference_type
 
 @app.route("/")
 def index():
-    return render_template("index.html", references=reference_type.get_references_for_index())
+    return render_template("index.html", references=reference_type.get_references_for_index(),
+        added_references=reference.get_references(1))
 
 
 @app.route("/test")

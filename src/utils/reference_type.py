@@ -8,32 +8,27 @@ from enum import Enum
 
 class ReferenceType(Enum):
 
-    ARTICLE = (1,
-    "Artikkeli",
+    ARTICLE = ("Artikkeli",
     ("author", "journal", "title", "year"), 
     ("month", "note", "number", "pages", "volume"))
-    BOOK = (2, 
-    "Kirja",
+    BOOK = ("Kirja",
     (("author", "editor"), "title", "publisher", "year"), 
-    (("volume", "number"), "series", "address", "edition", "month", "note")) 
-
-    def get_db_id(self):
-        return self.value[0]
+    (("volume", "number"), "series", "address", "edition", "month", "note"))
 
     def get_name(self):
-        return self.value[1]
+        return self.value[0]
 
     def get_required(self):
-        return self.value[2]
+        return self.value[1]
     
     def get_optional(self):
-        return self.value[3]
+        return self.value[2]
 
     def get_required_for_add(self):
-        return self._get_data(self.value[2])
+        return self._get_data(self.value[1])
 
     def get_optional_for_add(self):
-        return self._get_data(self.value[3])
+        return self._get_data(self.value[2])
     
     def _get_data(self, fromArray):
         array = []

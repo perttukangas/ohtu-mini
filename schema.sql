@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS tblReference (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users,
     reference_id TEXT,
-    reference_type_id INTEGER,
+    reference_name TEXT,
 
     address TEXT,
     -- annote ei käytetty

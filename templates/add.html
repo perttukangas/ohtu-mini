@@ -4,6 +4,9 @@
 
 <form action="/add" method="POST">
   <h3>Pakolliset kentät:</h3>
+  <p>Viitteen ID</p>
+  <input type="text" name="reference_id" style="width: 100%" />
+
   {% for req in required %} {% if req[0]|length == 2 %}
 
   <p>{{ req[0][1] }}</p>
