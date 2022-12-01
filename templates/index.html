@@ -1,4 +1,14 @@
 {% extends "layout.html" %} {% block content %}
-<h2 style="color:red">{{ message }}</h2>
+<h2 style="color: red">{{ message }}</h2>
 <h1>Tervetuloa etusivulle!</h1>
-{% endblock %}
+
+<p>Lisää viite</p>
+<ul>
+  {% for ref in references %}
+  <li>
+    <a href="/add/{{ ref[0] }}">{{ ref[1] }}</a>
+  </li>
+  {% endfor %}
+</ul>
+
+{% if session.user_id %} {% endif %} {% endblock %}

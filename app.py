@@ -25,3 +25,4 @@ run_sql_schema()
 
 from src.routes import routes
 from src.routes import user
+from src.routes import reference
