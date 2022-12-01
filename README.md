@@ -17,28 +17,83 @@
 poetry install
 ```
 
-### Ympäristömuuttujat:
+### Ympäristömuuttujat
 
 Luo juureen `.env` tiedosto, jonka sisältö on vastaava:
 
 ```
-DB_USERNAME=ronituohino
-DB_HOST=db.bit.io
-DB_DATABASE=ronituohino/ohtuminidev
+DB_USERNAME=postgres
+DB_HOST=localhost
+DB_DATABASE=ohtuminidev
 DB_PORT=5432
-DB_PASSWORD=<kehitystietokannan salasana>
-SECRET_KEY=<salainen avain>
+DB_PASSWORD=supersalainensalasana
+DB_SSL_CONTEXT=None
+SECRET_KEY=topsekretdev
 ```
 
 Luo juureen `.env.test` tiedosto, jonka sisältö on vastaava:
 
 ```
-DB_USERNAME=ronituohino
-DB_HOST=db.bit.io
-DB_DATABASE=ronituohino/ohtuminitest
+DB_USERNAME=postgres
+DB_HOST=localhost
+DB_DATABASE=ohtuminitest
 DB_PORT=5432
-DB_PASSWORD=<testaustietokannan salasana>
-SECRET_KEY=<salainen avain>
+DB_PASSWORD=supersalainensalasana
+DB_SSL_CONTEXT=None
+SECRET_KEY=topsekrettest
+```
+
+### Paikalliset tietokannat
+
+#### Tietokantapalvelimen asennus
+
+Varmista, että sinulla on asennettuna postgresql koneella. Vastauksena pitäisi
+tulla jotain tietoa palvelusta, ja tiedoissa pitäisi lukea
+`Active: active (exited)`
+
+```
+sudo systemctl status postgresql
+```
+
+postgresql:n pystyy asentamaan komennolla:
+
+```
+sudo apt-get -y install postgresql
+```
+
+Jos yllä oleva ei toimi, katso lisää tietoa:
+https://www.postgresql.org/download/
+
+#### Tietokantojen alustus
+
+Mene tietokantapalvelimeen komennolla
+
+```
+sudo -u postgres psql
+```
+
+Luo testitietokanta komennolla
+
+```
+CREATE DATABASE ohtuminitest;
+```
+
+Luo kehitystietokanta komennolla
+
+```
+CREATE DATABASE ohtuminidev;
+```
+
+Vaihda tietokantapalvelimen salasana komennolla
+
+```
+ALTER ROLE postgres WITH PASSWORD 'supersalainensalasana';
+```
+
+Poistu tietokannasta komennolla
+
+```
+\q
 ```
 
 ## Komentorivitoiminnot
