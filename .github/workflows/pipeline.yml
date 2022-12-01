@@ -15,6 +15,20 @@ env:
 jobs:
   build:
     runs-on: ubuntu-20.04
+
+    # Paikallinen testaustietokanta
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        # Health check, odota että postgres käynnistyy
+        options: >-
+          --health-cmd pg_isready 
+          --health-interval 10s 
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.8
@@ -27,7 +41,7 @@ jobs:
         run: poetry install
       - name: Run lint
         run: poetry run invoke lint
-      - name: Run tests
+      - name: Run tests by generating coverage
         run: poetry run invoke coverage
         env:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
@@ -35,12 +49,15 @@ jobs:
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_PORT: ${{ secrets.DB_PORT }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_SSL_CONTEXT: ${{ secrets.DB_SSL_CONTEXT }}
       - name: Check coverage
         run: poetry run invoke coverage-report
   deploy:
     needs: [build]
     runs-on: ubuntu-20.04
-    if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+    if:
+      ${{ github.event_name == 'push' &&
+      !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
