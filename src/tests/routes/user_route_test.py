@@ -6,9 +6,11 @@ from src.utils.db import connect
 class TestUserRoute(unittest.TestCase):
     def setUp(self):
         query = "DELETE FROM Users"
-        con = connect()
-        con.run(query)
-        con.close()
+        self.con = connect()
+        self.cur = self.con.cursor()
+        self.cur.execute(query)
+        self.con.commit()
+        self.con.close()
         register("testaaja", "testaaja")
         self.client = app.test_client()
 

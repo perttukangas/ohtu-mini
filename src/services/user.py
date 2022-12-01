@@ -28,7 +28,9 @@ def check_user_exists(username):
             "SELECT id, username, password FROM Users WHERE username=%s", (username,)
         )
         user = cur.fetchone()
-        print("tässä user:", user)
+        if user is None:
+            con.close()
+            return False
         con.close()
         return user
     except:
