@@ -21,12 +21,12 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_DATABASE }}
         # Health check, odota että postgres käynnistyy
         options: >-
-          --health-cmd pg_isready 
-          --health-interval 10s 
-          --health-timeout 5s
+          --health-cmd pg_isready  --health-interval 10s  --health-timeout 5s
           --health-retries 5
 
     steps:
@@ -45,10 +45,10 @@ jobs:
         run: poetry run invoke coverage
         env:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_PORT: ${{ secrets.DB_PORT }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
           DB_SSL_CONTEXT: ${{ secrets.DB_SSL_CONTEXT }}
       - name: Check coverage
         run: poetry run invoke coverage-report
