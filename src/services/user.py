@@ -6,24 +6,35 @@ from src.utils.db import connect
 
 def register(username, password):
     hash_value = generate_password_hash(password)
-    query = "INSERT INTO Users (username, password) VALUES (:username, :password)"
     con = connect()
+    cur = con.cursor()
     try:
-        con.run(query, username=username, password=hash_value)
+        cur.execute(
+            "INSERT INTO Users (username, password) VALUES (%s, %s)", (username, hash_value)
+        )
+        con.commit()
         con.close()
     except:
+        print(Exception)
         con.close()
         return False
     return True
 
 def check_user_exists(username):
-    query = "SELECT id, username, password FROM Users WHERE username=:username"
     con = connect()
+    cur = con.cursor()
     try:
-        user = con.run(query, username=username)[0]
+        cur.execute(
+            "SELECT id, username, password FROM Users WHERE username=%s", (username,)
+        )
+        user = cur.fetchone()
+        if user is None:
+            con.close()
+            return False
         con.close()
         return user
     except:
+        print(Exception)
         con.close()
         return False
 
@@ -47,11 +58,5 @@ def logout():
         del session["csrf_token"]
         return True
     except:
+        print(Exception)
         return False
-
-# TESTAAMISTA VARTEN !!!
-#def show_users():
-#    con = connect()
-#    for row in con.run("SELECT * FROM Users"):
-#        print(row)
-#    con.close()
