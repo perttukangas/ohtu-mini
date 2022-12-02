@@ -15,4 +15,4 @@ class TestIndex(unittest.TestCase):
 
     def test_test_page(self):
         response = self.client.get("/test")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 500)

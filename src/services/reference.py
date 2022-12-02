@@ -26,6 +26,11 @@ def get_references(user_id):
     con = connect()
     cur = con.cursor()
     cur.execute("SELECT * FROM tblReference")
-    result = cur.fetchall()
+
+    rows = cur.fetchall()
+    keys = [k[0] for k in cur.description]
+    results = [dict(zip(keys, row)) for row in rows]
+
     con.close()
-    return result
+
+    return results
