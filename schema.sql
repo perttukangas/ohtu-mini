@@ -6,9 +6,9 @@ CREATE TABLE IF NOT EXISTS Users (
 
 CREATE TABLE IF NOT EXISTS tblReference (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES Users,
-    reference_id TEXT,
-    reference_name TEXT,
+    user_id INTEGER REFERENCES Users NOT NULL,
+    reference_id TEXT NOT NULL,
+    reference_name TEXT NOT NULL,
 
     address TEXT,
     -- annote ei käytetty

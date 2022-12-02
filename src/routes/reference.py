@@ -80,7 +80,7 @@ def add():
             values.append(form_data)
 
 
-    user_id = 1#session["user_id"]
+    user_id = session["user_id"]
     ref_id = request.form["reference_id"]
     ref_name = ref_type.name
 

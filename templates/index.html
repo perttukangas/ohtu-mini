@@ -2,6 +2,7 @@
 <h2 style="color: red">{{ message }}</h2>
 <h1>Tervetuloa etusivulle!</h1>
 
+{% if session.user_id %}
 <p>Lisää viite</p>
 <ul>
   {% for ref in references %}
@@ -14,8 +15,8 @@
 <p>Lisätyt viitteet</p>
 <ul>
   {% for ref in added_references %}
-  <li>{{ref}}</li>
+  <li>{{ ref }}</li>
   {% endfor %}
 </ul>
 
-{% if session.user_id %} {% endif %} {% endblock %}
+{% endif %} {% endblock %}

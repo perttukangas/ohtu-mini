@@ -23,9 +23,12 @@ def add_reference(user_id, ref_id, ref_name, columns, values):
     con.close()
 
 def get_references(user_id):
+
+    print(user_id)
+
     con = connect()
     cur = con.cursor()
-    cur.execute("SELECT * FROM tblReference")
+    cur.execute("SELECT * FROM tblReference WHERE user_id=%s", (user_id,))
 
     rows = cur.fetchall()
     keys = [k[0] for k in cur.description]

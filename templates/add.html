@@ -1,5 +1,4 @@
-{% extends "layout.html" %} {% block content %}
-
+{% extends "layout.html" %} {% block content %} {% if session.user_id %}
 <h1>Lisää viite: {{ type[1] }}</h1>
 
 <form action="/add" method="POST">
@@ -35,5 +34,4 @@
   <input type="hidden" name="type_name" value="{{ type[0] }}" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
-
-{% endblock %}
+{% endif %} {% endblock %}
