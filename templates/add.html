@@ -1,4 +1,5 @@
 {% extends "layout.html" %} {% block content %} {% if session.user_id %}
+<h2 style="color: red" ;>{{ message }}</h2>
 <h1>Lisää viite: {{ type[1] }}</h1>
 
 <form action="/add" method="POST">
