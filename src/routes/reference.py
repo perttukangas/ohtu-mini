@@ -1,8 +1,8 @@
-from flask import render_template, request, redirect, session
+from pg8000.exceptions import DatabaseError
+from flask import render_template, request, redirect, session, abort
 from app import app
 from ..services import reference
-from ..utils import reference_type
-
+from ..utils import reference_type, validator
 
 @app.route("/add/<type_name>")
 def add_redirect(type_name):
@@ -10,7 +10,12 @@ def add_redirect(type_name):
 
 @app.route("/add", methods=["POST"])
 def add():
-    ref_type = reference_type.ReferenceType[request.form["type_name"]]
+    type_name = request.form["type_name"]
+    if type_name not in reference_type.ReferenceType._member_names_:
+        return abort(404)
+
+    ref_type = reference_type.ReferenceType[type_name]
+
     required = ref_type.get_required()
     optional = ref_type.get_optional()
 
@@ -19,22 +24,30 @@ def add():
 
     ref_name = ref_type.name
 
+    ref_id = request.form["reference_id"]
+    if len(ref_id) < 1:
+        return get_add_page(ref_name, f"Vaadittu kenttä täyttämättä: reference_id")
+
     required_validation = validate_input(ref_name, required, columns, values, True)
     if required_validation is not None:
         return required_validation
-    
+
     optional_validation = validate_input(ref_name, optional, columns, values, False)
     if optional_validation is not None:
         return optional_validation
 
     user_id = session["user_id"]
-    ref_id = request.form["reference_id"]
-
-    reference.add_reference(user_id, ref_id, ref_name, columns, values)
+    try:
+        reference.add_reference(user_id, ref_id, ref_name, columns, values)
+    except DatabaseError:
+        return get_add_page(ref_name, f"ID '{ref_id}' on jo käytössä!")
 
     return redirect("/")
 
 def get_add_page(type_name, message):
+    if type_name not in reference_type.ReferenceType._member_names_:
+        abort(404)
+
     type = reference_type.ReferenceType[type_name]
     required = type.get_required_for_add()
     optional = type.get_optional_for_add()
@@ -71,11 +84,6 @@ def get_form_data(cur_type):
         form_data = request.form[cur_type]
     return (form_type, form_data)
 
-def validate(row_type, data):
-    
-    # Split to separate
-    #if row_type == "author":
-    #    if len(data) < 5:
-    #        return "invalid"
-
-    return None
+def validate(form_type, data):
+    validator_class = validator.Validator()
+    return validator.check_for_errors(validator_class, form_type, data)

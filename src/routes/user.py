@@ -54,10 +54,3 @@ def validate_credentials(username, password1, password2):
         error_msg="Käyttäjätunnuksen tulee olla 3-20 merkkiä pitkä"
 
     return error_msg
-
-#TÄMÄ ON VAIN TESTAAMISTA VARTEN!!!
-
-#@app.route("/showall")
-#def showall():
-#    user.show_users()
-#    return redirect("/register")

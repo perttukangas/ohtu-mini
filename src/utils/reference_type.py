@@ -55,9 +55,29 @@ cache = {}
 def get_form_message(type):
     if cache:
         return cache.get(type, f"Lomakeviesti puuttuu: {type}")
-    
 
-    cache["address"] = "Osoite, esimerkiksi 'Helsinki, Suomi'"
-    # ...
+    cache["address"] = "Osoite, esim. 'Helsinki, Suomi'"
+    cache["author"] = "Kirjoittaja, esim. 'Ludwig van Beethoven'"
+    cache["booktitle"] = "Kirjan nimi, esim. 'Sinuhe egyptiläinen'"
+    cache["chapter"] = "Kirjan luku, esim. 4"
+    cache["edition"] = "Painos, esim. 'Kolmas' tai '3.'"
+    cache["editor"] = "Toimittaja, esim. 'Waltari, Mika"
+    cache["howpublished"] = "Julkaisutapa, esim. Jaettu näytteenä kirjamessuilla"
+    cache["institution"] = "Instituutio"
+    cache["journal"] = "Lehti, esim. 'Tieteen kuvalehti"
+    cache["month"] = "Kuukausi, esim. '2' tai 'marraskuu'"
+    cache["note"] = "Huomautus, esim. 'Luettu 15.10.2019 osoitteessa xx'"
+    cache["number"] = "Lehden numero, esim. '5'"
+    cache["organization"] = "Organisaatio, esim. 'British Society for Immunology'"
+    cache["pages"] = "Sivunumero tai -- väli, esim. '75' tai '40--50'"
+    cache["publisher"] = "Kustantaja, esim. 'Otava'"
+    cache["school"] = "Oppilaitos, esim. 'HY' tai 'Helsingin yliopisto'"
+    cache["series"] = "Kirjallisuussarja, esim. 'LNCS'"
+    # HUOM: 'title'-kentässä isot kirjaimet tulee laittaa {} sisälle, esim {S}uomi
+    # Muuten BibTex muuttaa ne pikkukirjaimiksi
+    cache["title"] = "Otsikko"
+    cache["type"] = "Tarkempia tietoja työstä. esim. 'kandidaatin tutkielma'"
+    cache["volume"] = "Lehden niteen numero, esim. '3'"
+    cache["year"] = "Julkaisuvuosi, esim. '2008'"
 
     return cache.get(type, f"Lomakeviesti puuttuu: {type}")

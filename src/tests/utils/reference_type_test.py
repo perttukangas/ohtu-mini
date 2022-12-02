@@ -1,7 +1,7 @@
 import unittest
 from src.utils import reference_type
 
-class TestUserService(unittest.TestCase):
+class TestReferenceTypeTest(unittest.TestCase):
     def setUp(self):
         self.ref_type = reference_type.ReferenceType.BOOK
     
@@ -44,4 +44,3 @@ class TestUserService(unittest.TestCase):
         result = reference_type.cache_references_for_index
         self.assertEqual(result[0], ("ARTICLE", "Artikkeli"))
         self.assertEqual(result[1], ("BOOK", "Kirja"))
-        # test commit asd

@@ -4,7 +4,7 @@
 
 <form action="/add" method="POST">
   <h3>Pakolliset kentät:</h3>
-  <p>Viitteen ID</p>
+  <p>Viitteen ID, jota käytetään lähteeseen viitatessa: <b>/cite{ID}</b></p>
   <input type="text" name="reference_id" style="width: 100%" />
 
   {% for req in required %} {% if req[0]|length == 2 %}
