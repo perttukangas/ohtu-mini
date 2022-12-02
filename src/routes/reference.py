@@ -11,8 +11,10 @@ def add_redirect(type_name):
 @app.route("/add", methods=["POST"])
 def add():
     type_name = request.form["type_name"]
-    if type_name not in reference_type.ReferenceType._member_names_:
-        return abort(404)
+    try:
+        reference_type.ReferenceType[type_name]
+    except KeyError:
+        abort(404)
 
     ref_type = reference_type.ReferenceType[type_name]
 
@@ -26,7 +28,7 @@ def add():
 
     ref_id = request.form["reference_id"]
     if len(ref_id) < 1:
-        return get_add_page(ref_name, f"Vaadittu kenttä täyttämättä: reference_id")
+        return get_add_page(ref_name, "Vaadittu kenttä täyttämättä: reference_id")
 
     required_validation = validate_input(ref_name, required, columns, values, True)
     if required_validation is not None:
@@ -45,13 +47,21 @@ def add():
     return redirect("/")
 
 def get_add_page(type_name, message):
-    if type_name not in reference_type.ReferenceType._member_names_:
+    try:
+        reference_type.ReferenceType[type_name]
+    except KeyError:
         abort(404)
 
-    type = reference_type.ReferenceType[type_name]
-    required = type.get_required_for_add()
-    optional = type.get_optional_for_add()
-    return render_template("add.html", type=(type_name, type.get_name()), required=required, optional=optional, message=message)
+    ref_type = reference_type.ReferenceType[type_name]
+    required = ref_type.get_required_for_add()
+    optional = ref_type.get_optional_for_add()
+    return render_template(
+        "add.html",
+        type=(type_name,ref_type.get_name()),
+        required=required,
+        optional=optional,
+        message=message
+        )
 
 def validate_input(ref_type, types, columns, values, required):
     for cur_type in types:
@@ -59,28 +69,29 @@ def validate_input(ref_type, types, columns, values, required):
         form_resp = get_form_data(cur_type)
         if len(form_resp) != 2:
             return get_add_page(ref_type, form_resp)
-        
+
         form_type, form_data = form_resp
-        
+
         if len(form_data) < 1 and required:
             return get_add_page(ref_type, f"Vaadittu kenttä täyttämättä: {cur_type}")
-        
+
         error = validate(form_type, form_data)
         if error is not None:
             return get_add_page(ref_type, error)
 
         columns.append(form_type)
         values.append(form_data)
+    return None
 
 def get_form_data(cur_type):
-    if type(cur_type) is tuple:
+    if isinstance(cur_type, tuple):
         if len(request.form[cur_type[0]]) > 0 and len(request.form[cur_type[1]]) > 0:
             return f"Vain toinen kentistä {cur_type[0]} ja {cur_type[1]} voi sisältää tietoa"
 
         form_type = cur_type[0] if len(request.form[cur_type[0]]) > 0 else cur_type[1]
         form_data = request.form[form_type]
     else:
-        form_type = cur_type 
+        form_type = cur_type
         form_data = request.form[cur_type]
     return (form_type, form_data)
 
