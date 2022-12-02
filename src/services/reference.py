@@ -3,17 +3,18 @@ from src.utils.db import connect
 from ..utils import reference_type
 
 def add_reference(user_id, ref_id, ref_name, columns, values):
-    column = ", ".join(columns)
-    formatter = ", ".join("%s" for _ in range(len(columns)))
-    sql = f"INSERT INTO tblReference (user_id, reference_id, reference_name, {column}) VALUES (%s, %s, %s, {formatter})"
-
     con = connect()
     cur = con.cursor()
 
-    cur.execute(sql, (user_id, ref_id, ref_name) + tuple(values))
+    cur.execute(generate_add_sql(columns), (user_id, ref_id, ref_name) + tuple(values))
 
     con.commit()
     con.close()
+
+def generate_add_sql(columns):
+    column = ", ".join(columns)
+    formatter = ", ".join("%s" for _ in range(len(columns)))
+    return f"INSERT INTO tblReference (user_id, reference_id, reference_name, {column}) VALUES (%s, %s, %s, {formatter})"
 
 def get_references(user_id):
 
@@ -21,10 +22,13 @@ def get_references(user_id):
     cur = con.cursor()
     cur.execute("SELECT * FROM tblReference WHERE user_id=%s", (user_id,))
 
-    rows = cur.fetchall()
-    keys = [k[0] for k in cur.description]
-    results = [dict(zip(keys, row)) for row in rows]
+    results = _get_keys_and_values(cur)
 
     con.close()
 
     return results
+
+def _get_keys_and_values(cursor):
+    rows = cursor.fetchall()
+    keys = [k[0] for k in cursor.description]
+    return [dict(zip(keys, row)) for row in rows]

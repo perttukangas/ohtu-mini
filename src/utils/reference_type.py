@@ -41,16 +41,15 @@ class ReferenceType(Enum):
                 array.append((row, get_form_message(row)))
         return array
 
-
-references_for_index = []
+cache_references_for_index = []
 def get_references_for_index():
-    if references_for_index:
-        return references_for_index
+    if cache_references_for_index:
+        return cache_references_for_index
     
     for data in ReferenceType:
-        references_for_index.append((data.name, data.get_name()))
+        cache_references_for_index.append((data.name, data.get_name()))
     
-    return references_for_index
+    return cache_references_for_index
 
 cache = {}
 def get_form_message(type):
@@ -62,4 +61,3 @@ def get_form_message(type):
     # ...
 
     return cache.get(type, f"Lomakeviesti puuttuu: {type}")
-
