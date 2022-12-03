@@ -72,8 +72,12 @@ def validate_input(ref_type, types, columns, values, required):
 
         form_type, form_data = form_resp
 
-        if len(form_data) < 1 and required:
-            return get_add_page(ref_type, f"Vaadittu kenttä täyttämättä: {cur_type}")
+        if len(form_data) < 1:
+            if required:
+                return get_add_page(ref_type, f"Vaadittu kenttä täyttämättä: {cur_type}")
+
+            # Jos valinnainen kenttä niin älä lähetä tyhjää merkkijonoa tietokantaan
+            continue
 
         error = validate(form_type, form_data)
         if error is not None:
