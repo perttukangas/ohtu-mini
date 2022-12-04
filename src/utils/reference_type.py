@@ -8,12 +8,21 @@ from enum import Enum
 
 class ReferenceType(Enum):
 
-    ARTICLE = ("Artikkeli",
-    ("author", "journal", "title", "year"), 
-    ("month", "note", "number", "pages", "volume"))
-    BOOK = ("Kirja",
-    (("author", "editor"), "title", "publisher", "year"), 
-    (("volume", "number"), "series", "address", "edition", "month", "note"))
+    ARTICLE = ("Artikkeli (@article)",
+    ["author", "journal", "title", "year"],
+    ["month", "note", "number", "pages", "volume"])
+    BOOK = ("Kirja (@book)",
+    [("author", "editor"), "title", "publisher", "year"],
+    [("volume", "number"), "series", "address", "edition", "month", "note"])
+    BOOKLET = ("Kirjanen (@booklet)",
+    ["title"],
+    ["address", "author", "howpublished", "month", "note", "year"])
+    INBOOK = ("Kirjassa (@inbook)",
+    [("author", "editor"), ("chapter", "pages"), "publisher", "title", "year"],
+    ["address", "edition", "month", "note", "number", "series", "type", "volume"])
+    INPROCEEDINGS = ("Konferenssi (@inproceedings)",
+    ["author", "booktitle", "title", "year"],
+    ["address", "editor", "month", "note", "number", "organization", "pages", "publisher", "series", "volume"])
 
     def get_name(self):
         return self.value[0]

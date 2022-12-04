@@ -6,11 +6,11 @@ class TestReferenceTypeTest(unittest.TestCase):
         self.ref_type = reference_type.ReferenceType.BOOK
     
     def test_correct_constants(self):
-        self.assertEqual(self.ref_type.get_name(), "Kirja")
+        self.assertEqual(self.ref_type.get_name(), "Kirja (@book)")
         self.assertEqual(self.ref_type.get_required(), 
-        (("author", "editor"), "title", "publisher", "year"))
+        [("author", "editor"), "title", "publisher", "year"])
         self.assertEqual(self.ref_type.get_optional(), 
-        (("volume", "number"), "series", "address", "edition", "month", "note"))
+        [("volume", "number"), "series", "address", "edition", "month", "note"])
     
     def test_required_for_add(self):
         req = self.ref_type.get_required_for_add()
@@ -36,11 +36,11 @@ class TestReferenceTypeTest(unittest.TestCase):
     
     def test_get_references_for_index(self):
         result = reference_type.get_references_for_index()
-        self.assertEqual(result[0], ("ARTICLE", "Artikkeli"))
-        self.assertEqual(result[1], ("BOOK", "Kirja"))
+        self.assertEqual(result[0], ("ARTICLE", "Artikkeli (@article)"))
+        self.assertEqual(result[1], ("BOOK", "Kirja (@book)"))
     
     def test_get_references_cache_for_index(self):
         reference_type.get_references_for_index()
         result = reference_type.cache_references_for_index
-        self.assertEqual(result[0], ("ARTICLE", "Artikkeli"))
-        self.assertEqual(result[1], ("BOOK", "Kirja"))
+        self.assertEqual(result[0], ("ARTICLE", "Artikkeli (@article)"))
+        self.assertEqual(result[1], ("BOOK", "Kirja (@book)"))
