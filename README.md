@@ -1,5 +1,8 @@
 # ohtu-mini
 
+![Deployment passing](https://github.com/Perttu-Kangas/ohtu-mini/actions/workflows/pipeline.yml/badge.svg)
+![Codecov coverage](https://codecov.io/gh/Perttu-Kangas/ohtu-mini/branch/main/graph/badge.svg?token=5JFTXJ2SI4)
+
 ## Definition of Done
 
 - Testikattavuus vähintään `80%` ja testit menevät läpi
