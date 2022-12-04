@@ -9,6 +9,7 @@ Käynnistä sovellus osoitteessa https://ohtu-mini.fly.dev/
 
 - [Sprint Backlog](https://github.com/orgs/Perttu-Kangas/projects/5)
 - [Product Backlog](https://github.com/orgs/Perttu-Kangas/projects/3)
+- [Burndown](https://docs.google.com/spreadsheets/d/1K0tKkEaEDCDPjoNIQM4OD2D97GUcdu-iTdonzo5Ue-I/edit?usp=sharing)
 
 ### Dokumentaatio
 
