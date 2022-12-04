@@ -81,4 +81,4 @@ jobs:
         with:
           tag: ${{ steps.tag_version.outputs.new_tag }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: https://ohtu-mini.fly.dev/
+          body: ${{ steps.tag_version.outputs.changelog }}
