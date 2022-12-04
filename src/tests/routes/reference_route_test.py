@@ -24,7 +24,7 @@ class TestReferenceRoute(unittest.TestCase):
     
     def test_add_valid_type_name_fetch(self):
         resp = self.client.get("/add/ARTICLE", follow_redirects=True)
-        self.assertIn("<h1>Lisää viite: Artikkeli</h1>", resp.text)
+        self.assertIn("<h1>Lisää viite: Artikkeli", resp.text)
     
     def test_add_invalid_type_name(self):
         resp = self.client.post("/add", data=dict(
