@@ -5,6 +5,9 @@
 
 Käynnistä sovellus osoitteessa https://ohtu-mini.fly.dev/
 
+Tarkastele testikattavuutta
+[täältä](https://app.codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
+
 ### Kehityksen seuraaminen
 
 - [Sprint Backlog](https://github.com/orgs/Perttu-Kangas/projects/5)
