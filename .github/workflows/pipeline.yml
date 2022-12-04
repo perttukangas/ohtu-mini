@@ -44,7 +44,7 @@ jobs:
       - name: Run lint
         run: poetry run invoke lint
       - name: Run tests by generating coverage
-        run: poetry run invoke coverage
+        run: poetry run invoke coverage-ci
         env:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -52,8 +52,14 @@ jobs:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}
           DB_SSL_CONTEXT: ${{ secrets.DB_SSL_CONTEXT }}
+      - name: Coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          fail_ci_if_error: true
       - name: Check coverage
-        run: poetry run invoke coverage-report
+        run: poetry run invoke coverage-check
   deploy:
     needs: [build]
     runs-on: ubuntu-20.04
@@ -66,7 +72,13 @@ jobs:
       - name: deploy
         run: flyctl deploy --remote-only
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.36.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: https://ohtu-mini.fly.dev/

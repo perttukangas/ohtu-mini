@@ -1,129 +1,26 @@
 # ohtu-mini
 
-## Definition of Done
+![Deployment passing](https://github.com/Perttu-Kangas/ohtu-mini/actions/workflows/pipeline.yml/badge.svg)
+![Codecov coverage](https://codecov.io/gh/Perttu-Kangas/ohtu-mini/branch/main/graph/badge.svg?token=5JFTXJ2SI4)
 
-- Testikattavuus vähintään `80%` ja testit menevät läpi
-- Koodin Pylint arvosana vähintään `9,00`
-- Ominaisuus on manuaalisesti testattu
-- Koodissa dokumentointi suomeksi, ja koodi englanniksi
-- Pull requstin on ainakin yksi toinen ohjelmoija katselmoinut
-- CI-palvelun testit menee läpi
+Käynnistä sovellus osoitteessa https://ohtu-mini.fly.dev/
 
-## Alustus
+Tarkastele testikattavuutta
+[täältä](https://app.codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
 
-### Poetry riippuvuudet
+### Kehityksen seuraaminen
 
-```
-poetry install
-```
+- [Sprint Backlog](https://github.com/orgs/Perttu-Kangas/projects/5)
+- [Product Backlog](https://github.com/orgs/Perttu-Kangas/projects/3)
+- [Burndown](https://docs.google.com/spreadsheets/d/1K0tKkEaEDCDPjoNIQM4OD2D97GUcdu-iTdonzo5Ue-I/edit?usp=sharing)
 
-### Ympäristömuuttujat
+### Dokumentaatio
 
-Luo juureen `.env` tiedosto, jonka sisältö on vastaava:
+- [Kehitysympäristön alustus](./docs/development.md)
+- [Komentorivikomennot](./docs/commands.md)
+- [Definition of Done](./docs/definition_of_done.md)
+- [Sovelluksen julkaisu](./docs/publishing.md)
 
-```
-DB_USERNAME=postgres
-DB_HOST=localhost
-DB_DATABASE=ohtuminidev
-DB_PORT=5432
-DB_PASSWORD=supersalainensalasana
-DB_SSL_CONTEXT=None
-SECRET_KEY=topsekretdev
-```
+### Retrospektiivit
 
-Luo juureen `.env.test` tiedosto, jonka sisältö on vastaava:
-
-```
-DB_USERNAME=postgres
-DB_HOST=localhost
-DB_DATABASE=ohtuminitest
-DB_PORT=5432
-DB_PASSWORD=supersalainensalasana
-DB_SSL_CONTEXT=None
-SECRET_KEY=topsekrettest
-```
-
-### Paikalliset tietokannat
-
-#### Tietokantapalvelimen asennus
-
-Varmista, että sinulla on asennettuna postgresql koneella. Vastauksena pitäisi
-tulla jotain tietoa palvelusta, ja tiedoissa pitäisi lukea
-`Active: active (exited)`
-
-```
-sudo systemctl status postgresql
-```
-
-postgresql:n pystyy asentamaan komennolla:
-
-```
-sudo apt-get -y install postgresql
-```
-
-Jos yllä oleva ei toimi, katso lisää tietoa:
-https://www.postgresql.org/download/
-
-#### Tietokantojen alustus
-
-Mene tietokantapalvelimeen komennolla
-
-```
-sudo -u postgres psql
-```
-
-Luo testitietokanta komennolla
-
-```
-CREATE DATABASE ohtuminitest;
-```
-
-Luo kehitystietokanta komennolla
-
-```
-CREATE DATABASE ohtuminidev;
-```
-
-Vaihda tietokantapalvelimen salasana komennolla
-
-```
-ALTER ROLE postgres WITH PASSWORD 'supersalainensalasana';
-```
-
-Poistu tietokannasta komennolla
-
-```
-\q
-```
-
-## Komentorivitoiminnot
-
-### Ohjelman suorittaminen kehitystilassa
-
-Komento: `poetry run invoke dev`
-
-### Testaus
-
-Komento: `poetry run invoke test`
-
-### Testikattavuus
-
-Komento: `poetry run invoke coverage`
-
-### Pylint
-
-Komento: `poetry run invoke lint`
-
-## Julkaiseminen
-
-### Ohjelman suorittaminen tuotantotilassa
-
-Komento: `poetry run invoke start`
-
-### Docker -kuvan rakentaminen
-
-Komento: `docker build .`
-
-### Docker -kuvan suorittaminen
-
-Komento: `docker run -p 8080 <image id>`
+- [Retro 1](./docs/retro.md)
