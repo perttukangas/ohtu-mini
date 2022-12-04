@@ -44,7 +44,7 @@ jobs:
       - name: Run lint
         run: poetry run invoke lint
       - name: Run tests by generating coverage
-        run: poetry run invoke coverage
+        run: poetry run invoke coverage-ci
         env:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -52,8 +52,14 @@ jobs:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}
           DB_SSL_CONTEXT: ${{ secrets.DB_SSL_CONTEXT }}
+      - name: Coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          fail_ci_if_error: true
       - name: Check coverage
-        run: poetry run invoke coverage-report
+        run: poetry run invoke coverage-check
   deploy:
     needs: [build]
     runs-on: ubuntu-20.04
