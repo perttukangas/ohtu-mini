@@ -1,6 +1,7 @@
+from bibtexparser.bibdatabase import BibDatabase
+from bibtexparser.bwriter import BibTexWriter
 from flask import session
 from src.utils.db import connect
-
 
 def add_reference(user_id, ref_id, ref_name, columns, values):
     con = connect()
@@ -17,23 +18,44 @@ def generate_add_sql(columns):
     return f"INSERT INTO tblReference (user_id, reference_id, reference_name, {column}) VALUES (%s, %s, %s, {formatter})"
 
 def get_references(user_id):
+
     con = connect()
     cur = con.cursor()
-    cur.execute(f"SELECT * FROM tblReference WHERE user_id={user_id}")
-   # cur.execute("SELECT * FROM tblReference WHERE user_id=%s", (user_id,))
+    cur.execute("SELECT * FROM tblReference WHERE user_id=%s", (user_id,))
+
     filtered_results = []
     results = _get_keys_and_values(cur)
     for dict in results:
         new_dict = {}
+        skip = ['id', 'user_id']
         for (key, value) in dict.items():
             if value and not None:
+                if key == 'reference_name':
+                    new_dict['ENTRYTYPE'] = value.lower()
+                    continue
+                if key == 'reference_id':
+                    new_dict['ID'] = value
+                    continue
+                if key in skip:
+                    continue
+                
                 new_dict[key] = value
         filtered_results.append(new_dict)
     print(filtered_results)
-    
     con.close()
 
+    print(generate_bibtex_string(filtered_results))
     return filtered_results
+
+def generate_bibtex_string(entries):
+    db = BibDatabase()
+    db.entries = entries
+    
+    writer = BibTexWriter()
+    with open('bibtex.bib', 'w') as bibfile:
+        bibfile.write(writer.write(db))
+    with open('bibtex.bib', 'r') as f:
+        return f.read()
 
 def _get_keys_and_values(cursor):
     rows = cursor.fetchall()
