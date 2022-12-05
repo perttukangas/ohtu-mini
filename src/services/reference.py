@@ -57,7 +57,7 @@ def generate_bibtex_string(entries):
     db.entries = new_entries
     
     writer = BibTexWriter()
-    with open('bibtex.bib', 'w+') as bibfile:
+    with open('src/services/bibtex.bib', 'w+') as bibfile:
         bibfile.write(writer.write(db))
         bibfile.seek(0,0)
         return bibfile.read().splitlines()
