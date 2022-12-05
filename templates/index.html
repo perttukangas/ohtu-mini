@@ -19,4 +19,11 @@
   {% endfor %}
 </ul>
 
+<p>Viitteet bibtex -muodossa</p>
+<ul>
+  {% for string in bibtex_string %}
+  <ul>{{ string }}</ul>
+  {% endfor %}
+</ul>
+
 {% endif %} {% endblock %}

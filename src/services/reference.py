@@ -41,10 +41,8 @@ def get_references(user_id):
                 
                 new_dict[key] = value
         filtered_results.append(new_dict)
-    print(filtered_results)
     con.close()
 
-    print(generate_bibtex_string(filtered_results))
     return filtered_results
 
 def generate_bibtex_string(entries):
@@ -52,10 +50,10 @@ def generate_bibtex_string(entries):
     db.entries = entries
     
     writer = BibTexWriter()
-    with open('bibtex.bib', 'w') as bibfile:
+    with open('bibtex.bib', 'w+') as bibfile:
         bibfile.write(writer.write(db))
-    with open('bibtex.bib', 'r') as f:
-        return f.read()
+        bibfile.seek(0,0)
+        return bibfile.read().splitlines()
 
 def _get_keys_and_values(cursor):
     rows = cursor.fetchall()
