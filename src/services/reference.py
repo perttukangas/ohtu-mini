@@ -33,7 +33,6 @@ def get_references(user_id):
         filtered_results.append(new_dict)
     con.close()
 
-    print(generate_bibtex_string(filtered_results))
     return filtered_results
 
 def generate_bibtex_string(entries):
