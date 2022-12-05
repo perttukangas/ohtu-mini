@@ -27,27 +27,35 @@ def get_references(user_id):
     results = _get_keys_and_values(cur)
     for dict in results:
         new_dict = {}
-        skip = ['id', 'user_id']
         for (key, value) in dict.items():
             if value and not None:
-                if key == 'reference_name':
-                    new_dict['ENTRYTYPE'] = value.lower()
-                    continue
-                if key == 'reference_id':
-                    new_dict['ID'] = value
-                    continue
-                if key in skip:
-                    continue
-                
                 new_dict[key] = value
         filtered_results.append(new_dict)
     con.close()
 
+    print(generate_bibtex_string(filtered_results))
     return filtered_results
 
 def generate_bibtex_string(entries):
+    new_entries = []
+    skip = ['id', 'user_id']
+    for dict in entries:
+        bib_dict = {}
+        for (key, value) in dict.items():
+            if key == 'reference_name':
+                bib_dict['ENTRYTYPE'] = value.lower()
+                continue
+            if key == 'reference_id':
+                bib_dict['ID'] = value
+                continue
+            if key in skip:
+                continue
+            else:
+                bib_dict[key] = value
+        new_entries.append(bib_dict)
+                
     db = BibDatabase()
-    db.entries = entries
+    db.entries = new_entries
     
     writer = BibTexWriter()
     with open('bibtex.bib', 'w+') as bibfile:
