@@ -1,5 +1,5 @@
 from pg8000.exceptions import DatabaseError
-from flask import render_template, request, redirect, session, abort, send_file
+from flask import render_template, request, redirect, session, abort
 from app import app
 from ..services import reference
 from ..utils import reference_type, validator
