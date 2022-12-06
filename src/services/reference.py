@@ -2,6 +2,7 @@ from bibtexparser.bibdatabase import BibDatabase
 from bibtexparser.bwriter import BibTexWriter
 from flask import send_file
 from src.utils.db import connect
+import os
 
 def add_reference(user_id, ref_id, ref_name, columns, values):
     con = connect()
@@ -57,12 +58,12 @@ def generate_bibtex_file(entries, user_id):
     
     writer = BibTexWriter()
     file_name = f"bibtex_{user_id}.bib"
-    with open(f"src/services/bibtex_files/{file_name}", "w+") as bibfile:
+    with open(f"{os.getcwd()}/src/services/bibtex_files/{file_name}", "w+") as bibfile:
         bibfile.write(writer.write(db))
 
 def get_bibtex_file(user_id):
     file_name = f"bibtex_{user_id}.bib"
-    return send_file(f"src/services/bibtex_files/{file_name}")
+    return send_file(f"{os.getcwd()}/src/services/bibtex_files/{file_name}")
 
 def _get_keys_and_values(cursor):
     rows = cursor.fetchall()
