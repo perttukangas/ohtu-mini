@@ -102,3 +102,15 @@ def get_form_data(cur_type):
 def validate(form_type, data):
     validator_class = validator.Validator()
     return validator.check_for_errors(validator_class, form_type, data)
+
+@app.route("/download-file", methods=["GET"])
+def file_downloads():
+    try:
+        user_id = session["user_id"]
+        entries = reference.get_references(user_id)
+        reference.generate_bibtex_file(entries, user_id)
+        return reference.get_bibtex_file(user_id)
+    except:
+        abort(404)
+
+    return redirect("/")

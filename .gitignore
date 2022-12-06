@@ -1,3 +1,6 @@
+# BibTex
+bibtex_files/*.bib
+
 # env
 .env
 .env.test

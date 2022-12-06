@@ -13,6 +13,7 @@ gunicorn = "^20.1.0"
 python-dotenv = "^0.21.0"
 pg8000 = "^1.29.3"
 sqlparse = "^0.4.3"
+bibtexparser = "^1.4.0"
 
 
 [tool.poetry.group.dev.dependencies]

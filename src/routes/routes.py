@@ -9,11 +9,9 @@ def index():
     return render_template("index.html", references=reference_type.get_references_for_index(),
         added_references=reference.get_references(user_id))
 
-
 @app.route("/test")
 def test():
     return render_template("test.html")
-
 
 @app.route("/ping")
 def ping():

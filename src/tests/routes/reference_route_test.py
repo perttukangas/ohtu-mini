@@ -1,6 +1,8 @@
 import unittest
+import os
 from app import app
 from src.utils.db import connect
+from src.services.reference import *
 
 class TestReferenceRoute(unittest.TestCase):
     def setUp(self):

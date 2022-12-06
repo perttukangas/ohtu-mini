@@ -12,11 +12,20 @@
   {% endfor %}
 </ul>
 
+{% if added_references %}
 <p>Lisätyt viitteet</p>
 <ul>
   {% for ref in added_references %}
   <li>{{ ref }}</li>
   {% endfor %}
 </ul>
+<body class="body">
+   <div class="container" align="left">
+		<a href="/download-file" target="blank"><button class='btn btn-default'>Lataa BibTex -tiedosto</button></a>
+   </div>
+</body>
+{% else %}
+<p>Et ole lisännyt vielä yhtään viitettä.</p>
+{% endif %}
 
 {% endif %} {% endblock %}
