@@ -1,5 +1,5 @@
 # BibTex
-bibtex_files/
+bibtex_files/*.bib
 
 # env
 .env

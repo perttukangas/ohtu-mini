@@ -58,12 +58,12 @@ def generate_bibtex_file(entries, user_id):
     
     writer = BibTexWriter()
     file_name = f"bibtex_{user_id}.bib"
-    with open(f"{os.getcwd()}/src/services/bibtex_files/{file_name}", "w+") as bibfile:
+    with open(f"{os.getcwd()}/bibtex_files/{file_name}", "w+") as bibfile:
         bibfile.write(writer.write(db))
 
 def get_bibtex_file(user_id):
     file_name = f"bibtex_{user_id}.bib"
-    return send_file(f"{os.getcwd()}/src/services/bibtex_files/{file_name}")
+    return send_file(f"{os.getcwd()}/bibtex_files/{file_name}")
 
 def _get_keys_and_values(cursor):
     rows = cursor.fetchall()

@@ -159,9 +159,3 @@ class TestReferenceRoute(unittest.TestCase):
                 note=""
             ), follow_redirects=True)
         self.assertIn("on jo käytössä", resp.text)
-
-    def test_file_download(self):
-        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
-        resp = self.client.get("/download-file", follow_redirects=True)
-
-        self.assertEqual(resp.status_code, 200)

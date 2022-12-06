@@ -66,12 +66,10 @@ class TestReferenceService(unittest.TestCase):
         ref = get_references(self.user_id)
 
         generate_bibtex_file(ref, self.user_id)
-        self.assertTrue(exists(f'{os.getcwd()}/src/services/bibtex_files/bibtex_{self.user_id}.bib'))
+        self.assertTrue(exists(f'{os.getcwd()}/bibtex_files/bibtex_{self.user_id}.bib'))
 
-        dir = f"{os.getcwd()}/src/services/bibtex_files"
-        for file in os.listdir(dir):
-            os.remove(os.path.join(dir, file))
+        os.remove(f'{os.getcwd()}/bibtex_files/bibtex_{self.user_id}.bib')
             
-        self.assertEqual(exists(f'{os.getcwd()}/src/services/bibtex_files/bibtex_{self.user_id}.bib'), False)
+        self.assertEqual(exists(f'{os.getcwd()}/bibtex_files/bibtex_{self.user_id}.bib'), False)
         
     
