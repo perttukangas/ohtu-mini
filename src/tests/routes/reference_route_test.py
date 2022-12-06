@@ -165,5 +165,3 @@ class TestReferenceRoute(unittest.TestCase):
         resp = self.client.get("/download-file", follow_redirects=True)
 
         self.assertEqual(resp.status_code, 200)
-
-        os.remove(f'src/services/bibtex_files/bibtex_{self.user_id}.bib')
