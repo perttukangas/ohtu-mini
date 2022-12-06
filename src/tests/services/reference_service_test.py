@@ -59,4 +59,8 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(refs[1]["author"], "jotai3")
         self.assertEqual(refs[1]["journal"], "jotai4")
 
+    def test_generate_bibtex_string(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        refs = get_references(self.user_id)
 
+        self.assertEqual(generate_bibtex_string(refs), ['@article{uniq1,', ' author = {jotai1},', ' journal = {jotai2}', '}'])

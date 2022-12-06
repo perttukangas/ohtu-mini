@@ -1,5 +1,5 @@
 from pg8000.exceptions import DatabaseError
-from flask import render_template, request, redirect, session, abort
+from flask import render_template, request, redirect, session, abort, send_file
 from app import app
 from ..services import reference
 from ..utils import reference_type, validator
@@ -102,3 +102,11 @@ def get_form_data(cur_type):
 def validate(form_type, data):
     validator_class = validator.Validator()
     return validator.check_for_errors(validator_class, form_type, data)
+
+@app.route("/download-file", methods=["GET"])
+def file_downloads():
+    try:
+        return reference.get_bibtex_file(session["user_id"])
+
+    except:
+        abort(404)

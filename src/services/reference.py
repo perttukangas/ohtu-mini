@@ -1,6 +1,8 @@
 from bibtexparser.bibdatabase import BibDatabase
 from bibtexparser.bwriter import BibTexWriter
-from flask import session
+import bibtexparser
+from flask import Flask, session, send_file
+import flask
 from src.utils.db import connect
 
 def add_reference(user_id, ref_id, ref_name, columns, values):
@@ -32,10 +34,9 @@ def get_references(user_id):
                 new_dict[key] = value
         filtered_results.append(new_dict)
     con.close()
-
     return filtered_results
 
-def generate_bibtex_string(entries):
+def generate_bibtex_string(entries, user_id):
     new_entries = []
     skip = ['id', 'user_id']
     for dict in entries:
@@ -57,10 +58,13 @@ def generate_bibtex_string(entries):
     db.entries = new_entries
     
     writer = BibTexWriter()
-    with open('src/services/bibtex.bib', 'w+') as bibfile:
+    file_name = f"bibtex_{user_id}.bib"
+    with open(f"src/services/bibtex_files/{file_name}", "w+") as bibfile:
         bibfile.write(writer.write(db))
-        bibfile.seek(0,0)
-        return bibfile.read().splitlines()
+
+def get_bibtex_file(user_id):
+    file_name = f"bibtex_{user_id}.bib"
+    return send_file(f"src/services/bibtex_files/{file_name}")
 
 def _get_keys_and_values(cursor):
     rows = cursor.fetchall()
