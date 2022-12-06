@@ -7,8 +7,8 @@ from ..utils import reference_type
 def index():
     user_id = session.get("user_id", 0)
     return render_template("index.html", references=reference_type.get_references_for_index(),
-        added_references=reference.get_references(user_id), 
-        bibtex_string = reference.generate_bibtex_string(reference.get_references(user_id), user_id))
+        added_references=reference.get_references(user_id)) 
+        #bibtex_string = reference.generate_bibtex_string(reference.get_references(user_id), user_id))
 
 
 @app.route("/test")
