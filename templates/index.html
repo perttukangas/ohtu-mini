@@ -15,9 +15,11 @@
 {% if added_references %}
 <body class="body">
    <div class="container" align="left">
-		<a href="/download-file" target="blank"><button class='btn btn-default'>Lataa bibtex -tiedosto</button></a>
+		<a href="/download-file" target="blank"><button class='btn btn-default'>Lataa BibTex -tiedosto</button></a>
    </div>
 </body>
+{% else %}
+<p>Ei vielä lisättyjä viitteitä.</p>
 {% endif %}
 
 {% endif %} {% endblock %}
