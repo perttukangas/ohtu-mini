@@ -67,3 +67,5 @@ class TestReferenceService(unittest.TestCase):
 
         generate_bibtex_string(ref, self.user_id)
         self.assertTrue(exists(f'src/services/bibtex_files/bibtex_{self.user_id}.bib'))
+
+        os.remove(f'src/services/bibtex_files/bibtex_{self.user_id}.bib')
