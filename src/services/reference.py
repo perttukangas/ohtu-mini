@@ -1,8 +1,6 @@
 from bibtexparser.bibdatabase import BibDatabase
 from bibtexparser.bwriter import BibTexWriter
-import bibtexparser
-from flask import Flask, session, send_file
-import flask
+from flask import send_file
 from src.utils.db import connect
 
 def add_reference(user_id, ref_id, ref_name, columns, values):
