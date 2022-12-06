@@ -108,7 +108,7 @@ def file_downloads():
     try:
         user_id = session["user_id"]
         entries = reference.get_references(user_id)
-        reference.generate_bibtex_string(entries, user_id)
+        reference.generate_bibtex_file(entries, user_id)
         return reference.get_bibtex_file(user_id)
     except:
         abort(404)

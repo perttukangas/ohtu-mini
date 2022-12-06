@@ -34,7 +34,7 @@ def get_references(user_id):
     con.close()
     return filtered_results
 
-def generate_bibtex_string(entries, user_id):
+def generate_bibtex_file(entries, user_id):
     new_entries = []
     skip = ['id', 'user_id']
     for dict in entries:

@@ -62,11 +62,10 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(refs[1]["journal"], "jotai4")
 
     def test_generate_bibtex_string(self):
-        print(self.user_id)
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         ref = get_references(self.user_id)
 
-        generate_bibtex_string(ref, self.user_id)
+        generate_bibtex_file(ref, self.user_id)
         self.assertTrue(exists(f'src/services/bibtex_files/bibtex_{self.user_id}.bib'))
 
         dir = 'src/services/bibtex_files'
