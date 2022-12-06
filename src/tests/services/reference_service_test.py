@@ -2,6 +2,8 @@ from pg8000.exceptions import DatabaseError
 import unittest
 from src.services.reference import *
 from src.utils.db import connect
+from os.path import exists
+import os
 
 class TestReferenceService(unittest.TestCase):
     def setUp(self):
@@ -58,4 +60,13 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(refs[1]["reference_name"], "ARTICLE")
         self.assertEqual(refs[1]["author"], "jotai3")
         self.assertEqual(refs[1]["journal"], "jotai4")
+
+    def test_generate_bibtex_string(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        ref = get_references(self.user_id)
+
+        generate_bibtex_string(ref, self.user_id)
+        self.assertTrue(exists(f'src/services/bibtex_files/bibtex_{self.user_id}.bib'))
+
+        os.remove(f'src/services/bibtex_files/bibtex_{self.user_id}.bib')
 
