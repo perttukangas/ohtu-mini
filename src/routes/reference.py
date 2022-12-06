@@ -110,6 +110,7 @@ def file_downloads():
         entries = reference.get_references(user_id)
         reference.generate_bibtex_string(entries, user_id)
         return reference.get_bibtex_file(user_id)
-
     except:
         abort(404)
+
+    return redirect("/")
