@@ -5,6 +5,9 @@
 {% if session.user_id %}
 <p>Lisää viite</p>
 <ul>
+  <li>
+    <a href="/addbib">BibTex -muodossa tai DOI -tunnisteella</a>
+  </li>
   {% for ref in references %}
   <li>
     <a href="/add/{{ ref[0] }}">{{ ref[1] }}</a>
@@ -20,12 +23,12 @@
   {% endfor %}
 </ul>
 <body class="body">
-   <div class="container" align="left">
-		<a href="/download-file" target="blank"><button class='btn btn-default'>Lataa BibTex -tiedosto</button></a>
-   </div>
+  <div class="container" align="left">
+    <a href="/download-file" target="blank"
+      ><button class="btn btn-default">Lataa BibTex -tiedosto</button></a
+    >
+  </div>
 </body>
 {% else %}
 <p>Et ole lisännyt vielä yhtään viitettä.</p>
-{% endif %}
-
-{% endif %} {% endblock %}
+{% endif %} {% endif %} {% endblock %}
