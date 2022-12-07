@@ -79,7 +79,7 @@ def find_bib_by_doi(doi):
     response.encoding = response.apparent_encoding
 
     if response.status_code != 200:
-        if "Error: DOI Not Found" in response.text:
+        if "Not Found" in response.text:
             return f"DOI: {doi} ei löytynyt"
         print(response.text)
         return f"Jotain meni pieleen: {response}"

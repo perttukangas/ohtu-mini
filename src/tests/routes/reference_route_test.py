@@ -122,3 +122,72 @@ class TestReferenceRoute(unittest.TestCase):
                 year="123",
             ), follow_redirects=True)
         self.assertIn("on jo käytössä", resp.text)
+    
+    def test_addbib_template(self):
+        resp = self.client.get("/addbib")
+        self.assertEqual(resp.status_code, 200)
+    
+    def test_finddoi_empty_doi(self):
+        resp = self.client.post("/finddoi", data=dict(
+                doi="",
+            ), follow_redirects=True)
+        self.assertIn("Et täyttänyt DOI kenttää", resp.text)
+    
+    def test_finddoi_valid_doi(self):
+        resp = self.client.post("/finddoi", data=dict(
+                doi="10.1145/2380552.2380613",
+            ), follow_redirects=True)
+        self.assertIn("@article{2012", resp.text)
+
+    def test_add_by_doi_valid(self):
+        bib = """@article{CitekeyArticle, author=\"P. J. Cohen\",
+            title=\"The independence of the continuum hypothesis\",
+            journal=\"Proceedings of the National Academy of Sciences\",
+            year=1963,
+            volume=\"50\",
+            number=\"6\",
+            pages=\"1143--1148\",
+            }
+        """
+
+        resp = self.client.post("/addbibdb", data=dict(
+                addbib=bib,
+            ), follow_redirects=True)
+        self.assertIn("Tervetuloa etusivulle", resp.text)
+
+    def test_add_by_doi_invalid(self):
+        bib = """@article{CitekeyArticle, author=\"P. J. Cohen\",
+            title=\"The independence of the continuum hypothesis\",
+            journal=\"Proceedings of the National Academy of Sciences\",
+            year="aaa",
+            volume=\"50\",
+            number=\"6\",
+            pages=\"1143--1148\",
+            }
+        """
+
+        resp = self.client.post("/addbibdb", data=dict(
+                addbib=bib,
+            ), follow_redirects=True)
+        self.assertIn("kokonaisluku", resp.text)
+
+    def test_add_by_doi_duplicate(self):
+        bib = """@article{CitekeyArticle, author=\"P. J. Cohen\",
+            title=\"The independence of the continuum hypothesis\",
+            journal=\"Proceedings of the National Academy of Sciences\",
+            year=1963,
+            volume=\"50\",
+            number=\"6\",
+            pages=\"1143--1148\",
+            }
+        """
+
+        resp = self.client.post("/addbibdb", data=dict(
+                addbib=bib,
+            ), follow_redirects=True)
+        
+        resp = self.client.post("/addbibdb", data=dict(
+                addbib=bib,
+            ), follow_redirects=True)
+
+        self.assertIn("on jo käytössä!", resp.text)
