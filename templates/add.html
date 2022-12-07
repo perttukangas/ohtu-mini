@@ -32,7 +32,7 @@
   {% endif %} {% endfor %}
 
   <input type="submit" value="Lisää" />
-  <input type="hidden" name="type_name" value="{{ type[0] }}" />
+  <input type="hidden" name="reference_name" value="{{ type[0] }}" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
 {% endif %} {% endblock %}
