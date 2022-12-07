@@ -1,5 +1,5 @@
 from pg8000.exceptions import DatabaseError
-from flask import render_template, request, redirect, session, abort
+from flask import render_template, request, redirect, session, abort, send_file
 from app import app
 from ..services import reference
 from ..utils.reference_type import ReferenceType
@@ -49,12 +49,8 @@ def get_add_page(reference_name, message):
 
 @app.route("/download-file", methods=["GET"])
 def file_downloads():
-    try:
-        user_id = session["user_id"]
-        entries = reference.get_references(user_id)
-        reference.generate_bibtex_file(entries, user_id)
-        return reference.get_bibtex_file(user_id)
-    except:
-        abort(404)
-
-    return redirect("/")
+    user_id = session["user_id"]
+    entries = reference.get_references(user_id)
+    bibtex_string = reference.generate_bibtex_string(entries)
+    file_obj = reference.get_bibtex_in_bytes(bibtex_string)
+    return send_file(file_obj, mimetype="text/bibliography", as_attachment=True, download_name="bibtex.bib")
