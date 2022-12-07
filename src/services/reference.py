@@ -34,31 +34,25 @@ def get_references(user_id):
     return filtered_results
 
 def generate_bibtex_string(entries):
-    new_entries = []
-    skip = ['id', 'user_id']
-    for dict in entries:
-        bib_dict = {}
-        for (key, value) in dict.items():
-            if key == 'reference_name':
-                bib_dict['ENTRYTYPE'] = value.lower()
-                continue
-            if key == 'reference_id':
-                bib_dict['ID'] = value
-                continue
-            if key in skip:
-                continue
-            else:
-                bib_dict[key] = value
-        new_entries.append(bib_dict)
-                
     db = BibDatabase()
-    db.entries = new_entries
+    db.entries = from_db_to_bibtexparser(entries)
     
     writer = BibTexWriter()
     return writer.write(db)
 
 def get_bibtex_in_bytes(bibtex_string):
     return BytesIO(bibtex_string.encode())
+
+def from_db_to_bibtexparser(entries):
+    for dict in entries:
+        dict["ENTRYTYPE"] = dict["reference_name"].lower()
+        dict["ID"] = dict["reference_id"]
+        del dict["reference_name"]
+        del dict["reference_id"]
+        del dict["id"]
+        del dict["user_id"]
+    
+    return entries
 
 def _get_keys_and_values(cursor):
     rows = cursor.fetchall()
