@@ -19,7 +19,6 @@ def generate_add_sql(columns):
     return f"INSERT INTO tblReference (user_id, reference_id, reference_name, {column}) VALUES (%s, %s, %s, {formatter})"
 
 def get_references(user_id):
-
     con = connect()
     cur = con.cursor()
     cur.execute("SELECT * FROM tblReference WHERE user_id=%s", (user_id,))
