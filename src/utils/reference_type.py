@@ -10,19 +10,28 @@ class ReferenceType(Enum):
 
     ARTICLE = ("Artikkeli (@article)",
     ["author", "journal", "title", "year"],
-    ["month", "note", "number", "pages", "volume"])
+    ["volume", "number", "pages", "month", "note"])
     BOOK = ("Kirja (@book)",
     [("author", "editor"), "title", "publisher", "year"],
     [("volume", "number"), "series", "address", "edition", "month", "note"])
-    BOOKLET = ("Kirjanen (@booklet)",
+    BOOKLET = ("Vihkonen (@booklet)",
     ["title"],
-    ["address", "author", "howpublished", "month", "note", "year"])
+    ["author", "howpublished", "address", "month", "year", "note"])
     INBOOK = ("Kirjassa (@inbook)",
-    [("author", "editor"), ("chapter", "pages"), "publisher", "title", "year"],
-    ["address", "edition", "month", "note", "number", "series", "type", "volume"])
+    [("author", "editor"), "title", ("chapter", "pages"), "publisher", "year"],
+    [("volume", "number"), "series", "type", "address", "edition", "month", "note"])
     INPROCEEDINGS = ("Konferenssi (@inproceedings)",
-    ["author", "booktitle", "title", "year"],
-    ["address", "editor", "month", "note", "number", "organization", "pages", "publisher", "series", "volume"])
+    ["author", "title", "booktitle", "year"],
+    ["editor", ("volume", "number"), "series", "pages", "address", "month", "organization", "publisher", "note"])
+    MASTERSTHESIS = ("Pro gradu (@mastersthesis)",
+    ["author", "title", "school", "year"],
+    ["address", "month", "note"])
+    PHDTHESIS = ("Väitöskirja (@phdthesis)",
+    ["author", "title", "year", "school"],
+    ["address", "month", "note"])
+    MISC = ("Geneerinen (@misc)",
+    ["author"],
+    ["title", "howpublished", "month", "year", "note"])
 
     def get_name(self):
         return self.value[0]
