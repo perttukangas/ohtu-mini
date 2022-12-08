@@ -1,4 +1,5 @@
 {% extends "layout.html" %} {% block content %}
+
 <h2 style="color: red">{{ message }}</h2>
 <h1>Tervetuloa etusivulle!</h1>
 
@@ -16,69 +17,31 @@
 </ul>
 
 {% if added_references %}
-<ul class="list-group d-grid gap-2 border-0 w-auto">
+<ul>
   {% for ref in added_references %}
-  <li class="list-group-item list-group-item-dark rounded-3 py-3 pe-5" 
-  data-bs-toggle="collapse" 
-  href="#collapse{{ ref.id }}" 
-  role="button" 
-  aria-expanded="false" 
-  aria-controls="collapse{{ ref.id }}"  
-  >
-    <span class="badge bg-secondary">{{ ref.reference_id }}</span>
-      
-      
-      {{ ref.author }}
-      ||
-      {{ ref.editor }}
+  <li class="reference">
+    <span>{{ ref.reference_id }}</span>
 
-      {{ ref.title }}
-      {{ ref.booktitle }}
+    {{ ref.author }} || {{ ref.editor }} {{ ref.title }} {{ ref.booktitle }} {{
+    ref.chapter }} || {{ ref.pages }} {{ ref.journal }} {{ ref.volume }} || {{
+    ref.number }} {{ ref.edition }} ( {{ ref.year }} {{ ref.month }} ) {{
+    ref.howpublished }} {{ ref.school }} {{ ref.institution }} {{
+    ref.organization }} {{ ref.type }} {{ ref.note }}
 
-      {{ ref.chapter }}
-      ||
-      {{ ref.pages }}
-
-      {{ ref.journal }}
-      {{ ref.volume }}
-      ||
-      {{ ref.number }}
-      {{ ref.edition }}
-      
-      (
-      {{ ref.year }} 
-      {{ ref.month }}
-      )
-
-      {{ ref.howpublished }}
-      
-      {{ ref.school }}
-      {{ ref.institution }}
-      {{ ref.organization }}
-
-      {{ ref.type }}
-
-      {{ ref.note }}
-  
-      <div class="collapse" id="collapse{{ ref.id }}">
-        <div class="card card-body">
-          {% for field in ref %}
-            {% if field not in ["id", "user_id"] %}
-              {{ field }}: {{ ref[field] }} <br>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-    </li>
+    <details>
+      <summary>Lisää tietoja</summary>
+      {% for field in ref %} {% if field not in ["id", "user_id"] %} {{ field
+      }}: {{ ref[field] }} <br />
+      {% endif %} {% endfor %}
+    </details>
+  </li>
   {% endfor %}
 </ul>
-<body class="body">
-  <div class="container" align="left">
-    <a href="/download-file" target="blank"
-      ><button class="btn btn-default">Lataa BibTex -tiedosto</button></a
-    >
-  </div>
-</body>
+<div>
+  <a href="/download-file" target="blank"
+    ><button>Lataa BibTex -tiedosto</button></a
+  >
+</div>
 {% else %}
 <p>Et ole lisännyt vielä yhtään viitettä.</p>
 {% endif %} {% endif %} {% endblock %}
