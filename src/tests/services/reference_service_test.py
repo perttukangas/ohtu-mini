@@ -61,15 +61,35 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(refs[1]["author"], "jotai3")
         self.assertEqual(refs[1]["journal"], "jotai4")
 
-    def test_generate_bibtex_file(self):
+    def test_generate_bibtex_string(self):
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         ref = get_references(self.user_id)
 
-        generate_bibtex_file(ref, self.user_id)
-        self.assertTrue(exists(f'{os.getcwd()}/bibtex_files/bibtex_{self.user_id}.bib'))
-
-        os.remove(f'{os.getcwd()}/bibtex_files/bibtex_{self.user_id}.bib')
-            
-        self.assertEqual(exists(f'{os.getcwd()}/bibtex_files/bibtex_{self.user_id}.bib'), False)
-        
+        bibtex_string = generate_bibtex_string(ref)
+        self.assertIn("@article{uniq1", bibtex_string)
+        self.assertIn("author = {", bibtex_string)
+        self.assertIn("journal = {", bibtex_string)
     
+    def test_bibtex_in_bytes(self):
+        some_str = "asdasdasd"
+        self.assertEqual(get_bibtex_in_bytes(some_str).getvalue(), b"asdasdasd")
+    
+    def test_from_bibtexparser_to_db(self):
+        entries = [{
+            "ENTRYTYPE": "book",
+            "ID": "asd"
+        }]
+        from_bibtexparser_to_db(entries)
+
+        self.assertEqual(entries[0].get("ENTRYTYPE"), None)
+        self.assertEqual(entries[0].get("ID"), None)
+        self.assertEqual(entries[0].get("reference_name"), "BOOK")
+        self.assertEqual(entries[0].get("reference_id"), "asd")
+        
+    def test_find_by_doi_valid(self):
+        result = find_bib_by_doi("10.1145/2380552.2380613")
+        self.assertIn("@article{2012", result)
+        
+    def test_find_by_doi_invalid(self):
+        result = find_bib_by_doi("10.1145/2380552.2380613aaaaa")
+        self.assertIn("ei löytynyt", result)

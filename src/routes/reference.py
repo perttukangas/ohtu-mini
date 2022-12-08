@@ -1,5 +1,5 @@
 from pg8000.exceptions import DatabaseError
-from flask import render_template, request, redirect, session, abort
+from flask import render_template, request, redirect, session, abort, send_file
 from app import app
 from ..services import reference
 from ..utils.reference_type import ReferenceType
@@ -47,14 +47,49 @@ def get_add_page(reference_name, message):
         message=message
         )
 
-@app.route("/download-file", methods=["GET"])
-def file_downloads():
-    try:
+@app.route("/addbib", methods=["GET"])
+def addbib():
+    return render_template("addbib.html")
+
+@app.route("/finddoi", methods=["POST"])
+def find_doi():
+    doi = request.form.get("doi", "")
+    if len(doi) < 1:
+        return render_template("addbib.html", message="Et täyttänyt DOI kenttää")
+
+    return render_template("addbib.html", fetchedbib=reference.find_bib_by_doi(doi))
+
+@app.route("/addbibdb", methods=["POST"])
+def addbibdb():
+
+    bib_database = reference.get_bibtex_database(request.form.get("addbib"))
+    db_entries = reference.from_bibtexparser_to_db(bib_database.entries)
+
+    for entry in db_entries:
+
+        validator = Validator(entry)
+
+        type_name = entry.get("reference_name")
+        ref_id = entry.get("reference_id")
+
+        if validator.run_all_validators():
+            if validator.error == "404":
+                abort(404)
+            return render_template("addbib.html", message=validator.error)
+
         user_id = session["user_id"]
-        entries = reference.get_references(user_id)
-        reference.generate_bibtex_file(entries, user_id)
-        return reference.get_bibtex_file(user_id)
-    except:
-        abort(404)
+        try:
+            reference.add_reference(user_id, ref_id, type_name, validator.columns, validator.values)
+        except DatabaseError:
+            return render_template("addbib.html", message=f"ID '{ref_id}' on jo käytössä!")
 
     return redirect("/")
+
+@app.route("/download-file", methods=["GET"])
+def file_downloads():
+    user_id = session["user_id"]
+    entries = reference.get_references(user_id)
+    bibtex_string = reference.generate_bibtex_string(entries)
+    file_obj = reference.get_bibtex_in_bytes(bibtex_string)
+    return send_file(file_obj, mimetype="text/bibliography",
+                    as_attachment=True, download_name="bibtex.bib")
