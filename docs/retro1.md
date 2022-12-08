@@ -1,4 +1,4 @@
-Glad, Mad ja Sad.
+Glad, Mad ja Sad. (1. retro)
 
 Glad: CI&CD, Flawless UI  
 Mad: Pytest env webis, .env, Vesiputousmallinen sprintti, Chrome-salasana
