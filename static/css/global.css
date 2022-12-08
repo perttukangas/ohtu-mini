@@ -1,18 +1,12 @@
-body {
-  background-color: yellow;
-}
-
 .header {
   background-color: gray;
   overflow: hidden;
 }
 
 .header a {
-  float: left;
-  color: #ffffff;
   text-align: center;
-  font-size: 18px;
-  padding: 10px 10px;
+  text-decoration: none;
+  color: white;
 }
 
 nobr {
