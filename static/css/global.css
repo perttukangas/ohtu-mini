@@ -1,13 +1,31 @@
+* {
+  color: white;
+}
+
 body {
   --bg-back: #232429;
   --bg-front: #2d2e33;
   --shadow: #1a1a1a;
   background-color: var(--bg-back);
   font-family: "Poppins", sans-serif;
+
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 .header,
 .reference,
+.login,
+.container,
 .card {
   background-color: var(--bg-front);
   box-shadow: 0px 0px 8px var(--shadow);
@@ -48,19 +66,37 @@ summary {
   list-style: none;
 }
 
-p,
-a,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: white;
-}
-
 a {
   text-decoration: none;
+}
+
+button {
+  border-radius: 10px;
+  border: 1px solid #ff4b2b;
+  background-color: #ff4b2b;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button.ghost {
+  background-color: transparent;
+  border-color: #ffffff;
+}
+
+input {
+  background-color: var(--bg-front);
+  border: 1px solid white;
+  border-radius: 12px;
+  padding: 12px 15px;
+  margin: 8px 0;
 }
 
 /* Poppins -fonttimäärittelyt */

@@ -18,6 +18,10 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/global.css') }}"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/login.css') }}"
+    />
   </head>
 
   <body>
@@ -41,13 +45,80 @@
 
     {% else %}
     <!-- Kirjautumissivu -->
-    <nobr>kirjaudu</nobr>
-    <form action="/login" method="post">
-      <nobr>Käyttäjätunnus: <input type="text" name="username" /></nobr>
-      <nobr>Salasana: <input type="password" name="password" /></nobr>
-      <input type="submit" value="Kirjaudu" style="margin-top: 10px" />
-      <a href="/register">Luo uusi käyttäjä</a>
-    </form>
+    <div class="container" id="container">
+      <!-- Kirjautuminen -->
+      <div class="sign-in-container">
+        <h2 style="color: red">{{ message }}</h2>
+        <form action="/login" method="post">
+          <h1>Kirjautuminen</h1>
+          <input placeholder="Käyttäjänimi" type="text" name="username" />
+          <input placeholder="Salasana" type="password" name="password" />
+          <button>Kirjaudu</button>
+        </form>
+      </div>
+      <!-- Rekisteröityminen -->
+      <div class="sign-up-container">
+        <h2 style="color: red">{{ message }}</h2>
+        <form action="/register" method="POST">
+          <h1>Rekisteröityminen</h1>
+          <input
+            type="text"
+            placeholder="Käyttäjänimi"
+            name="username"
+            minlength="3"
+            maxlength="20"
+          />
+          <input
+            type="password"
+            placeholder="Salasana"
+            name="password1"
+            minlength="8"
+            maxlength="30"
+          />
+          <input
+            type="password"
+            placeholder="Salasana uudestaan"
+            name="password2"
+            minlength="8"
+            maxlength="30"
+          />
+          <button>Rekisteröidy</button>
+        </form>
+      </div>
+
+      <!-- Overlay (se värikäs osa) -->
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>
+              To keep connected with us please login with your personal info
+            </p>
+            <button class="ghost" id="signIn">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <button class="ghost" id="signUp">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const signUpButton = document.getElementById("signUp");
+      const signInButton = document.getElementById("signIn");
+      const container = document.getElementById("container");
+
+      signUpButton.addEventListener("click", () => {
+        container.classList.add("right-panel-active");
+      });
+
+      signInButton.addEventListener("click", () => {
+        container.classList.remove("right-panel-active");
+      });
+    </script>
+
     {% endif %}
 
     <main>{% block content %}{% endblock %}</main>
@@ -58,8 +129,3 @@
     </footer>
   </body>
 </html>
-
-<a href="/logout">Kirjaudu ulos</a>
-<nobr style="float: right"
-  >Kirjauduttu käyttäjänä: {{ session.user_username }}</nobr
->

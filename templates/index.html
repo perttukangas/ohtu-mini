@@ -1,9 +1,4 @@
-{% extends "layout.html" %} {% block content %}
-
-<h2 style="color: red">{{ message }}</h2>
-<h1>Tervetuloa etusivulle!</h1>
-
-{% if session.user_id %}
+{% extends "layout.html" %} {% block content %} {% if session.user_id %}
 <p>Lisää viite</p>
 <ul>
   <li>

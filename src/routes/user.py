@@ -8,20 +8,20 @@ def logout():
     user.logout()
     return redirect("/")
 
+
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
     password = request.form["password"]
     if user.login(username, password):
         return redirect("/")
-    return render_template("index.html", message="Käyttäjätunnus tai salasana virheellinen")
+    return render_template(
+        "index.html", message="Käyttäjätunnus tai salasana virheellinen"
+    )
 
 
-@app.route("/register", methods=["GET","POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "GET" and not user.logged_in():
-        return render_template("register.html")
-
     if request.method == "POST":
         username = request.form["username"]
         password1 = request.form["password1"]
@@ -36,8 +36,8 @@ def register():
             return redirect("/")
         return render_template(
             "register.html",
-            message="Yhteys palvelimeen katkesi - yritä uudelleen hetken kuluttua"
-            )
+            message="Yhteys palvelimeen katkesi - yritä uudelleen hetken kuluttua",
+        )
 
     return redirect("/")
 
@@ -45,12 +45,12 @@ def register():
 def validate_credentials(username, password1, password2):
     error_msg = ""
     if user.check_user_exists(username):
-        error_msg=f"Käyttätunnus '{username}' on jo käytössä"
+        error_msg = f"Käyttätunnus '{username}' on jo käytössä"
     elif password1 != password2:
         error_msg = "Salasanat eivät täsmää"
     elif len(password1) > 30 or len(password1) < 8:
-        error_msg="Salasanan tulee olla 8-30 merkkiä pitkä"
+        error_msg = "Salasanan tulee olla 8-30 merkkiä pitkä"
     elif len(username) > 20 or len(username) < 3:
-        error_msg="Käyttäjätunnuksen tulee olla 3-20 merkkiä pitkä"
+        error_msg = "Käyttäjätunnuksen tulee olla 3-20 merkkiä pitkä"
 
     return error_msg
