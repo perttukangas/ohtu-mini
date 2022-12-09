@@ -104,4 +104,6 @@ def file_downloads():
 @app.route("/download-selected", methods=["POST"])
 def download_selected():
     # tämä pitää toteuttaa
+    # alla olevalla saa kaikkien valituiden viitteiden id:t
+    # request.form.getlist('ref_checkbox')
     return redirect("/")
