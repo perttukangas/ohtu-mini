@@ -94,7 +94,7 @@ class TestReferenceService(unittest.TestCase):
         result = find_bib_by_doi("10.1145/2380552.2380613aaaaa")
         self.assertIn("ei löytynyt", result)
 
-    def test_reference_deletion_works(self):
+    def test_reference_deletion_works_only_with_correct_credentials(self):
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq3", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
@@ -104,7 +104,9 @@ class TestReferenceService(unittest.TestCase):
         id2 = get_references(self.user_id)[1]["id"]
         id3 = get_references(self.user_id)[2]["id"]
         id4 = get_references(self.user_id)[3]["id"]
-        delete_selected([id1])
+        delete_selected([self.user_id, id1])
         self.assertEqual(len(get_references(self.user_id)), 3)
-        delete_selected([id2, id3, id4])
-        self.assertEqual(len(get_references(self.user_id)), 0)
+        delete_selected([self.user_id, id2, id3])
+        self.assertEqual(len(get_references(self.user_id)), 1)
+        delete_selected([int(self.user_id)+1, id4])
+        self.assertEqual(len(get_references(self.user_id)), 1)

@@ -1,5 +1,6 @@
 from pg8000.exceptions import DatabaseError
 from flask import render_template, request, redirect, session, abort, send_file
+from collections import deque
 from app import app
 from ..services import reference
 from ..utils.reference_type import ReferenceType
@@ -49,9 +50,14 @@ def get_add_page(reference_name, message):
 
 @app.route("/delete", methods=["POST"])
 def delete():
-    selected = request.form.getlist('ref_checkbox')
-    if selected:
-        reference.delete_selected(selected)
+    selected = deque(request.form.getlist('ref_checkbox'))
+    user_id = session["user_id"]
+    if selected and user_id:
+        selected.appendleft(user_id)
+        try:
+            reference.delete_selected(selected)
+        except DatabaseError:
+            abort(403)
     return redirect("/")
 
 @app.route("/addbib", methods=["GET"])
