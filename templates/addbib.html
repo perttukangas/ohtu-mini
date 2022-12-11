@@ -1,9 +1,8 @@
 {% extends "layout.html" %} {% block content %} {% if session.user_id %}
-<h2 style="color: red" ;>{{ message }}</h2>
 
 <h1>Lisää viite BibTex -muodossa</h1>
 <form action="/addbibdb" method="POST">
-  <textarea id="addbib" name="addbib" rows="10" style="width: 100%">
+  <textarea id="addbib" name="addbib" rows="10">
 {% if fetchedbib %}
 {{ fetchedbib }}
 {% else %}
@@ -24,12 +23,7 @@
 
 <form action="finddoi" method="POST">
   <p>Hae viite dokumentin yksilöllisellä tunnisteella (DOI)</p>
-  <input
-    type="text"
-    name="doi"
-    style="width: 100%"
-    value="10.1145/2380552.2380613"
-  />
+  <input type="text" name="doi" value="10.1145/2380552.2380613" />
   <input type="submit" value="Hae" />
 </form>
 

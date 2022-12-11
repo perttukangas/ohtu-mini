@@ -48,78 +48,81 @@
     <div class="container" id="container">
       <!-- Kirjautuminen -->
       <div class="sign-in-container">
-        <h2 style="color: red">{{ message }}</h2>
-        <form action="/login" method="post">
-          <h1>Kirjautuminen</h1>
-          <input placeholder="Käyttäjänimi" type="text" name="username" />
-          <input placeholder="Salasana" type="password" name="password" />
+        <h1 id="toLoginForm">Kirjautuminen</h1>
+        <form class="sign-in-form" action="/login" method="post">
+          <div class="group">
+            <label>Käyttäjänimi</label>
+            <input type="text" name="username" />
+          </div>
+
+          <div class="group">
+            <label>Salasana</label>
+            <input type="password" name="password" />
+          </div>
+
           <button>Kirjaudu</button>
         </form>
       </div>
       <!-- Rekisteröityminen -->
       <div class="sign-up-container">
-        <h2 style="color: red">{{ message }}</h2>
-        <form action="/register" method="POST">
-          <h1>Rekisteröityminen</h1>
-          <input
-            type="text"
-            placeholder="Käyttäjänimi"
-            name="username"
-            minlength="3"
-            maxlength="20"
-          />
-          <input
-            type="password"
-            placeholder="Salasana"
-            name="password1"
-            minlength="8"
-            maxlength="30"
-          />
-          <input
-            type="password"
-            placeholder="Salasana uudestaan"
-            name="password2"
-            minlength="8"
-            maxlength="30"
-          />
+        <h1 id="toRegisterForm">Rekisteröityminen</h1>
+        <form class="sign-up-form" action="/register" method="POST">
+          <div class="group">
+            <label>Käyttäjänimi</label>
+            <input type="text" name="username" minlength="3" maxlength="20" />
+          </div>
+
+          <div class="group">
+            <label>Salasana</label>
+            <input
+              type="password"
+              name="password1"
+              minlength="8"
+              maxlength="30"
+            />
+          </div>
+
+          <div class="group">
+            <label>Salasana uudestaan</label>
+            <input
+              type="password"
+              name="password2"
+              minlength="8"
+              maxlength="30"
+            />
+          </div>
+
           <button>Rekisteröidy</button>
         </form>
-      </div>
-
-      <!-- Overlay (se värikäs osa) -->
-      <div class="overlay-container">
-        <div class="overlay">
-          <div class="overlay-panel overlay-left">
-            <h1>Welcome Back!</h1>
-            <p>
-              To keep connected with us please login with your personal info
-            </p>
-            <button class="ghost" id="signIn">Sign In</button>
-          </div>
-          <div class="overlay-panel overlay-right">
-            <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start journey with us</p>
-            <button class="ghost" id="signUp">Sign Up</button>
-          </div>
-        </div>
       </div>
     </div>
 
     <script>
-      const signUpButton = document.getElementById("signUp");
-      const signInButton = document.getElementById("signIn");
-      const container = document.getElementById("container");
+      const login = document.getElementById("toLoginForm");
+      const register = document.getElementById("toRegisterForm");
 
-      signUpButton.addEventListener("click", () => {
-        container.classList.add("right-panel-active");
-      });
+      login.addEventListener("click", openLogin);
+      register.addEventListener("click", openRegister);
 
-      signInButton.addEventListener("click", () => {
-        container.classList.remove("right-panel-active");
-      });
+      function openLogin() {
+        const container = document.getElementById("container");
+        if (container.classList.contains("sign-up-active")) {
+          container.classList.remove("sign-up-active");
+        }
+      }
+
+      function openRegister() {
+        const container = document.getElementById("container");
+        if (!container.classList.contains("sign-up-active")) {
+          container.classList.add("sign-up-active");
+        }
+      }
     </script>
 
     {% endif %}
+
+    <!-- Virheviestit -->
+    <h2 class="error-message">{{ message }}</h2>
 
     <main>{% block content %}{% endblock %}</main>
     <footer>

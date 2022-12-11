@@ -3,8 +3,14 @@
 }
 
 body {
+  --bg-back-hovered: #191a1d;
   --bg-back: #232429;
   --bg-front: #2d2e33;
+  --bg-highlight: #474950;
+
+  --primary: #ff4b2b;
+  --primary-hovered: #e93d1f;
+
   --shadow: #1a1a1a;
   background-color: var(--bg-back);
   font-family: "Poppins", sans-serif;
@@ -16,17 +22,29 @@ body {
   min-height: 100vh;
 }
 
+h1 {
+  margin: 4px;
+}
+h2 {
+  margin: 3px;
+}
+h3 {
+  margin: 2px;
+}
+
 footer {
-  position: fixed;
+  position: sticky;
+  margin-top: 32px;
   bottom: 0;
-  left: 0;
 }
 
 .header,
 .reference,
 .login,
 .container,
+.add-form,
 .card {
+  border-radius: 12px;
   background-color: var(--bg-front);
   box-shadow: 0px 0px 8px var(--shadow);
 }
@@ -41,7 +59,6 @@ footer {
 }
 
 .header a {
-  text-decoration: none;
   display: flex;
   align-items: center;
 }
@@ -72,31 +89,70 @@ a {
 
 button {
   border-radius: 10px;
-  border: 1px solid #ff4b2b;
-  background-color: #ff4b2b;
+  border: 1px solid var(--primary);
+  background-color: var(--primary);
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  transition: transform 80ms ease-in;
+  transition: all 80ms ease-in;
+  width: 100%;
+}
+
+button:hover {
+  background-color: var(--primary-hovered);
 }
 
 button:active {
+  background-color: var(--primary-hovered);
   transform: scale(0.95);
 }
 
 button.ghost {
   background-color: transparent;
-  border-color: #ffffff;
+  border-color: white;
 }
 
-input {
-  background-color: var(--bg-front);
+.group {
+  display: flex;
+  flex-direction: column;
+}
+.group > input {
+  background-color: var(--bg-back);
   border: 1px solid white;
   border-radius: 12px;
+  border-top-left-radius: 0;
   padding: 12px 15px;
-  margin: 8px 0;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.group > input:hover {
+  background-color: var(--bg-back-hovered);
+}
+
+.group > input:focus {
+  background-color: var(--bg-back-hovered);
+}
+
+.input-horizontal {
+  display: flex;
+  gap: 8px;
+}
+
+.input-horizontal > span {
+  transform: translateY(48%);
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 32px;
+}
+
+.error-message {
+  color: var(--primary);
 }
 
 /* Poppins -fonttimäärittelyt */

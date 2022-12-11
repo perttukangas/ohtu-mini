@@ -1,89 +1,71 @@
 .container {
   border-radius: 10px;
-  position: relative;
-  width: 768px;
-  max-width: 100%;
-  min-height: 480px;
-  overflow: hidden;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  position: relative;
+  overflow: hidden;
+  padding: 96px 84px;
 }
 
 .sign-in-container,
 .sign-up-container {
-  flex-basis: 50%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  padding: 0 50px;
-  height: 100%;
-  text-align: center;
+  transition: transform 0.4s ease-in-out;
 }
 
-.overlay-container {
+.sign-in-container {
+  transform: translateY(-25%);
+}
+
+.sign-up-container {
   position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  height: 100%;
-  overflow: hidden;
-  transition: transform 0.6s ease-in-out;
-}
-
-.container.right-panel-active .overlay-container {
-  transform: translateX(-100%);
-}
-
-.overlay {
-  background: #ff416c;
-  background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
-  background: linear-gradient(to right, #ff4b2b, #ff416c);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 0 0;
-  position: relative;
-  left: -100%;
-  height: 100%;
   width: 200%;
-  transform: translateX(0);
-  transition: transform 0.6s ease-in-out;
+  background-color: var(--bg-highlight);
+  transform: translateY(67%);
 }
 
-.container.right-panel-active .overlay {
-  transform: translateX(50%);
-}
-
-.overlay-panel {
-  position: absolute;
+.sign-in-form,
+.sign-up-form {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  padding: 0 40px;
-  text-align: center;
-  top: 0;
-  height: 100%;
-  width: 40%;
-  transform: translateX(0);
-  transition: transform 0.6s ease-in-out;
+  gap: 16px;
+  transition: opacity 0.5s ease-in-out;
 }
 
-.overlay-left {
-  transform: translateX(-20%);
+.sign-in-form {
+  opacity: 1;
 }
 
-.container.right-panel-active .overlay-left {
-  transform: translateX(0);
+.sign-up-form {
+  opacity: 0;
+  margin-bottom: 128px;
 }
 
-.overlay-right {
-  right: 0;
-  transform: translateX(0);
+.container.sign-up-active .sign-in-container {
+  transform: translateY(-37%);
 }
 
-.container.right-panel-active .overlay-right {
-  transform: translateX(20%);
+.container.sign-up-active .sign-up-container {
+  transform: translateY(0%);
+}
+
+.container.sign-up-active .sign-in-form {
+  opacity: 0;
+}
+
+.container.sign-up-active .sign-up-form {
+  opacity: 1;
+}
+
+#toLoginForm,
+#toRegisterForm {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
