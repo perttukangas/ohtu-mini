@@ -14,7 +14,15 @@
   </li>
   {% endfor %}
 </ul>
-
+<form action="/search" method="POST">
+  <h3>Etsi viitteitä tekijällä ja/tai vuosiluvulla:</h3>
+  <p>Tekijä (author)</p>
+  <input type="text" name="search_author" size="30"><br>
+  <p>Vuosi (esim. 20 tai 2022 tai 1955-70 tai 1960-2001</p>
+  <input type="text" name="search_year" size="30"><br>
+  <p></p>
+  <input type="submit" value="Etsi">
+</form>
 {% if added_references %}
   <form method="post" action="/">
     <p>Lisätyt viitteet</p>
@@ -38,6 +46,10 @@
     >
   </div>
 </body>
+<p></p>
+
 {% else %}
 <p>Et ole lisännyt vielä yhtään viitettä.</p>
+
+<p></p>
 {% endif %} {% endif %} {% endblock %}

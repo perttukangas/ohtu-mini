@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, session, abort, send_file
 from collections import deque
 from app import app
 from ..services import reference
+from ..utils import reference_type
 from ..utils.reference_type import ReferenceType
 from ..utils.validator import Validator
 
@@ -113,3 +114,22 @@ def download_selected():
     # alla olevalla saa kaikkien valituiden viitteiden id:t
     # request.form.getlist('ref_checkbox')
     return redirect("/")
+
+@app.route("/search", methods=["POST"])
+def search():
+    """Suorittaa haun tekijän ja/tai vuoden mukaan.
+    """
+
+    user_id = session["user_id"]
+    search_author = request.form["search_author"]
+    search_year = request.form["search_year"]
+    added_references = reference.get_references(user_id, search_author, search_year)
+
+    if len(added_references) > 0:
+        return render_template("index.html", references=reference_type.get_references_for_index(),
+    added_references=added_references)
+
+    else:
+        msg = "Hakusi ei tuottanut tulosta. Ole hyvä ja yritä uudelleen."
+        return render_template("index.html", message=msg, references=reference_type.get_references_for_index(),
+    added_references=added_references)
