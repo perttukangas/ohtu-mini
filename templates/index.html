@@ -16,12 +16,21 @@
 </ul>
 
 {% if added_references %}
-<p>Lisätyt viitteet</p>
-<ul>
-  {% for ref in added_references %}
-  <li>{{ ref }}</li>
-  {% endfor %}
-</ul>
+  <form method="post" action="/">
+    <p>Lisätyt viitteet</p>
+    <button type="button" onclick="checkAll(true)">Valitse kaikki</button>
+    <button type="button" onclick="checkAll(false)">Tyhjennä valinnat</button>
+    <ul>    
+    {% for ref in added_references %}
+      <li>
+        <input type="checkbox" id="referenceCheckbox" name="ref_checkbox" value="{{ ref['id'] }}">
+        {{ ref }}
+      </li>
+    {% endfor %}
+    </ul>
+    <button name="action" value="create" formaction="/download-selected">Luo BibTex-tiedosto valituista</button>
+    <button name="action" value="delete" formaction="/delete">Poista valitut viitteet</button>
+  </form><br>
 <body class="body">
   <div class="container" align="left">
     <a href="/download-file" target="blank"

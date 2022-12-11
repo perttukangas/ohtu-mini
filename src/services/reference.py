@@ -36,6 +36,18 @@ def get_references(user_id):
     con.close()
     return filtered_results
 
+def delete_selected(ids: list):
+    con = connect()
+    cur = con.cursor()
+    n = len(ids) - 1
+    # lisätään sql-kyselyyn tarpeeksi monta kertaa %s
+    query = 'DELETE FROM tblReference WHERE user_id=%s AND id IN ({})'.format(
+        ','.join(['%s']*n)
+        )
+    cur.execute(query, (ids))
+    con.commit()
+    con.close()
+
 def generate_bibtex_string(entries):
     db = BibDatabase()
     db.entries = from_db_to_bibtexparser(entries)
