@@ -6,10 +6,12 @@ body {
   --bg-back-hovered: #191a1d;
   --bg-back: #232429;
   --bg-front: #2d2e33;
-  --bg-highlight: #474950;
+  --bg-highlight: #443a3a;
 
   --primary: #ff4b2b;
   --primary-hovered: #e93d1f;
+
+  --secondary: #a5321d;
 
   --shadow: #1a1a1a;
   background-color: var(--bg-back);
@@ -51,6 +53,7 @@ footer {
 }
 
 .header {
+  min-width: 0;
   margin: 16px;
   padding: 16px;
   border-radius: 12px;
@@ -58,6 +61,7 @@ footer {
   gap: 32px;
   justify-content: space-between;
   align-items: center;
+  max-width: 768px;
 }
 
 .header a {
@@ -69,6 +73,18 @@ footer {
 .user {
   display: flex;
   gap: 16px;
+  min-width: 0;
+}
+
+.user > p {
+  flex-basis: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.user > button {
+  flex-shrink: 6;
 }
 
 .reference {
@@ -163,6 +179,7 @@ button.ghost {
 .input-horizontal {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .input-horizontal > span {
