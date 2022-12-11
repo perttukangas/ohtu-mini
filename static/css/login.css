@@ -8,24 +8,29 @@
   padding: 96px 84px;
 }
 
+#toRegisterForm {
+  width: 100%;
+  text-align: center;
+  height: 125%;
+}
+
 .sign-in-container,
 .sign-up-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   transition: transform 0.4s ease-in-out;
 }
 
 .sign-in-container {
-  transform: translateY(-25%);
+  transform: translateY(-15%);
 }
 
 .sign-up-container {
   position: absolute;
   width: 200%;
   background-color: var(--bg-highlight);
-  transform: translateY(67%);
+  transform: translateY(63%);
 }
 
 .sign-in-form,
@@ -48,11 +53,11 @@
 }
 
 .container.sign-up-active .sign-in-container {
-  transform: translateY(-37%);
+  transform: translateY(-36%);
 }
 
 .container.sign-up-active .sign-up-container {
-  transform: translateY(0%);
+  transform: translateY(-6.5%);
 }
 
 .container.sign-up-active .sign-in-form {

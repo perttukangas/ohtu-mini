@@ -39,16 +39,20 @@
 
       <div class="user">
         <p>{{ session.user_username }}</p>
-        <a href="/logout">Kirjaudu ulos</a>
+        <button onclick="location.href = '/logout'">Kirjaudu ulos</button>
       </div>
     </header>
 
     {% else %}
+
     <!-- Kirjautumissivu -->
     <div class="container" id="container">
       <!-- Kirjautuminen -->
       <div class="sign-in-container">
-        <h1 id="toLoginForm">Kirjautuminen</h1>
+        <div id="toLoginForm">
+          <h1>Kirjautuminen</h1>
+        </div>
+
         <form class="sign-in-form" action="/login" method="post">
           <div class="group">
             <label>Käyttäjänimi</label>
@@ -65,7 +69,10 @@
       </div>
       <!-- Rekisteröityminen -->
       <div class="sign-up-container">
-        <h1 id="toRegisterForm">Rekisteröityminen</h1>
+        <div id="toRegisterForm">
+          <h1>Rekisteröityminen</h1>
+        </div>
+
         <form class="sign-up-form" action="/register" method="POST">
           <div class="group">
             <label>Käyttäjänimi</label>

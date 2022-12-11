@@ -23,13 +23,13 @@ body {
 }
 
 h1 {
-  margin: 4px;
+  margin: 8px;
 }
 h2 {
-  margin: 3px;
+  margin: 6px;
 }
 h3 {
-  margin: 2px;
+  margin: 4px;
 }
 
 footer {
@@ -43,6 +43,7 @@ footer {
 .login,
 .container,
 .add-form,
+.add-bib,
 .card {
   border-radius: 12px;
   background-color: var(--bg-front);
@@ -54,6 +55,7 @@ footer {
   padding: 16px;
   border-radius: 12px;
   display: flex;
+  gap: 32px;
   justify-content: space-between;
   align-items: center;
 }
@@ -61,6 +63,7 @@ footer {
 .header a {
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
 .user {
@@ -69,18 +72,40 @@ footer {
 }
 
 .reference {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   border-radius: 16px;
   margin-top: 12px;
   padding: 16px;
 }
 
+.ref-id {
+  background-color: var(--primary);
+  padding: 2px;
+  border-radius: 6px;
+}
+
+.index {
+  max-width: 768px;
+}
+
 ul {
   list-style: none;
+  padding-left: 0;
+}
+
+details div {
+  background-color: var(--bg-back);
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 2px;
 }
 
 summary {
   cursor: pointer;
-  list-style: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 a {
@@ -151,8 +176,27 @@ button.ghost {
   padding: 16px 32px;
 }
 
+.add-bib {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 32px;
+}
+
+.add-bib-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 32px;
+}
+
 .error-message {
   color: var(--primary);
+}
+
+textarea {
+  background-color: var(--bg-back);
+  border: 1px solid white;
 }
 
 /* Poppins -fonttimäärittelyt */
