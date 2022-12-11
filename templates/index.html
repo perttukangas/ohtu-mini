@@ -1,6 +1,7 @@
 {% extends "layout.html" %} {% block content %} {% if session.user_id %}
-<div class="index">
+<form class="index" method="post" action="/">
   <div class="toolbar">
+    <!-- Lisäykset dropdown -->
     <div class="dropdown">
       <div class="dropdown-box">Lisää viite</div>
       <ul class="dropdown-content">
@@ -13,13 +14,30 @@
         </li>
         {% endfor %}
       </ul>
+
+      <button type="button" onclick="checkAll(true)">Valitse kaikki</button>
+      <button type="button" onclick="checkAll(false)">Tyhjennä valinnat</button>
+
+      <button name="action" value="create" formaction="/download-selected">
+        Luo BibTex-tiedosto valituista
+      </button>
+      <button name="action" value="delete" formaction="/delete">
+        Poista valitut viitteet
+      </button>
     </div>
   </div>
+  <p>Lisätyt viitteet</p>
 
   {% if added_references %}
   <ul>
     {% for ref in added_references %}
     <li class="reference">
+      <input
+        type="checkbox"
+        id="referenceCheckbox"
+        name="ref_checkbox"
+        value="{{ ref['id'] }}"
+      />
       <div>
         <span class="ref-id">{{ ref.reference_id }}</span>
         <span class="ref-author">
@@ -51,13 +69,7 @@
     </li>
     {% endfor %}
   </ul>
-  <div>
-    <button onclick="location.href = '/download-file'">
-      Lataa BibTex -tiedosto
-    </button>
-  </div>
   {% else %}
   <p>Et ole lisännyt vielä yhtään viitettä.</p>
-</div>
-
+</form>
 {% endif %} {% endif %} {% endblock %}

@@ -1,5 +1,6 @@
 from pg8000.exceptions import DatabaseError
 from flask import render_template, request, redirect, session, abort, send_file
+from collections import deque
 from app import app
 from ..services import reference
 from ..utils.reference_type import ReferenceType
@@ -47,6 +48,18 @@ def get_add_page(reference_name, message):
         message=message
         )
 
+@app.route("/delete", methods=["POST"])
+def delete():
+    selected = deque(request.form.getlist('ref_checkbox'))
+    user_id = session["user_id"]
+    if selected and user_id:
+        selected.appendleft(user_id)
+        try:
+            reference.delete_selected(selected)
+        except DatabaseError:
+            abort(403)
+    return redirect("/")
+
 @app.route("/addbib", methods=["GET"])
 def addbib():
     return render_template("addbib.html")
@@ -93,3 +106,10 @@ def file_downloads():
     file_obj = reference.get_bibtex_in_bytes(bibtex_string)
     return send_file(file_obj, mimetype="text/bibliography",
                     as_attachment=True, download_name="bibtex.bib")
+
+@app.route("/download-selected", methods=["POST"])
+def download_selected():
+    # tämä pitää toteuttaa
+    # alla olevalla saa kaikkien valituiden viitteiden id:t
+    # request.form.getlist('ref_checkbox')
+    return redirect("/")
