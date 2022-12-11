@@ -1,16 +1,20 @@
 {% extends "layout.html" %} {% block content %} {% if session.user_id %}
 <div class="index">
-  <p>Lisää viite</p>
-  <ul>
-    <li>
-      <a href="/addbib">BibTex -muodossa tai DOI -tunnisteella</a>
-    </li>
-    {% for ref in references %}
-    <li>
-      <a href="/add/{{ ref[0] }}">{{ ref[1] }}</a>
-    </li>
-    {% endfor %}
-  </ul>
+  <div class="toolbar">
+    <div class="dropdown">
+      <div class="dropdown-box">Lisää viite</div>
+      <ul class="dropdown-content">
+        <li>
+          <a href="/addbib">BibTex -muodossa tai DOI -tunnisteella</a>
+        </li>
+        {% for ref in references %}
+        <li>
+          <a href="/add/{{ ref[0] }}">{{ ref[1] }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 
   {% if added_references %}
   <ul>
