@@ -1,6 +1,6 @@
+from collections import deque
 from pg8000.exceptions import DatabaseError
 from flask import render_template, request, redirect, session, abort, send_file
-from collections import deque
 from app import app
 from ..services import reference
 from ..utils.reference_type import ReferenceType
