@@ -1,4 +1,3 @@
-
 import bibtexparser
 from bibtexparser.bibdatabase import BibDatabase
 from bibtexparser.bwriter import BibTexWriter
@@ -20,20 +19,49 @@ def generate_add_sql(columns):
     formatter = ", ".join("%s" for _ in range(len(columns)))
     return f"INSERT INTO tblReference (user_id, reference_id, reference_name, {column}) VALUES (%s, %s, %s, {formatter})"
 
-def get_references(user_id):
+
+def get_references(user_id, search_author="", search_year=""):
     con = connect()
     cur = con.cursor()
-    cur.execute("SELECT * FROM tblReference WHERE user_id=%s", (user_id,))
+    years = search_year.split("-")
+    if search_author == "" and search_year == "":
+        cur.execute("SELECT * FROM tblReference WHERE user_id=%s", (user_id,))
 
-    filtered_results = []
+    elif len(years) == 1 and years[0] != "":
+        if search_author != "" and search_year != "":
+            cur.execute("SELECT * FROM tblReference WHERE user_id=%s AND author LIKE %s AND year=%s", (user_id, f"%{search_author}%", years[0],))
+        elif search_year != "":
+            cur.execute("SELECT * FROM tblReference WHERE user_id=%s AND year=%s", (user_id, years[0],))
+    
+    elif len(years) == 2:
+        if len(years[1]) == 2:
+            years[1] = years[0][0:2] + years[1]
+        years[0] = str(int(years[0])-1)
+        years[1] = str(int(years[1])+1)
+        if search_author != "" and search_year != "":
+            cur.execute("SELECT * FROM tblReference WHERE user_id=%s AND author LIKE %s AND year BETWEEN %s AND %s", (user_id, f"%{search_author}%", years[0], years[1],))
+        else:
+            cur.execute("SELECT * FROM tblReference WHERE user_id=%s AND year BETWEEN %s AND %s", (user_id, years[0], years[1],))
+
+    else:
+        cur.execute("SELECT * FROM tblReference WHERE user_id=%s AND author LIKE %s", (user_id, f"%{search_author}%",))
+
     results = _get_keys_and_values(cur)
+    con.close()
+    filtered_results = []
     for dict in results:
         new_dict = {}
         for (key, value) in dict.items():
             if value and not None:
                 new_dict[key] = value
         filtered_results.append(new_dict)
-    con.close()
+    return filtered_results
+
+def get_selected(entries, id_list):
+    filtered_results = []
+    for entry in entries:
+        if str(entry["id"]) in id_list:
+            filtered_results.append(entry)
     return filtered_results
 
 def delete_selected(ids: list):

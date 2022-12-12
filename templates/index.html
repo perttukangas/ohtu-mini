@@ -1,4 +1,15 @@
 {% extends "layout.html" %} {% block content %} {% if session.user_id %}
+
+<form action="/search" method="POST">
+  <h3>Etsi viitteitä tekijällä ja/tai vuosiluvulla:</h3>
+  <p>Tekijä (author)</p>
+  <input type="text" name="search_author" size="30" /><br />
+  <p>Vuosi (esim. 2022 tai 1960-2001)</p>
+  <input type="text" name="search_year" size="30" /><br />
+  <p></p>
+  <input type="submit" value="Etsi" />
+</form>
+
 <form class="index" method="post" action="/">
   <div class="toolbar">
     <!-- Lisäykset dropdown -->

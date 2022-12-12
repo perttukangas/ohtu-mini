@@ -126,13 +126,13 @@ class TestReferenceRoute(unittest.TestCase):
     def test_addbib_template(self):
         resp = self.client.get("/addbib")
         self.assertEqual(resp.status_code, 200)
-    
+
     def test_finddoi_empty_doi(self):
         resp = self.client.post("/finddoi", data=dict(
                 doi="",
             ), follow_redirects=True)
         self.assertIn("Et täyttänyt DOI kenttää", resp.text)
-    
+
     def test_finddoi_valid_doi(self):
         resp = self.client.post("/finddoi", data=dict(
                 doi="10.1145/2380552.2380613",
@@ -191,3 +191,32 @@ class TestReferenceRoute(unittest.TestCase):
             ), follow_redirects=True)
 
         self.assertIn("on jo käytössä!", resp.text)
+
+    def test_validation_search_form(self):
+        resp = self.client.post("/search", data=dict(
+                search_author="author",
+                search_year="15",
+            ), follow_redirects=True)
+        self.assertIn("Tervetuloa etusivulle", resp.text)
+
+    def test_validation_error_search_form(self):
+        resp = self.client.post("/search", data=dict(
+                search_author="",
+                search_year="",
+            ), follow_redirects=True)
+        self.assertIn("Hakusi ei tuottanut tulosta. Ole hyvä ja yritä uudelleen.",
+        resp.text)
+
+        resp = self.client.post("/search", data=dict(
+                search_author="",
+                search_year="2022-",
+            ), follow_redirects=True)
+        self.assertIn( "Annoit vuoden väärässä muodossa. Ole hyvä ja yritä uudelleen.",
+        resp.text)
+
+        resp = self.client.post("/search", data=dict(
+                search_author="",
+                search_year="aAA",
+            ), follow_redirects=True)
+        self.assertIn("Vuosi tulee antaa kokonaislukuna. Ole hyvä ja yritä uudelleen.",
+        resp.text)

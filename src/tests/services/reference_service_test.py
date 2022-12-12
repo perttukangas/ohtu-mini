@@ -10,6 +10,7 @@ class TestReferenceService(unittest.TestCase):
         self.con = connect()
         self.cur = self.con.cursor()
         self.cur.execute("DELETE FROM tblReference")
+        self.cur.execute("ALTER SEQUENCE tblReference_id_seq RESTART WITH 1")
         self.cur.execute("DELETE FROM Users")
         self.cur.execute("INSERT INTO Users (username, password) VALUES (%s, %s) RETURNING id", ("user", "12345678"))
         result = self.cur.fetchone()
@@ -61,6 +62,50 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(refs[1]["author"], "jotai3")
         self.assertEqual(refs[1]["journal"], "jotai4")
 
+    def test_get_references_wrong_user_id(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai3", "jotai4"])
+
+        wrong_user_id = self.user_id + 1
+        refs = get_references(wrong_user_id)
+
+        self.assertEqual(len(refs), 0)
+
+    def test_get_references_search(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal", "title", "year"],
+        ["jotai1", "jotai2", "uusi testi", "2002"])
+        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal", "title", "year"],
+        ["jotai3", "jotai4", "testi", "2022"])
+        refs = get_references(self.user_id, "", "2002")
+        self.assertEqual(len(refs), 1)
+
+        self.assertEqual(refs[0]["user_id"], self.user_id)
+        self.assertEqual(refs[0]["reference_id"], "uniq1")
+        self.assertEqual(refs[0]["reference_name"], "ARTICLE")
+        self.assertEqual(refs[0]["author"], "jotai1")
+        self.assertEqual(refs[0]["journal"], "jotai2")
+        self.assertEqual(refs[0]["title"], "uusi testi")
+        self.assertEqual(refs[0]["year"], "2002")
+
+        refs = get_references(self.user_id, "jotai", "2002-2022")
+        self.assertEqual(len(refs), 2)
+
+        self.assertEqual(refs[0]["user_id"], self.user_id)
+        self.assertEqual(refs[0]["reference_id"], "uniq1")
+        self.assertEqual(refs[0]["reference_name"], "ARTICLE")
+        self.assertEqual(refs[0]["author"], "jotai1")
+        self.assertEqual(refs[0]["journal"], "jotai2")
+        self.assertEqual(refs[0]["title"], "uusi testi")
+        self.assertEqual(refs[0]["year"], "2002")
+
+        self.assertEqual(refs[1]["user_id"], self.user_id)
+        self.assertEqual(refs[1]["reference_id"], "uniq2")
+        self.assertEqual(refs[1]["reference_name"], "ARTICLE")
+        self.assertEqual(refs[1]["author"], "jotai3")
+        self.assertEqual(refs[1]["journal"], "jotai4")
+        self.assertEqual(refs[1]["title"], "testi")
+        self.assertEqual(refs[1]["year"], "2022")
+
     def test_generate_bibtex_string(self):
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         ref = get_references(self.user_id)
@@ -110,3 +155,40 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(len(get_references(self.user_id)), 1)
         delete_selected([int(self.user_id)+1, id4])
         self.assertEqual(len(get_references(self.user_id)), 1)
+
+    def test_reference_deletion_works_only_with_correct_user_id(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+
+        id1 = get_references(self.user_id)[0]["id"]
+        id2 = get_references(self.user_id)[1]["id"]
+
+        wrong_user_id = self.user_id + 1
+        delete_selected([wrong_user_id, id1, id2])
+
+        self.assertEqual(len(get_references(self.user_id)), 2)
+        
+    def test_filter_selected_from_references(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq3", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq4", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        selected_id = ['1','3']
+        entries = get_references(self.user_id)
+        filtered = get_selected(entries, selected_id)
+        self.assertEqual(filtered[0]["id"], 1)
+        self.assertEqual(filtered[1]["id"], 3)
+        
+    def test_filter_selected_works_only_with_correct_user_id(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+
+        id1 = get_references(self.user_id)[0]["id"]
+        id2 = get_references(self.user_id)[1]["id"]
+
+        wrong_user_id = self.user_id + 1
+
+        entries = get_references(wrong_user_id)
+        filtered = get_selected(entries, [id1, id2])
+
+        self.assertEqual(len(filtered), 0)
