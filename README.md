@@ -1,12 +1,9 @@
 # ohtu-mini
 
 ![Deployment passing](https://github.com/Perttu-Kangas/ohtu-mini/actions/workflows/pipeline.yml/badge.svg)
-![Codecov coverage](https://codecov.io/gh/Perttu-Kangas/ohtu-mini/branch/main/graph/badge.svg?token=5JFTXJ2SI4)
+[![Codecov coverage](https://codecov.io/gh/Perttu-Kangas/ohtu-mini/branch/main/graph/badge.svg?token=5JFTXJ2SI4)](https://codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
 
 Käynnistä sovellus osoitteessa https://ohtu-mini.fly.dev/
-
-Tarkastele testikattavuutta
-[täältä](https://app.codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
 
 ### Kehityksen seuraaminen
 
@@ -23,5 +20,4 @@ Tarkastele testikattavuutta
 
 ### Retrospektiivit
 
-- [Retro 1](./docs/retro.md)
-
+- [Retro 1](./docs/retro1.md)
