@@ -1,65 +1,99 @@
-{% extends "layout.html" %} {% block content %}
-<h2 style="color: red">{{ message }}</h2>
-<h1>Tervetuloa etusivulle!</h1>
+{% extends "layout.html" %} {% block content %} {% if session.user_id %}
 
-{% if session.user_id %}
-<p>Lisää viite</p>
-<ul>
-  <li>
-    <a href="/addbib">BibTex -muodossa tai DOI -tunnisteella</a>
-  </li>
-  {% for ref in references %}
-  <li>
-    <a href="/add/{{ ref[0] }}">{{ ref[1] }}</a>
-  </li>
-  {% endfor %}
-</ul>
-<form action="/search" method="POST">
-  <h3>Etsi viitteitä tekijällä ja/tai vuosiluvulla:</h3>
-  <p>Tekijä (author)</p>
-  <input type="text" name="search_author" size="30" /><br />
-  <p>Vuosi (esim. 2022 tai 1960-2001)</p>
-  <input type="text" name="search_year" size="30" /><br />
-  <p></p>
-  <input type="submit" value="Etsi" />
-</form>
-{% if added_references %}
-<form method="post" action="/">
+<form class="index" method="post" action="/">
+  <div class="toolbar">
+    <div class="toolbar-row search-bar">
+      <!-- Hakupalkki -->
+      <div class="group">
+        <label>Tekijä (author)</label>
+        <input type="text" name="search_author" size="30" />
+      </div>
+
+      <div class="group">
+        <label>Vuosi (esim. 2022 tai 1960-2001)</label>
+        <input type="text" name="search_year" size="30" />
+      </div>
+
+      <button name="action" value="create" formaction="/search">Hae</button>
+    </div>
+
+    <div class="toolbar-row">
+      <!-- Checkbox hommelit -->
+      <button type="button" onclick="checkAll(true)">Valitse kaikki</button>
+      <button type="button" onclick="checkAll(false)">Tyhjennä valinnat</button>
+
+      <!-- Lisäykset dropdown -->
+      <div class="dropdown">
+        <input type="checkbox" id="dropdown-checkbox" />
+        <label for="dropdown-checkbox" id="dropdown-label">Lisää viite</label>
+        <ul class="dropdown-content">
+          <li>
+            <a href="/addbib">BibTex -muodossa tai DOI -tunnisteella</a>
+          </li>
+          {% for ref in references %}
+          <li>
+            <a href="/add/{{ ref[0] }}">{{ ref[1] }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Viitteiden lataus ja poisto -->
+      <button name="action" value="create" formaction="/download-selected">
+        Luo BibTex-tiedosto valituista
+      </button>
+      <button name="action" value="delete" formaction="/delete">
+        Poista valitut viitteet
+      </button>
+    </div>
+  </div>
   <p>Lisätyt viitteet</p>
-  <button type="button" onclick="checkAll(true)">Valitse kaikki</button>
-  <button type="button" onclick="checkAll(false)">Tyhjennä valinnat</button>
+
+  {% if added_references %}
   <ul>
     {% for ref in added_references %}
-    <li>
+    <li class="reference">
       <input
         type="checkbox"
         id="referenceCheckbox"
         name="ref_checkbox"
         value="{{ ref['id'] }}"
       />
-      {{ ref }}
+
+      <div class="reference-info">
+        <div>
+          <span class="ref-id">{{ ref.reference_id }}</span>
+          <span class="ref-author">
+            {% if 'author' in ref %} {{ ref.author }} {% else %} {{ ref.editor}}
+            {% endif %}
+          </span>
+        </div>
+
+        <div>
+          <span class="ref-title">
+            {% if 'booktitle' in ref %} {{ ref.booktitle }} {% else %} {{
+            ref.title }} {% endif %}
+          </span>
+
+          <span class="ref-time">
+            {% if 'year' in ref or 'month' in ref %} {{ ref.year }} {{ ref.month
+            }} {% endif %}
+          </span>
+        </div>
+
+        <details>
+          <summary>Lisää tietoja</summary>
+          <div>
+            {% for field in ref %} {% if field not in ["id", "user_id"] %} {{
+            field }}: {{ ref[field] }} <br />
+            {% endif %} {% endfor %}
+          </div>
+        </details>
+      </div>
     </li>
     {% endfor %}
   </ul>
-  <button name="action" value="create" formaction="/download-selected">
-    Luo BibTex-tiedosto valituista
-  </button>
-  <button name="action" value="delete" formaction="/delete">
-    Poista valitut viitteet
-  </button>
+  {% else %}
+  <p>Et ole lisännyt vielä yhtään viitettä.</p>
 </form>
-<br />
-<body class="body">
-  <div class="container" align="left">
-    <a href="/download-file" target="blank"
-      ><button class="btn btn-default">Lataa BibTex -tiedosto</button></a
-    >
-  </div>
-</body>
-<p></p>
-
-{% else %}
-<p>Et ole lisännyt vielä yhtään viitettä.</p>
-
-<p></p>
 {% endif %} {% endif %} {% endblock %}

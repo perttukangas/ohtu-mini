@@ -1,0 +1,77 @@
+.container {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 96px 84px;
+}
+
+#toLoginForm,
+#toRegisterForm {
+  width: 200%;
+  text-align: center;
+  height: 125%;
+}
+
+.sign-in-container,
+.sign-up-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.4s ease-in-out;
+}
+
+.sign-in-container {
+  transform: translateY(-15%);
+}
+
+.sign-up-container {
+  position: absolute;
+  width: 200%;
+  background-color: var(--secondary);
+  transform: translateY(63%);
+}
+
+.sign-in-form,
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.sign-in-form {
+  opacity: 1;
+}
+
+.sign-up-form {
+  opacity: 0;
+  margin-bottom: 128px;
+}
+
+.container.sign-up-active .sign-in-container {
+  transform: translateY(-36%);
+}
+
+.container.sign-up-active .sign-up-container {
+  transform: translateY(-6.5%);
+}
+
+.container.sign-up-active .sign-in-form {
+  opacity: 0;
+}
+
+.container.sign-up-active .sign-up-form {
+  opacity: 1;
+}
+
+#toLoginForm,
+#toRegisterForm {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
