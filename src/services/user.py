@@ -13,12 +13,12 @@ def register(username, password):
             "INSERT INTO Users (username, password) VALUES (%s, %s)", (username, hash_value)
         )
         con.commit()
-        con.close()
-    except:
-        print(Exception)
-        con.close()
+        return True
+    except Exception as ex:
+        print(ex)
         return False
-    return True
+    finally:
+        con.close()
 
 def check_user_exists(username):
     con = connect()
@@ -29,14 +29,14 @@ def check_user_exists(username):
         )
         user = cur.fetchone()
         if user is None:
-            con.close()
             return False
-        con.close()
         return user
-    except:
-        print(Exception)
-        con.close()
+    except Exception as ex:
+        print(ex)
         return False
+    finally:
+        con.close()
+
 
 def login(username, password):
     user = check_user_exists(username)
@@ -57,6 +57,6 @@ def logout():
         del session["user_username"]
         del session["csrf_token"]
         return True
-    except:
-        print(Exception)
+    except Exception as ex:
+        print(ex)
         return False
