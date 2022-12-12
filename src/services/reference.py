@@ -20,17 +20,17 @@ def generate_add_sql(columns):
     return f"INSERT INTO tblReference (user_id, reference_id, reference_name, {column}) VALUES (%s, %s, %s, {formatter})"
 
 
-def get_references(user_id, search_author="", search_year=""):
+def get_references(user_id, search_author=None, search_year=""):
     """Funktio, joka palauttaa listan lisätyistä viitteistä sekä hakee tietokannasta tiedot annettujen ehtojen mukaan.
     """
 
     con = connect()
     cur = con.cursor()
     years = search_year.split("-")
-    if search_author == "" and search_year == "":
+    if search_author == None and search_year == "":
         cur.execute("SELECT * FROM tblReference WHERE user_id=%s", (user_id,))
     elif len(years) == 1 and years[0] != "":
-        if search_author != "" and search_year != "":
+        if search_author != None and search_year != "":
             cur.execute("SELECT * FROM tblReference WHERE user_id=%s and author ilike %s and year ilike %s", (user_id, f"%{search_author}%", f"%{years[0]}%",))
         elif search_year != "":
             cur.execute("SELECT * FROM tblReference WHERE user_id=%s and year ilike %s", (user_id, f"%{years[0]}%",))
@@ -39,13 +39,13 @@ def get_references(user_id, search_author="", search_year=""):
             years[1] = years[0][0:2] + years[1]
         years[0] = str(int(years[0])-1)
         years[1] = str(int(years[1])+1)
-        if search_author != "" and search_year != "":
+        if search_author != None and search_year != "":
             cur.execute("SELECT * FROM tblReference WHERE user_id=%s and author ilike %s and year between %s and %s", (user_id, f"%{search_author}%", f"%{years[0]}%",f"%{years[1]}%",))
         else:
             cur.execute("SELECT * FROM tblReference WHERE user_id=%s and year between %s and %s", (user_id, f"%{years[0]}%", f"%{years[1]}%",))
     else:
         cur.execute("SELECT * FROM tblReference WHERE user_id=%s and author ILIKE %s", (user_id, f"%{search_author}%",))
-    
+
     results = _get_keys_and_values(cur)
     con.close()
     filtered_results = []

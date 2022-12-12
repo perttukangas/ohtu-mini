@@ -191,3 +191,37 @@ class TestReferenceRoute(unittest.TestCase):
             ), follow_redirects=True)
 
         self.assertIn("on jo käytössä!", resp.text)
+
+    def test_validation_search_form(self):
+        resp = self.client.post("/search", data=dict(
+                search_author="author",
+                search_year="15",
+            ), follow_redirects=True)
+        self.assertIn("Tervetuloa etusivulle", resp.text)
+
+        resp = self.client.post("/search", data=dict(
+                search_author="",
+                search_year="1950-2022",
+            ), follow_redirects=True)
+        self.assertIn("Tervetuloa etusivulle", resp.text)
+
+        resp = self.client.post("/search", data=dict(
+                search_author="aut",
+                search_year="",
+            ), follow_redirects=True)
+        self.assertIn("Tervetuloa etusivulle", resp.text)
+
+    def test_validation_error_search_form(self):
+        resp = self.client.post("/search", data=dict(
+                search_author="",
+                search_year="",
+            ), follow_redirects=True)
+        self.assertIn("Hakusi ei tuottanut tulosta. Ole hyvä ja yritä uudelleen.",
+        resp.text)
+
+        resp = self.client.post("/search", data=dict(
+                search_author="pekka",
+                search_year="",
+            ), follow_redirects=True)
+        self.assertIn("Hakusi ei tuottanut tulosta. Ole hyvä ja yritä uudelleen.",
+        resp.text)
