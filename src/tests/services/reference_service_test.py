@@ -62,12 +62,21 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(refs[1]["author"], "jotai3")
         self.assertEqual(refs[1]["journal"], "jotai4")
 
+    def test_get_references_wrong_user_id(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai3", "jotai4"])
+
+        wrong_user_id = self.user_id + 1
+        refs = get_references(wrong_user_id)
+
+        self.assertEqual(len(refs), 0)
+
     def test_get_references_search(self):
-        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal","title", "year"],
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal", "title", "year"],
         ["jotai1", "jotai2", "uusi testi", "2002"])
-        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal","title", "year"],
+        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal", "title", "year"],
         ["jotai3", "jotai4", "testi", "2022"])
-        refs = get_references(self.user_id, None, "2002")
+        refs = get_references(self.user_id, "", "2002")
         self.assertEqual(len(refs), 1)
 
         self.assertEqual(refs[0]["user_id"], self.user_id)

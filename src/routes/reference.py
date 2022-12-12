@@ -127,7 +127,7 @@ def search():
     search_author = request.form["search_author"]
     search_year = request.form["search_year"]
 
-    if search_year.__contains__("-") and search_year[-1] == "-":
+    if "-" in search_year and search_year[-1] == "-":
         msg = "Annoit vuoden väärässä muodossa. Ole hyvä ja yritä uudelleen."
         return render_template("index.html", message=msg,
         references=reference_type.get_references_for_index(),
@@ -143,11 +143,10 @@ def search():
 
     if len(added_references) > 0 and len(search_author) > 0 or len(search_year) > 0:
         return render_template("index.html",
-        references=reference_type.get_references_for_index(),
-        added_references=added_references)
+            references=reference_type.get_references_for_index(),
+            added_references=added_references)
 
-    else:
-        msg = "Hakusi ei tuottanut tulosta. Ole hyvä ja yritä uudelleen."
-        return render_template("index.html", message=msg,
+    msg = "Hakusi ei tuottanut tulosta. Ole hyvä ja yritä uudelleen."
+    return render_template("index.html", message=msg,
         references=reference_type.get_references_for_index(),
         added_references=added_references)
