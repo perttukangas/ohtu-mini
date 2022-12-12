@@ -109,7 +109,13 @@ def file_downloads():
 
 @app.route("/download-selected", methods=["POST"])
 def download_selected():
-    # tämä pitää toteuttaa
-    # alla olevalla saa kaikkien valituiden viitteiden id:t
-    # request.form.getlist('ref_checkbox')
-    return redirect("/")
+    selected = request.form.getlist('ref_checkbox')
+    if len(selected) == 0:
+        return redirect("/")
+    user_id = session["user_id"]
+    entries = reference.get_references(user_id)
+    filtered = reference.get_selected(entries, selected)
+    bibtex_string = reference.generate_bibtex_string(filtered)
+    file_obj = reference.get_bibtex_in_bytes(bibtex_string)
+    return send_file(file_obj, mimetype="text/bibliography",
+                    as_attachment=True, download_name="bibtex.bib")

@@ -10,6 +10,7 @@ class TestReferenceService(unittest.TestCase):
         self.con = connect()
         self.cur = self.con.cursor()
         self.cur.execute("DELETE FROM tblReference")
+        self.cur.execute("ALTER SEQUENCE tblReference_id_seq RESTART WITH 1")
         self.cur.execute("DELETE FROM Users")
         self.cur.execute("INSERT INTO Users (username, password) VALUES (%s, %s) RETURNING id", ("user", "12345678"))
         result = self.cur.fetchone()
@@ -110,3 +111,15 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(len(get_references(self.user_id)), 1)
         delete_selected([int(self.user_id)+1, id4])
         self.assertEqual(len(get_references(self.user_id)), 1)
+        
+    def test_filter_selected_from_references(self):
+        add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq3", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        add_reference(self.user_id, "uniq4", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
+        selected_id = ['1','3']
+        entries = get_references(self.user_id)
+        filtered = get_selected(entries, selected_id)
+        self.assertEqual(filtered[0]["id"], 1)
+        self.assertEqual(filtered[1]["id"], 3)
+        
