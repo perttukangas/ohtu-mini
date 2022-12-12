@@ -3,6 +3,7 @@ from pg8000.exceptions import DatabaseError
 from flask import render_template, request, redirect, session, abort, send_file
 from app import app
 from ..services import reference
+from ..utils import reference_type
 from ..utils.reference_type import ReferenceType
 from ..utils.validator import Validator
 
@@ -119,3 +120,33 @@ def download_selected():
     file_obj = reference.get_bibtex_in_bytes(bibtex_string)
     return send_file(file_obj, mimetype="text/bibliography",
                     as_attachment=True, download_name="bibtex.bib")
+
+@app.route("/search", methods=["POST"])
+def search():
+    user_id = session["user_id"]
+    search_author = request.form["search_author"]
+    search_year = request.form["search_year"]
+
+    if "-" in search_year and search_year[-1] == "-":
+        msg = "Annoit vuoden väärässä muodossa. Ole hyvä ja yritä uudelleen."
+        return render_template("index.html", message=msg,
+        references=reference_type.get_references_for_index(),
+        added_references=reference.get_references(user_id))
+
+    if any(alpha.isalpha() for alpha in search_year) is True:
+        msg = "Vuosi tulee antaa kokonaislukuna. Ole hyvä ja yritä uudelleen."
+        return render_template("index.html", message=msg,
+        references=reference_type.get_references_for_index(),
+        added_references=reference.get_references(user_id))
+
+    added_references = reference.get_references(user_id, search_author, search_year)
+
+    if len(added_references) > 0 and len(search_author) > 0 or len(search_year) > 0:
+        return render_template("index.html",
+            references=reference_type.get_references_for_index(),
+            added_references=added_references)
+
+    msg = "Hakusi ei tuottanut tulosta. Ole hyvä ja yritä uudelleen."
+    return render_template("index.html", message=msg,
+        references=reference_type.get_references_for_index(),
+        added_references=added_references)
