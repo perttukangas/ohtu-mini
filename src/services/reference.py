@@ -57,6 +57,13 @@ def get_references(user_id, search_author=None, search_year=""):
         filtered_results.append(new_dict)
     return filtered_results
 
+def get_selected(entries, id_list):
+    filtered_results = []
+    for entry in entries:
+        if str(entry["id"]) in id_list:
+            filtered_results.append(entry)
+    return filtered_results
+
 def delete_selected(ids: list):
     con = connect()
     cur = con.cursor()
