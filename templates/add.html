@@ -1,38 +1,65 @@
 {% extends "layout.html" %} {% block content %} {% if session.user_id %}
-<h2 style="color: red" ;>{{ message }}</h2>
-<h1>Lisää viite: {{ type[1] }}</h1>
-
-<form action="/add" method="POST">
+<form class="add-form" action="/add" method="POST">
+  <h1>Lisää viite: {{ type[1] }}</h1>
   <h3>Pakolliset kentät:</h3>
-  <p>Viitteen ID, jota käytetään lähteeseen viitatessa: <b>/cite{ID}</b></p>
-  <input type="text" name="reference_id" style="width: 100%" />
+  <div class="group">
+    <label>
+      Viitteen ID, jota käytetään lähteeseen viitatessa (/cite{ID})
+    </label>
+    <input type="text" name="reference_id" />
+  </div>
 
   {% for req in required %} {% if req[0]|length == 2 %}
 
-  <p>{{ req[0][1] }}</p>
-  <input type="text" name="{{ req[0][0] }}" style="width: 100%" />
-  <p>TAI</p>
-  <p>{{ req[1][1] }}</p>
-  <input type="text" name="{{ req[1][0] }}" style="width: 100%" />
+  <div class="input-horizontal">
+    <div class="group">
+      <label> {{ req[0][1] }} </label>
+      <input type="text" name="{{ req[0][0] }}" />
+    </div>
+
+    <span>tai</span>
+
+    <div class="group">
+      <label>{{ req[1][1] }}</label>
+      <input type="text" name="{{ req[1][0] }}" />
+    </div>
+  </div>
+
   {% else %}
-  <p>{{ req[1] }}</p>
-  <input type="text" name="{{ req[0] }}" style="width: 100%" />
+  <div class="group">
+    <label> {{ req[1] }} </label>
+    <input type="text" name="{{ req[0] }}" />
+  </div>
+
   {% endif %} {% endfor %}
 
   <h3>Valinnaiset kentät:</h3>
   {% for opt in optional %} {% if opt[0]|length == 2 %}
-  <p>{{ opt[0][1] }}</p>
-  <input type="text" name="{{ opt[0][0] }}" style="width: 100%" />
-  <p>TAI</p>
-  <p>{{ opt[1][1] }}</p>
-  <input type="text" name="{{ opt[1][0] }}" style="width: 100%" />
+  <div class="input-horizontal">
+    <div class="group">
+      <label> {{ opt[0][1] }} </label>
+      <input type="text" name="{{ opt[0][0] }}" />
+    </div>
+
+    <span>tai</span>
+
+    <div class="group">
+      <label> {{ opt[1][1] }} </label>
+      <input type="text" name="{{ opt[1][0] }}" />
+    </div>
+  </div>
+
   {% else %}
-  <p>{{ opt[1] }}</p>
-  <input type="text" name="{{ opt[0] }}" style="width: 100%" />
+  <div class="group">
+    <label> {{ opt[1] }} </label>
+    <input type="text" name="{{ opt[0] }}" />
+  </div>
+
   {% endif %} {% endfor %}
 
-  <input type="submit" value="Lisää" />
+  <button>Lisää</button>
   <input type="hidden" name="reference_name" value="{{ type[0] }}" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
+
 {% endif %} {% endblock %}

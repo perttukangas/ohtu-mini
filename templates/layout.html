@@ -1,34 +1,145 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ohtu-mini</title>
+    <title>Viitevarasto</title>
 
+    <!-- Favicon -->
+    <link
+      href="{{ url_for('static', filename='icon/favicon.ico') }}"
+      rel="icon"
+      sizes="76x76"
+    />
+
+    <!-- Mobilili viewport fix  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- CSS -->
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/main.css') }}"
+      href="{{ url_for('static', filename='css/global.css') }}"
     />
-    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/login.css') }}"
+    />
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/main.js') }}"
+    ></script>
   </head>
 
   <body>
-    <div class="navbar">
-        <a href="/">Etusivulle</a>
-        {% if session.user_id %}
-            <a class="right" href="/logout">Kirjaudu ulos</a>
-            <nobr style="float: right;">Kirjauduttu käyttäjänä: {{ session.user_username }}</nobr>
-        {% else %}
-        <nobr>kirjaudu</nobr>
-        <form class="right" action="/login" method="post">
-            <nobr>Käyttäjätunnus: <input type="text" name="username"></nobr>
-            <nobr>Salasana: <input type="password" name="password"></nobr>
-            <input type="submit" value="Kirjaudu" style="margin-top:10px;">
-            <a class="right" href="/register">Luo uusi käyttäjä</a>
+    {% if session.user_id %}
+    <header class="header">
+      <a href="/">
+        <img
+          src="/static/icon/viitevarasto.svg"
+          alt="Logo"
+          width="32"
+          height="32"
+        />
+        <h1>Viitevarasto</h1>
+      </a>
+
+      <div class="user">
+        <p>{{ session.user_username }}</p>
+        <button onclick="location.href = '/logout'">Kirjaudu ulos</button>
+      </div>
+    </header>
+
+    {% else %}
+
+    <!-- Kirjautumissivu -->
+    <div class="container" id="container">
+      <!-- Kirjautuminen -->
+      <div class="sign-in-container">
+        <div id="toLoginForm">
+          <h1>Kirjautuminen</h1>
+        </div>
+
+        <form class="sign-in-form" action="/login" method="post">
+          <div class="group">
+            <label>Käyttäjänimi</label>
+            <input type="text" name="username" />
+          </div>
+
+          <div class="group">
+            <label>Salasana</label>
+            <input type="password" name="password" />
+          </div>
+
+          <button>Kirjaudu</button>
         </form>
-        {% endif %}
+      </div>
+      <!-- Rekisteröityminen -->
+      <div class="sign-up-container">
+        <div id="toRegisterForm">
+          <h1>Rekisteröityminen</h1>
+        </div>
+
+        <form class="sign-up-form" action="/register" method="POST">
+          <div class="group">
+            <label>Käyttäjänimi</label>
+            <input type="text" name="username" minlength="3" maxlength="20" />
+          </div>
+
+          <div class="group">
+            <label>Salasana</label>
+            <input
+              type="password"
+              name="password1"
+              minlength="8"
+              maxlength="30"
+            />
+          </div>
+
+          <div class="group">
+            <label>Salasana uudestaan</label>
+            <input
+              type="password"
+              name="password2"
+              minlength="8"
+              maxlength="30"
+            />
+          </div>
+
+          <button class="ghost">Rekisteröidy</button>
+        </form>
+      </div>
     </div>
+
+    <script>
+      const login = document.getElementById('toLoginForm')
+      const register = document.getElementById('toRegisterForm')
+
+      login.addEventListener('click', openLogin)
+      register.addEventListener('click', openRegister)
+
+      function openLogin() {
+        const container = document.getElementById('container')
+        if (container.classList.contains('sign-up-active')) {
+          container.classList.remove('sign-up-active')
+        }
+      }
+
+      function openRegister() {
+        const container = document.getElementById('container')
+        if (!container.classList.contains('sign-up-active')) {
+          container.classList.add('sign-up-active')
+        }
+      }
+    </script>
+
+    {% endif %}
+
+    <!-- Virheviestit -->
+    <h2 class="error-message">{{ message }}</h2>
+
     <main>{% block content %}{% endblock %}</main>
     <footer>
-      <a href="https://github.com/Perttu-Kangas/ohtu-mini">Tarkastele lähdekoodia</a>
+      <a href="https://github.com/Perttu-Kangas/ohtu-mini"
+        >Tarkastele lähdekoodia</a
+      >
     </footer>
   </body>
 </html>

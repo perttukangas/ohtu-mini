@@ -77,7 +77,7 @@ class TestReferenceRoute(unittest.TestCase):
                 publisher="publisher",
                 year="15",
             ), follow_redirects=True)
-        self.assertIn("Tervetuloa etusivulle", resp.text)
+        self.assertIn("Lisätyt viitteet", resp.text)
     
     def test_validation_error_in_form(self):
         resp = self.client.post("/add", data=dict(
@@ -153,7 +153,7 @@ class TestReferenceRoute(unittest.TestCase):
         resp = self.client.post("/addbibdb", data=dict(
                 addbib=bib,
             ), follow_redirects=True)
-        self.assertIn("Tervetuloa etusivulle", resp.text)
+        self.assertIn("Lisätyt viitteet", resp.text)
 
     def test_add_by_doi_invalid(self):
         bib = """@article{CitekeyArticle, author=\"P. J. Cohen\",
@@ -197,7 +197,7 @@ class TestReferenceRoute(unittest.TestCase):
                 search_author="author",
                 search_year="15",
             ), follow_redirects=True)
-        self.assertIn("Tervetuloa etusivulle", resp.text)
+        self.assertIn("user", resp.text)
 
     def test_validation_error_search_form(self):
         resp = self.client.post("/search", data=dict(

@@ -1,0 +1,337 @@
+* {
+  color: var(--text);
+}
+
+body {
+  --text: white;
+  --bg-back-hovered: #191a1d;
+  --bg-back: #232429;
+  --bg-front: #2d2e33;
+  --bg-highlight: #443a3a;
+
+  --primary: #0082ff;
+  --primary-hovered: #166fc2;
+
+  --secondary: #0011ff;
+
+  --shadow: #1a1a1a;
+  background-color: var(--bg-back);
+  font-family: "Poppins", sans-serif;
+
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h1 {
+  margin: 8px;
+}
+
+h2 {
+  margin: 6px;
+}
+
+h3 {
+  margin: 4px;
+}
+
+footer {
+  position: sticky;
+  margin-top: 32px;
+  bottom: 0;
+}
+
+.header,
+.reference,
+.login,
+.container,
+.add-form,
+.add-bib,
+.dropdown-box,
+.dropdown-content,
+.card {
+  border-radius: 12px;
+  background-color: var(--bg-front);
+  box-shadow: 0px 0px 8px var(--shadow);
+}
+
+.header {
+  min-width: 0;
+  margin: 16px;
+  padding: 16px;
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 768px;
+}
+
+.header a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.user {
+  display: flex;
+  gap: 16px;
+  min-width: 0;
+}
+
+.user>p {
+  flex-basis: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.user>button {
+  flex-shrink: 6;
+}
+
+.reference {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  border-radius: 16px;
+  margin-top: 12px;
+  padding: 16px;
+  padding-left: 32px;
+}
+
+.reference>input[type=checkbox] {
+  scale: 2;
+}
+
+.reference-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ref-id {
+  background-color: var(--primary);
+  padding: 2px;
+  border-radius: 6px;
+}
+
+.index {
+  max-width: 768px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+details div {
+  background-color: var(--bg-back);
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 2px;
+}
+
+summary {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border-radius: 10px;
+  border: 1px solid var(--primary);
+  background-color: var(--primary);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 80ms ease-in;
+  width: 100%;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--primary-hovered);
+}
+
+button:active {
+  background-color: var(--primary-hovered);
+  transform: scale(0.95);
+}
+
+button.ghost {
+  background-color: transparent;
+  border-color: white;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.group>input {
+  background-color: var(--bg-back);
+  border: 1px solid white;
+  border-radius: 12px;
+  border-top-left-radius: 0;
+  padding: 12px 15px;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.group>input:hover {
+  background-color: var(--bg-back-hovered);
+}
+
+.group>input:focus {
+  background-color: var(--bg-back-hovered);
+}
+
+.input-horizontal {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.input-horizontal>span {
+  transform: translateY(48%);
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 32px;
+}
+
+.add-bib {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 32px;
+}
+
+.add-bib-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 32px;
+}
+
+.error-message {
+  color: var(--primary);
+}
+
+textarea {
+  background-color: var(--bg-back);
+  border: 1px solid white;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.toolbar-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.search-bar>button {
+  transform: translateY(10px);
+}
+
+.dropdown {
+  position: relative;
+}
+
+#dropdown-checkbox {
+  display: none;
+}
+
+#dropdown-label {
+  display: block;
+  border-radius: 10px;
+  background-color: var(--bg-front);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: background-color 0.15s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#dropdown-label:hover {
+  background-color: var(--bg-highlight);
+}
+
+#dropdown-checkbox:checked~#dropdown-label {
+  background-color: var(--bg-highlight);
+}
+
+#dropdown-checkbox:checked~.dropdown-content {
+  display: flex;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 0.8;
+  left: 0;
+  background-color: var(--bg-front);
+  min-width: 160px;
+  padding: 12px 16px;
+  z-index: 1;
+
+  flex-direction: column;
+  gap: 2px;
+}
+
+
+
+/* Poppins -fonttimäärittelyt */
+/* devanagari */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/static/fonts/poppins-0.woff2") format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8,
+    U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/static/fonts/poppins-1.woff2") format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/static/fonts/poppins-2.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
