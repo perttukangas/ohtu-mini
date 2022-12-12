@@ -1,5 +1,6 @@
 from collections import deque
 from pg8000.exceptions import DatabaseError
+from bibtexparser.bibdatabase import UndefinedString
 from flask import render_template, request, redirect, session, abort, send_file
 from app import app
 from ..services import reference
@@ -75,29 +76,42 @@ def find_doi():
 
 @app.route("/addbibdb", methods=["POST"])
 def addbibdb():
+    try:
+        bib_database = reference.get_bibtex_database(request.form.get("addbib"))
+    except UndefinedString:
+        return render_template("addbib.html", message="BibTex merkkijono oli väärin")
 
-    bib_database = reference.get_bibtex_database(request.form.get("addbib"))
     db_entries = reference.from_bibtexparser_to_db(bib_database.entries)
+
+    if len(db_entries) < 1:
+        return render_template("addbib.html", message="BibTex merkkijono oli väärin tai tyhjä")
 
     for entry in db_entries:
 
-        validator = Validator(entry)
-
-        type_name = entry.get("reference_name")
-        ref_id = entry.get("reference_id")
-
-        if validator.run_all_validators():
-            if validator.error == "404":
-                abort(404)
-            return render_template("addbib.html", message=validator.error)
-
-        user_id = session["user_id"]
-        try:
-            reference.add_reference(user_id, ref_id, type_name, validator.columns, validator.values)
-        except DatabaseError:
-            return render_template("addbib.html", message=f"ID '{ref_id}' on jo käytössä!")
+        result = loop_bib_entries(entry)
+        if result is not None:
+            return result
 
     return redirect("/")
+
+def loop_bib_entries(entry):
+    validator = Validator(entry)
+
+    type_name = entry.get("reference_name")
+    ref_id = entry.get("reference_id")
+
+    if validator.run_all_validators():
+        if validator.error == "404":
+            abort(404)
+        return render_template("addbib.html", message=validator.error)
+
+    user_id = session["user_id"]
+    try:
+        reference.add_reference(user_id, ref_id, type_name, validator.columns, validator.values)
+    except DatabaseError:
+        return render_template("addbib.html", message=f"ID '{ref_id}' on jo käytössä!")
+
+    return None
 
 @app.route("/download-file", methods=["GET"])
 def file_downloads():

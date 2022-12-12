@@ -22,7 +22,10 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/login.css') }}"
     />
-    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/main.js') }}"
+    ></script>
   </head>
 
   <body>
@@ -106,23 +109,23 @@
     </div>
 
     <script>
-      const login = document.getElementById("toLoginForm");
-      const register = document.getElementById("toRegisterForm");
+      const login = document.getElementById('toLoginForm')
+      const register = document.getElementById('toRegisterForm')
 
-      login.addEventListener("click", openLogin);
-      register.addEventListener("click", openRegister);
+      login.addEventListener('click', openLogin)
+      register.addEventListener('click', openRegister)
 
       function openLogin() {
-        const container = document.getElementById("container");
-        if (container.classList.contains("sign-up-active")) {
-          container.classList.remove("sign-up-active");
+        const container = document.getElementById('container')
+        if (container.classList.contains('sign-up-active')) {
+          container.classList.remove('sign-up-active')
         }
       }
 
       function openRegister() {
-        const container = document.getElementById("container");
-        if (!container.classList.contains("sign-up-active")) {
-          container.classList.add("sign-up-active");
+        const container = document.getElementById('container')
+        if (!container.classList.contains('sign-up-active')) {
+          container.classList.add('sign-up-active')
         }
       }
     </script>

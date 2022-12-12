@@ -17,8 +17,8 @@ class TestUserRoute(unittest.TestCase):
 
     def test_register_post_valid(self):
         resp = self.client.post("/register", data=dict(
-          username="thisisvalid", 
-          password1="topsekret", 
+          username="thisisvalid",
+          password1="topsekret",
           password2="topsekret"
           ))
         
@@ -26,8 +26,8 @@ class TestUserRoute(unittest.TestCase):
 
     def test_register_post_invalid_username(self):
         resp = self.client.post("/register", data=dict(
-          username="th", 
-          password1="topsekret", 
+          username="th",
+          password1="topsekret",
           password2="topsekret"
           ))
         

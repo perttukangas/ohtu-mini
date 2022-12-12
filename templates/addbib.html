@@ -5,17 +5,17 @@
   <form class="add-bib-form" action="/addbibdb" method="POST">
     <textarea id="addbib" name="addbib" rows="10">
       {% if fetchedbib %}
-        {{ fetchedbib }}
+{{ fetchedbib }}
       {% else %}
-        @article{CitekeyArticle,
-          author   = "P. J. Cohen",
-          title    = "The independence of the continuum hypothesis",
-          journal  = "Proceedings of the National Academy of Sciences",
-          year     = 1963,
-          volume   = "50",
-          number   = "6",
-          pages    = "1143--1148",
-        }
+@article{CitekeyArticle,
+  author   = "P. J. Cohen",
+  title    = "The independence of the continuum hypothesis",
+  journal  = "Proceedings of the National Academy of Sciences",
+  year     = 1963,
+  volume   = "50",
+  number   = "6",
+  pages    = "1143--1148",
+}
       {% endif %}
     </textarea>
 

@@ -9,10 +9,10 @@ body {
   --bg-front: #2d2e33;
   --bg-highlight: #443a3a;
 
-  --primary: #ff4b2b;
-  --primary-hovered: #e93d1f;
+  --primary: #0082ff;
+  --primary-hovered: #166fc2;
 
-  --secondary: #a5321d;
+  --secondary: #0011ff;
 
   --shadow: #1a1a1a;
   background-color: var(--bg-back);
@@ -28,9 +28,11 @@ body {
 h1 {
   margin: 8px;
 }
+
 h2 {
   margin: 6px;
 }
+
 h3 {
   margin: 4px;
 }
@@ -78,24 +80,35 @@ footer {
   min-width: 0;
 }
 
-.user > p {
+.user>p {
   flex-basis: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.user > button {
+.user>button {
   flex-shrink: 6;
 }
 
 .reference {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  gap: 32px;
   border-radius: 16px;
   margin-top: 12px;
   padding: 16px;
+  padding-left: 32px;
+}
+
+.reference>input[type=checkbox] {
+  scale: 2;
+}
+
+.reference-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .ref-id {
@@ -141,6 +154,7 @@ button {
   text-transform: uppercase;
   transition: all 80ms ease-in;
   width: 100%;
+  cursor: pointer;
 }
 
 button:hover {
@@ -161,7 +175,8 @@ button.ghost {
   display: flex;
   flex-direction: column;
 }
-.group > input {
+
+.group>input {
   background-color: var(--bg-back);
   border: 1px solid white;
   border-radius: 12px;
@@ -170,11 +185,11 @@ button.ghost {
   transition: background-color 0.15s ease-in-out;
 }
 
-.group > input:hover {
+.group>input:hover {
   background-color: var(--bg-back-hovered);
 }
 
-.group > input:focus {
+.group>input:focus {
   background-color: var(--bg-back-hovered);
 }
 
@@ -184,7 +199,7 @@ button.ghost {
   flex-wrap: wrap;
 }
 
-.input-horizontal > span {
+.input-horizontal>span {
   transform: translateY(48%);
 }
 
@@ -220,31 +235,71 @@ textarea {
 
 .toolbar {
   display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.toolbar-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.search-bar>button {
+  transform: translateY(10px);
 }
 
 .dropdown {
   position: relative;
 }
 
-.dropdown-box {
-  padding: 16px;
-  border-radius: 8px;
+#dropdown-checkbox {
+  display: none;
+}
+
+#dropdown-label {
+  display: block;
+  border-radius: 10px;
+  background-color: var(--bg-front);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: background-color 0.15s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#dropdown-label:hover {
+  background-color: var(--bg-highlight);
+}
+
+#dropdown-checkbox:checked~#dropdown-label {
+  background-color: var(--bg-highlight);
+}
+
+#dropdown-checkbox:checked~.dropdown-content {
+  display: flex;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  top: 0;
+  top: 0.8;
   left: 0;
   background-color: var(--bg-front);
   min-width: 160px;
   padding: 12px 16px;
   z-index: 1;
+
+  flex-direction: column;
+  gap: 2px;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
+
 
 /* Poppins -fonttimäärittelyt */
 /* devanagari */
@@ -257,6 +312,7 @@ textarea {
   unicode-range: U+0900-097F, U+1CD0-1CF6, U+1CF8-1CF9, U+200C-200D, U+20A8,
     U+20B9, U+25CC, U+A830-A839, U+A8E0-A8FB;
 }
+
 /* latin-ext */
 @font-face {
   font-family: "Poppins";
@@ -267,6 +323,7 @@ textarea {
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
     U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* latin */
 @font-face {
   font-family: "Poppins";

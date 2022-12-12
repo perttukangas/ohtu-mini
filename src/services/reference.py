@@ -112,7 +112,7 @@ def get_bibtex_database(data):
 def find_bib_by_doi(doi):
     response = requests.get(f"http://dx.doi.org/{doi}", 
                 headers={"Accept": "text/bibliography; style=bibtex",
-                "Content-Type": "text/html; charset=utf-8"})
+                "Content-Type": "text/bibliography; charset=utf-8"})
     
     # https://stackoverflow.com/questions/44203397/python-requests-get-returns-improperly-decoded-text-instead-of-utf-8
     # :)

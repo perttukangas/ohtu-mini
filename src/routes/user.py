@@ -30,12 +30,12 @@ def register():
         error_msg = validate_credentials(username, password1, password2)
 
         if error_msg != "":
-            return render_template("register.html", message=error_msg)
+            return render_template("index.html", message=error_msg)
 
         if user.register(username, password1):
             return redirect("/")
         return render_template(
-            "register.html",
+            "index.html",
             message="Yhteys palvelimeen katkesi - yritä uudelleen hetken kuluttua",
         )
 
