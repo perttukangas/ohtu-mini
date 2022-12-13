@@ -7,6 +7,16 @@ from enum import Enum
 # https://www.bibtex.com/format/
 
 class ReferenceType(Enum):
+    """Enum, jolla generoidaan sivustolle eri Bib -tyyppejä. Enumin
+    pohjalta generoidaan myös lisäyksen lomakesivustot.
+
+    [0] = Tyypin suomennos / nimi
+    [1] = pakolliset kentät listana
+    [2] = valinnaiset kentät listana
+
+    Listan sisällä tuple = TAI kenttä. Eli jompikumpi annetuista kentistä
+    täytyy olla täytettynä, mutta ei kumpikin
+    """
 
     ARTICLE = ("Artikkeli (@article)",
     ["author", "journal", "title", "year"],
@@ -91,8 +101,6 @@ def get_form_message(type):
     cache["publisher"] = "Kustantaja, esim. 'Otava'"
     cache["school"] = "Oppilaitos, esim. 'HY' tai 'Helsingin yliopisto'"
     cache["series"] = "Kirjallisuussarja, esim. 'LNCS'"
-    # HUOM: 'title'-kentässä isot kirjaimet tulee laittaa {} sisälle, esim {S}uomi
-    # Muuten BibTex muuttaa ne pikkukirjaimiksi
     cache["title"] = "Otsikko"
     cache["type"] = "Tarkempia tietoja työstä. esim. 'kandidaatin tutkielma'"
     cache["volume"] = "Lehden niteen numero, esim. '3'"
