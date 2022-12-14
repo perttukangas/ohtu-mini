@@ -63,6 +63,10 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(refs[1]["journal"], "jotai4")
 
     def test_get_references_wrong_user_id(self):
+        """Vaatimukset:
+        Käyttäjälle näytetään vain omia viitteitä
+        """
+
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai3", "jotai4"])
 
@@ -72,6 +76,12 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(len(refs), 0)
 
     def test_get_references_search(self):
+        """Vaatimukset:
+        Vuosiluku voidaan antaa muodossa `50-200`, jolloin vain viitteet joiden year on 50 - 200 näkyvät
+        Vuosiluku voidaan antaa muodossa `50`, jolloin vain viitteet joiden year on 50
+        Kirjoittaja voidaan antaa muodossa `Mat`, jolloin viitteet joiden `author` -kenttä sisältää `Mat` merkkijonon näytetään
+        """
+
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal", "title", "year"],
         ["jotai1", "jotai2", "uusi testi", "2002"])
         add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal", "title", "year"],
@@ -87,7 +97,7 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(refs[0]["title"], "uusi testi")
         self.assertEqual(refs[0]["year"], "2002")
 
-        refs = get_references(self.user_id, "jotai", "2002-2022")
+        refs = get_references(self.user_id, "JOTAI", "2002-2022")
         self.assertEqual(len(refs), 2)
 
         self.assertEqual(refs[0]["user_id"], self.user_id)
@@ -140,6 +150,10 @@ class TestReferenceService(unittest.TestCase):
         self.assertIn("ei löytynyt", result)
 
     def test_reference_deletion_works_only_with_correct_credentials(self):
+        """Vaatimukset:
+        Vain valitut viitteet poistetaan
+        """
+
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq3", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
@@ -157,6 +171,10 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(len(get_references(self.user_id)), 1)
 
     def test_reference_deletion_works_only_with_correct_user_id(self):
+        """Vaatimukset:
+        Käyttäjä on viitteiden omistaja
+        """
+
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
 
@@ -169,6 +187,10 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(len(get_references(self.user_id)), 2)
         
     def test_filter_selected_from_references(self):
+        """Vaatimukset:
+        Vain valitut viitteet viedään BibTex-tiedostoon
+        """
+
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq3", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
@@ -180,6 +202,10 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(filtered[1]["id"], 3)
         
     def test_filter_selected_works_only_with_correct_user_id(self):
+        """Vaatimukset:
+        Käyttäjä on viitteiden omistaja
+        """
+
         add_reference(self.user_id, "uniq1", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
         add_reference(self.user_id, "uniq2", "ARTICLE", ["author", "journal"], ["jotai1", "jotai2"])
 

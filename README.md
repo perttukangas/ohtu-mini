@@ -1,18 +1,18 @@
 # ohtu-mini
 
 ![Deployment passing](https://github.com/Perttu-Kangas/ohtu-mini/actions/workflows/pipeline.yml/badge.svg)
-![Codecov coverage](https://codecov.io/gh/Perttu-Kangas/ohtu-mini/branch/main/graph/badge.svg?token=5JFTXJ2SI4)
+[![Codecov coverage](https://codecov.io/gh/Perttu-Kangas/ohtu-mini/branch/main/graph/badge.svg?token=5JFTXJ2SI4)](https://codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
 
 Käynnistä sovellus osoitteessa https://ohtu-mini.fly.dev/
 
-Tarkastele testikattavuutta
-[täältä](https://app.codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
+Tarkastele testikattavuutta [täältä](https://app.codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
 
 ### Kehityksen seuraaminen
 
 - [Sprint Backlog](https://github.com/orgs/Perttu-Kangas/projects/5)
 - [Product Backlog](https://github.com/orgs/Perttu-Kangas/projects/3)
-- [Burndown](https://docs.google.com/spreadsheets/d/1K0tKkEaEDCDPjoNIQM4OD2D97GUcdu-iTdonzo5Ue-I/edit?usp=sharing)
+- [Burndown](https://docs.google.com/spreadsheets/d/1K0tKkEaEDCDPjoNIQM4OD2D97GUcdu-iTdonzo5Ue-I)
+- [Burndown Sprint 3](https://docs.google.com/spreadsheets/d/1D-1qNb3hNNvEjGIEabCOtez4Z-PaYJhj4aBt_YK2SFY)
 
 ### Dokumentaatio
 
@@ -23,5 +23,6 @@ Tarkastele testikattavuutta
 
 ### Retrospektiivit
 
-- [Retro 1](./docs/retro.md)
+- [Retro 1](./docs/retro1.md)
+- [Retro 2](./docs/retro2.md)
 
