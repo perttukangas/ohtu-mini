@@ -9,11 +9,11 @@ Etsi pari DOI-tunniste esimerkkiä joita käytetään demossa (nää pitää tes
 
 Joku formin kautta lisättävä.
 
-BOOK:
-id: cc
-Author: Steve McConnel
-Book name: Code Complete
-Publisher: Microsoft Press
+BOOK:  
+id: cc  
+Author: Steve McConnel  
+Book name: Code Complete  
+Publisher: Microsoft Press  
 Date: 1993
 
 Kokeillaan alla olevat jutut että se nyt toimii lol.
