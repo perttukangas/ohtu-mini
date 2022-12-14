@@ -11,7 +11,7 @@ Joku formin kautta lisättävä.
 
 BOOK:  
 id: cc  
-Author: Steve McConnel  
+Author: Steve McConnell  
 Book name: Code Complete  
 Publisher: Microsoft Press  
 Date: 1993
