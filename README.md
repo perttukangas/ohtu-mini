@@ -25,3 +25,4 @@ Tarkastele testikattavuutta [täältä](https://app.codecov.io/gh/Perttu-Kangas/
 
 - [Retro 1](./docs/retro1.md)
 - [Retro 2](./docs/retro2.md)
+
