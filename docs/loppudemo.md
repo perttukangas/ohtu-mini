@@ -5,11 +5,16 @@ Käyttäjälle pitää lisätä jotain valmista fiksua dataa.
 Etsi pari DOI-tunniste esimerkkiä joita käytetään demossa (nää pitää testata).
 
 (DOI)  
-(DOI)
+10.1109/5.771073
 
 Joku formin kautta lisättävä.
 
-(Tähän ne tiedot ja tyypit)
+BOOK:
+id: cc
+Author: Steve McConnel
+Book name: Code Complete
+Publisher: Microsoft Press
+Date: 1993
 
 Kokeillaan alla olevat jutut että se nyt toimii lol.
 
