@@ -133,12 +133,6 @@ class TestReferenceRoute(unittest.TestCase):
             ), follow_redirects=True)
         self.assertIn("Et täyttänyt DOI kenttää", resp.text)
 
-    def test_finddoi_valid_doi(self):
-        resp = self.client.post("/finddoi", data=dict(
-                doi="10.1145/2380552.2380613",
-            ), follow_redirects=True)
-        self.assertIn("@article{2012", resp.text)
-
     def test_add_by_doi_valid(self):
         bib = """@article{CitekeyArticle, author=\"P. J. Cohen\",
             title=\"The independence of the continuum hypothesis\",
