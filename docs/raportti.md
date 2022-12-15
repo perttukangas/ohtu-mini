@@ -4,74 +4,94 @@
 
 ### Sprintti 1
 
-Vesiputousmalli
+Ensimmäisessä sprintissä tekniikka tuotti paljon ongelmia. Alustustoimenpiteet
+osoittautuivat yllättävän haastaviksi, ja uusien kirjastojen käyttö hidasti
+kehitystä paljon. Tästä johtunee se, että emme saaneet yhtään user storya
+valmiiksi ensimmäisessä sprintissä. Kohti sprintin loppua kehitystä hidasti
+entisestään se, että käytimme testaustietokantana netissä olevaa tietokantaa
+(testien suoritus venyi noin minuuttiin 😂). Tässä kanssa tuli ainakin neljä
+ylityötuntia tiimillä yhteensä.
 
-Alustustoimenpiteet venyi
-
-User storyja ei saatu valmiiksi
-
-Testaaminen oli hidasta, ja testaus-strategiaa ei sinänsä mietitty
-
-Estimointi meni höpöksi
-
-Kirjastot ja tekniikka uutta -> hankalaa tehdä asioita (pitää lukea paljon
-dokkareita)
+Ensimmäinen sprintti myös tuntui vesiputousmaiselta: tiesimme että projektissa
+tapahtuu isoja muutoksia, joten teimme sovitut työtehtävät porraistetusti.
 
 ### Sprintti 2
 
-Alkupuolisko vesiputous taas,
+Tämänkin sprintin alkupuoliskolla oli samaa vesiputousmaisuutta, koska
+vaihdoimme muutamia kirjastoja joiden takia koko projektin koodi muuttui hieman.
+Tähän kirjastojen vaihtamiseen kului yllättävän paljon aikaa.
 
-Tietokannan lokalisointi söi paljon aikaa
+(Estimointi ei vieläkään ollut meidän vahvuus 😄)
 
-Tietokanta-clientin vaihtaminen (pg8000 -> dbapi)
+Toisessa sprintissä huomasimme, että emme olleet puhuneet testaus-strategiasta
+yhtään, jonka takia meidän e2e-, integraatio- ja yksikkötestaaminen oli
+epäselvää ja hieman hajanaista.
 
 ### Sprintti 3
 
-Fronttiin jQuery -systeemin kanssa ongelmia.
+Kolmannella sprintillä emme kohdanneet enää paljoa ongelmia. Olimme retroissa
+puhuneet parannuskohteista, ja se näkyi kolmannella sprintillä. Vielä kohtasimme
+pieniä teknisiä ongelmia, mutta niihin ei kulunut paljoa aikaa. 🥳
 
 ## Mikä sujui projektissa hyvin
 
-Kommunikaatio on sujunut erittäin hyvin. Näimme parhaaksi 2 dailya (:D)
-viikossa, joka vaikutti hyvältä.
+Meidän ryhmässä kommunikaatio on sujut erittäin hyvin. Olemme käyttäneet
+yhteistä Discord -palvelinta, jossa olemme kysyneet toisilta apua / infonnut
+projektiin liittyvistä asiosta. Pidimme 2 dailya viikossa, ja se auttoi pitämään
+kaikki ryhmän jäsenet ajan tasalla projektin kulusta.
 
-Hyvän pohjan rakentamisen jälkeen oli erittäin helppoa lisätä ominaisuuksia.
+Ensimmäisen ja toisen sprintin puolikkaan konffauksen ja säädön jälkeen olimme
+tuottaneet hyvän pohjan projektille, jolle oli helppoa rakentaa uusia
+toiminnallisuuksia. Koodi on hyvälaatuista ja selkää.
 
-Ryhmän sisäiset taitotasoerot otettu huomioon kehityksessä. Tarkat ohjeet
-esimerkiksi tietokantojen alustamiseen.
+Ryhmän sisäiset taitotasoerot on otettu huomioon kehityksessä. Tämä näkyi
+esimerkiksi taskien delegoinnissa, ryhmäkeskustelun aikana (matala kynnys kysyä
+jos jokin epäselvää) ja dokumentaation kirjoittamisessa (tarkat ohjeet asioiden
+alustamiseen / käyttämiseen).
 
-Harrastimme pariohjelmointia, josta oli selkeitä hyötyjä kehityksessä. Käytimme
-tähän usein VS Coden Live Share -extensionia, joka toimi erittäin hyvin.
+Kokeilimme pariohjelmointia, ja huomasimme sen selkeitä hyötyjä kehityksen
+aikana. Käytimme tähän VS Coden Live Share -extensionia, joka toimi erittäin
+hyvin.
 
-Toisen sprintin jälkeen sovimme yhden henkilön vahtimaan asiakkaan toiveita ja
-vaatimuksia, jotta kaikki asiat tulisi tehdyksi.
+Ensimmäisen sprintin jälkeen sovimme yhden henkilön vahtimaan
+arvosteluperusteita, asiakkaan toiveita ja vaatimuksia. Näin varmistimme, että
+asiat tulevat tehdyksi myöhemmillä sprinteillä.
 
 ## Mitä parannettavaa seuraavaa kertaa varten
 
-Työtä ei kauheana hajautettu pitkin viikkoa.
+- Työtä olisi voinut hajauttaa pitkin viikkoa.
 
-Ryhmässä olisi voinut käydä enemmän läpi projektin alussa olevia asiakkaan
-toiveita / arvosteluperusteita.
+- Työtehtävien estimointia olisi pitänyt miettiä enemmän, jotta ylityötunteja ei
+  olisi kertynyt.
 
-Testit voisi tehdä paremmin. Tästä olisi voinut kanssa keskustella alussa ryhmän
-kanssa enemmän.
+- Ryhmässä olisi voinut käydä enemmän läpi projektin alussa olevia asiakkaan
+  toiveita / arvosteluperusteita.
+
+- Testit voisi tehdä paremmin. Tästä olisi voinut kanssa keskustella alussa
+  ryhmän kanssa enemmän.
 
 ## Mitä asioita opimme
 
-Setuppaamiseen kuluu tosi paljon aikaa, mutta se on kannattavaa.
+Setuppaamiseen, konffaukseen, kirjastojen vaihtamiseen ja niiden opetteluun,
+kuluu paljon aikaa mutta se on kannattavaa.
+
+Kommunikaatio on äärimmäisen tärkeää.
 
 Uusien kirjastojen käyttö on kannattavaa.
 
 ## Mitä asioita olisimme halunneet oppia
 
-Jollain modernimmalla / käytetymmällä frameworkilla olisi ollut kivempi tehdä.
-(React)
+Jollain modernimmalla / käytetymmällä frameworkilla olisi ollut ehkä mukavampi
+tehdä. (React)
 
 ## Mikä tuntui turhalta
 
-Burndown -käyrä, erityisesti näin pienessä projektissa.
+Burndown -käyrä tuntui ajanhukalta, erityisesti näin pienessä projektissa.
 
-Valmiin toiminnallisuuden toimittaminen ensimmäisessä sprintissä, vaikka pohjaa
-ei ollu rakennettu valmiiksi.
+Valmiin toiminnallisuuden toimittaminen ensimmäisessä sprintissä, vaikka
+minkäänlaista pohjaa ei oltu vielä rakennettu valmiiksi. Meillä oli yksi pullari
+melkein valmiina, mutta sitä jouduttiim uusimaan aika paljon, koska halusimme
+hioa muita systeemejä.
 
 # Tekijät
 
@@ -80,3 +100,5 @@ Perttu Kangas
 Joonas Ahovalli  
 Tiina Kuisma  
 Sami Sidoroff
+
+Kiitos vielä kaikille tästä projektista! <3

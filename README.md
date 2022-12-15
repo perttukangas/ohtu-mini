@@ -5,7 +5,8 @@
 
 Käynnistä sovellus osoitteessa https://ohtu-mini.fly.dev/
 
-Tarkastele testikattavuutta [täältä](https://app.codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
+Tarkastele testikattavuutta
+[täältä](https://app.codecov.io/gh/Perttu-Kangas/ohtu-mini/tree/main/?displayType=list)
 
 ### Kehityksen seuraaminen
 
@@ -26,3 +27,7 @@ Tarkastele testikattavuutta [täältä](https://app.codecov.io/gh/Perttu-Kangas/
 - [Retro 1](./docs/retro1.md)
 - [Retro 2](./docs/retro2.md)
 
+### Muuta
+
+- [Demo](./docs/loppudemo.md)
+- [Loppuraportti](./docs/raportti.md)
