@@ -157,8 +157,8 @@ def find_bib_by_doi(doi):
     response = requests.get(
         f"http://dx.doi.org/{doi}",
         headers={
-            "Accept": "text/bibliography; style=bibtex",
-            "Content-Type": "text/bibliography; charset=utf-8",
+            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
+            "Accept": "text/bibliography; style=bibtex"
         },
     )
 

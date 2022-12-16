@@ -140,11 +140,7 @@ class TestReferenceService(unittest.TestCase):
         self.assertEqual(entries[0].get("ID"), None)
         self.assertEqual(entries[0].get("reference_name"), "BOOK")
         self.assertEqual(entries[0].get("reference_id"), "asd")
-        
-    def test_find_by_doi_valid(self):
-        result = find_bib_by_doi("10.1145/2380552.2380613")
-        self.assertIn("@article{2012", result)
-        
+     
     def test_find_by_doi_invalid(self):
         result = find_bib_by_doi("10.1145/2380552.2380613aaaaa")
         self.assertIn("ei löytynyt", result)
